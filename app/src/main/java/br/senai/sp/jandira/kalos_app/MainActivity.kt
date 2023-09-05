@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.screen.CriarContaScreen
 import br.senai.sp.jandira.kalos_app.screens.telaInicialComponent.screen.TelaInicial
 import br.senai.sp.jandira.kalos_app.ui.theme.Kalos_appTheme
 
@@ -29,9 +30,12 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController =  navController,
-                        startDestination = "telaInicial" ){
+                        startDestination = "criarConta" ){
                         composable(route = "telaInicial"){
                             TelaInicial(navController)
+                        }
+                        composable(route = "criarConta"){
+                            CriarContaScreen()
                         }
 
                     }
