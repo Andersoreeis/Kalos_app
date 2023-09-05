@@ -19,19 +19,19 @@ import br.senai.sp.jandira.kalos_app.R
 
 
 @Composable
-fun createButton(textButton: String, naveController: NavController, navName: String) {
+fun createButton(textButton: String, naveController: NavController, navName: String, corBotao: Color) {
     //cores
     var ColorGreenKalos = colorResource(id = R.color.green_kalos)
     Button(
         onClick = { },
         modifier = Modifier
             .fillMaxWidth()
-            .border(1.dp, ColorGreenKalos, CircleShape),
+            .border(1.dp, corBotao, CircleShape),
         colors = ButtonDefaults.buttonColors(Color.Transparent)
     ) {
         Text(
             text = textButton,
-            color = ColorGreenKalos,
+            color = corBotao,
             fontSize = 20.sp,
             fontWeight = FontWeight(400)
         )

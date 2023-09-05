@@ -47,13 +47,7 @@ fun getLogoKalosCompleted() {
             .height(42.dp)
             .padding(10.dp)
     )
-    Image(
-        painterResource(id = R.drawable.line_kalos),
-        contentDescription = "linha Kalos",
-        modifier = Modifier
-            .width(50.dp)
-            .padding(10.dp)
-    )
+
 }
 
 
