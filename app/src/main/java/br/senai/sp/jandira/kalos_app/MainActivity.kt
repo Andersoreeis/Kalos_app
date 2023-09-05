@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                         navController =  navController,
                         startDestination = "telaInicial" ){
                         composable(route = "telaInicial"){
-                            TelaInicial()
+                            TelaInicial(navController)
                         }
 
                     }

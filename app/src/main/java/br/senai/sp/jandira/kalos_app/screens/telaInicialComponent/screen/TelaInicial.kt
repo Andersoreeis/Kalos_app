@@ -14,18 +14,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import br.senai.sp.jandira.app_kalos.components.createButton
 import br.senai.sp.jandira.app_kalos.components.getLogoKalosCompleted
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.screens.telaInicialComponent.components.TextTelaInicial
+import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @Composable
-fun TelaInicial() {
+fun TelaInicial(navController: NavController) {
+    val montserrat = FontFamily(Font(R.font.montserrat_thin))
     Column(
         modifier = Modifier
             .fillMaxSize()
+
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
@@ -36,9 +46,11 @@ fun TelaInicial() {
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(90.dp))
-        getLogoKalosCompleted()
         Spacer(modifier = Modifier.height(40.dp))
+
+        getLogoKalosCompleted()
+
+        Spacer(modifier = Modifier.height(5.dp))
         Box (
             modifier = Modifier
                 .height(1.dp)
@@ -52,20 +64,35 @@ fun TelaInicial() {
                     )
                 )
         ){}
-        Text(
-            text = stringResource(R.string.sua_academia_no_bolso) +
-                    stringResource(R.string.otimize_seus_treinos),
-            color = Color.White,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .width(350.dp)
-                .padding(top = 100.dp),
-        )
+
+        TextTelaInicial()
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Column (
+            modifier = Modifier.padding(horizontal = 20.dp)
+        ){
+            createButton(
+                textButton = "Sou Aluno" ,
+                naveController = navController,
+                navName = "",
+                corBotao = GreenKalos)
+
+            Spacer(modifier = Modifier.height(5.dp))
+
+            createButton(
+                textButton = "Sou Academia" ,
+                naveController = navController,
+                navName = "",
+                corBotao = GreenKalos)
+        }
+
+
     }
 }
 
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-fun TelaInicialPreview() {
-    TelaInicial()
-}
+//@Preview(showSystemUi = true, showBackground = true)
+//@Composable
+//fun TelaInicialPreview() {
+//    TelaInicial()
+//}
