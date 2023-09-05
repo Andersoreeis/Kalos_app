@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.text.googlefonts.Font
+import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun createTitleKalos(content: String, sizeText: Int, colorText: Color, bold: Int) {
@@ -23,7 +24,7 @@ fun createTitleKalos(content: String, sizeText: Int, colorText: Color, bold: Int
 }
 
 @Composable
-fun createTextKalos(content: String, sizeText: Int, colorText: Color, bold: Int) {
-    Text(text = content, fontSize = sizeText.sp, color = colorText, fontWeight = FontWeight(bold))
+fun createTextKalos(content: String, sizeText: Int, colorText: Color, bold: Int, alinhamento:TextAlign ) {
+    Text(text = content, fontSize = sizeText.sp, color = colorText, fontWeight = FontWeight(bold), textAlign = alinhamento)
 
 }
