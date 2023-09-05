@@ -45,11 +45,11 @@ fun TelaInicial(navController: NavController) {
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(90.dp))
 
         getLogoKalosCompleted()
 
-        Spacer(modifier = Modifier.height(5.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         Box (
             modifier = Modifier
                 .height(1.dp)
@@ -64,10 +64,10 @@ fun TelaInicial(navController: NavController) {
                 )
         ){}
 
+        Spacer(modifier = Modifier.height(20.dp))
+
         createTextKalos(content = stringResource(R.string.sua_academia_no_bolso) +
                 stringResource(R.string.otimize_seus_treinos), sizeText = 16 , colorText = Color.White , bold = 20, TextAlign.Center)
-    }
-
         Spacer(modifier = Modifier.height(30.dp))
 
         Column (
@@ -79,7 +79,7 @@ fun TelaInicial(navController: NavController) {
                 navName = "",
                 corBotao = GreenKalos)
 
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(19.dp))
 
             createButton(
                 textButton = "Sou Academia" ,
@@ -87,9 +87,10 @@ fun TelaInicial(navController: NavController) {
                 navName = "",
                 corBotao = GreenKalos)
 
-
-
         }
+    }
+
+
 
 
     }

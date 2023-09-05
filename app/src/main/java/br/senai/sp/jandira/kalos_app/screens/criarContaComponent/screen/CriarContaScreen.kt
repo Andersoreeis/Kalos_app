@@ -16,6 +16,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.components.CamposCriarConta
+import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.components.HeaderCriarConta
 
 @Composable
 fun CriarContaScreen() {
@@ -23,26 +25,28 @@ fun CriarContaScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-    ) {
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 25.dp, start = 21.dp)
         ) {
-            IconButton(
-                onClick = { /*TODO*/ }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 25.dp, start = 21.dp)
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_chevron_left_24) ,
-                    contentDescription = "Botão para voltar para tela anterior",
-                    tint = Color.White,
-                )
+                IconButton(
+                    onClick = { /*TODO*/ }
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_chevron_left_24) ,
+                        contentDescription = "Botão para voltar para tela anterior",
+                        tint = Color.White,
+                    )
+                }
             }
+
+            HeaderCriarConta()
+
+           CamposCriarConta()
         }
-
-
-    }
 
 }
 
