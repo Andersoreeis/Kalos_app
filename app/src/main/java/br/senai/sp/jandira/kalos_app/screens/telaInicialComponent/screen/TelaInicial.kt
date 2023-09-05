@@ -24,14 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createButton
+import br.senai.sp.jandira.app_kalos.components.createTextKalos
 import br.senai.sp.jandira.app_kalos.components.getLogoKalosCompleted
 import br.senai.sp.jandira.kalos_app.R
-import br.senai.sp.jandira.kalos_app.screens.telaInicialComponent.components.TextTelaInicial
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @Composable
 fun TelaInicial(navController: NavController) {
-    val montserrat = FontFamily(Font(R.font.montserrat_thin))
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -65,7 +64,9 @@ fun TelaInicial(navController: NavController) {
                 )
         ){}
 
-        TextTelaInicial()
+        createTextKalos(content = stringResource(R.string.sua_academia_no_bolso) +
+                stringResource(R.string.otimize_seus_treinos), sizeText = 16 , colorText = Color.White , bold = 20, TextAlign.Center)
+    }
 
         Spacer(modifier = Modifier.height(30.dp))
 
@@ -85,11 +86,14 @@ fun TelaInicial(navController: NavController) {
                 naveController = navController,
                 navName = "",
                 corBotao = GreenKalos)
+
+
+
         }
 
 
     }
-}
+
 
 //@Preview(showSystemUi = true, showBackground = true)
 //@Composable
