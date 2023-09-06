@@ -18,9 +18,9 @@ import br.senai.sp.jandira.kalos_app.R
 
 
 @Composable
-fun createTitleKalos(content: String, sizeText: Int, colorText: Color, bold: Int) {
+fun createTitleKalos(content: String, sizeText: Int, colorText: Color, bold: Int, alinhamento:TextAlign ) {
     Text(
-        text = content, fontSize = sizeText.sp, color = colorText, fontWeight = FontWeight(bold),
+        text = content, fontSize = sizeText.sp, color = colorText, fontWeight = FontWeight(bold), textAlign = alinhamento
     )
 
 }

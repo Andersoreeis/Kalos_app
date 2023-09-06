@@ -1,22 +1,17 @@
-package br.senai.sp.jandira.kalos_app.screens.criarContaComponent.components
+package br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
+
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
@@ -33,7 +28,7 @@ fun CamporEmail(value: String, aoMudar: (String) -> Unit, placeholder: String) {
         },
         modifier = Modifier
             .background(Color.Black)
-            .width(350.dp)
+            .fillMaxWidth()
 
         ,
         shape = RoundedCornerShape(25.dp),

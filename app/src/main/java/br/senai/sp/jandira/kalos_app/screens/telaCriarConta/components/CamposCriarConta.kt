@@ -1,11 +1,10 @@
-package br.senai.sp.jandira.kalos_app.screens.criarContaComponent.components
+package br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
