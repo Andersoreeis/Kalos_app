@@ -2,6 +2,7 @@ package br.senai.sp.jandira.app_kalos.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -12,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -25,6 +27,25 @@ fun createButton(textButton: String, naveController: NavController, navName: Str
         onClick = { },
         modifier = Modifier
             .fillMaxWidth()
+            .border(1.dp, corBotao, CircleShape),
+        colors = ButtonDefaults.buttonColors(Color.Transparent)
+    ) {
+        Text(
+            text = textButton,
+            color = corBotao,
+            fontSize = 20.sp,
+            fontWeight = FontWeight(400)
+        )
+    }
+}
+
+@Composable
+fun createButtonWithWidth(textButton: String, naveController: NavController, navName: String, corBotao: Color, width: Dp) {
+    //cores
+    Button(
+        onClick = { },
+        modifier = Modifier
+            .width(width)
             .border(1.dp, corBotao, CircleShape),
         colors = ButtonDefaults.buttonColors(Color.Transparent)
     ) {

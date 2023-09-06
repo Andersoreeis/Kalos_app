@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                             TelaInicial(navController)
                         }
                         composable(route = "criarConta"){
-                            CriarContaScreen()
+                            CriarContaScreen(navController)
                         }
 
                     }
