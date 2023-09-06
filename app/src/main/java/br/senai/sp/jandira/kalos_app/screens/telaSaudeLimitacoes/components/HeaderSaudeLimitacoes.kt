@@ -1,5 +1,6 @@
-package br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components
+package br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -24,17 +24,18 @@ import br.senai.sp.jandira.app_kalos.components.getLogoKalos
 import br.senai.sp.jandira.kalos_app.R
 
 @Composable
-fun HeaderCriarConta(navController: NavController) {
+fun HeaderSaudeLimitacoes(navController: NavController) {
     Column (
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            ,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box() {
             getLogoKalos(size = 80.dp)
             IconButton(
 
-                onClick = { navController.navigate("fazerLogin") },
+                onClick = { navController.navigate("") },
                 modifier = Modifier.offset(x= -170.dp)
             ) {
                 Icon(
@@ -47,26 +48,15 @@ fun HeaderCriarConta(navController: NavController) {
         }
 
 
-            Text(
-                text = stringResource(id = R.string.criar_conta) ,
-                color = Color.White,
-                fontSize = 36.sp,
-                fontWeight = FontWeight.Bold
-            )
-
-            Text(
-                text = stringResource(R.string.seja_bem_vindo),
-                color = Color.White,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(top = 10.dp)
-            )
+        Text(
+            text = stringResource(R.string.saude_limitacoes),
+            color = Color.White,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
 
 
-        }
+
+
     }
-
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//fun HeaderCriarContaPreview() {
-//    HeaderCriarConta()
-//}
+}
