@@ -1,6 +1,7 @@
 package br.senai.sp.jandira.kalos_app.screens.telaInicialComponent.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -45,55 +46,73 @@ fun TelaInicial(navController: NavController) {
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(90.dp))
+        Column(
+            modifier = Modifier.padding(20.dp),
+            verticalArrangement = Arrangement.Center,
+            Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(90.dp))
 
-        getLogoKalosCompleted()
+            getLogoKalosCompleted()
 
-        Spacer(modifier = Modifier.height(20.dp))
-        Box (
-            modifier = Modifier
-                .height(1.dp)
-                .width(50.dp)
-                .background(
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(
-                            Color(0xFF58B2E1),
-                            Color(0xFF00F49B)
+            Spacer(modifier = Modifier.height(20.dp))
+            Box(
+                modifier = Modifier
+                    .height(1.dp)
+                    .width(50.dp)
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(
+                                Color(0xFF58B2E1),
+                                Color(0xFF00F49B)
+                            )
                         )
                     )
+            ) {}
+
+
+            Spacer(modifier = Modifier.height(60.dp))
+
+            createTextKalos(
+                content = stringResource(R.string.sua_academia_no_bolso) +
+                        stringResource(R.string.otimize_seus_treinos),
+                sizeText = 16,
+                colorText = Color.White,
+                bold = 400,
+                TextAlign.Center
+            )
+
+            Column(
+                modifier = Modifier
+                    .padding(20.dp)
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                Spacer(modifier = Modifier.height(40.dp))
+                createButton(
+                    textButton = "Sou Aluno",
+                    naveController = navController,
+                    navName = "fazerLogin",
+                    corBotao = GreenKalos
                 )
-        ){}
 
-        Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(19.dp))
 
-        createTextKalos(content = stringResource(R.string.sua_academia_no_bolso) +
-                stringResource(R.string.otimize_seus_treinos), sizeText = 16 , colorText = Color.White , bold = 20, TextAlign.Center)
-        Spacer(modifier = Modifier.height(30.dp))
+                createButton(
+                    textButton = "Sou Academia",
+                    naveController = navController,
+                    navName = "",
+                    corBotao = GreenKalos
+                )
 
-        Column (
-            modifier = Modifier.padding(horizontal = 20.dp)
-        ){
-            createButton(
-                textButton = "Sou Aluno" ,
-                naveController = navController,
-                navName = "",
-                corBotao = GreenKalos)
-
-            Spacer(modifier = Modifier.height(19.dp))
-
-            createButton(
-                textButton = "Sou Academia" ,
-                naveController = navController,
-                navName = "",
-                corBotao = GreenKalos)
-
+            }
         }
-    }
-
-
-
 
     }
+
+}
 
 
 //@Preview(showSystemUi = true, showBackground = true)
