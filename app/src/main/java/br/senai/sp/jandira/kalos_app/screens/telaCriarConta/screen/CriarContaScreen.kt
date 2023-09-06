@@ -80,25 +80,6 @@ fun CriarContaScreen(navController: NavController) {
             ContinueCom()
         }
 
-
-        HeaderCriarConta()
-
-        Spacer(modifier = Modifier.height(72.dp))
-        CamposCriarConta()
-        Spacer(modifier = Modifier.height(98.dp))
-        createButtonWithWidth(
-            textButton = stringResource(R.string.continuar),
-            naveController = navController,
-            navName = "",
-            corBotao = GreenKalos,
-            width = 350.dp
-        )
-        Spacer(modifier = Modifier.height(41.dp))
-        Column(
-            modifier = Modifier.padding(30.dp)
-        ) {
-            ContinueCom()
-        }
         Row (
             verticalAlignment = Alignment.CenterVertically
         ){
