@@ -30,8 +30,8 @@ import br.senai.sp.jandira.app_kalos.components.createButton
 import br.senai.sp.jandira.app_kalos.components.createButtonWithWidth
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.components.ContinueCom
-import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.components.CamposCriarConta
-import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.components.HeaderCriarConta
+import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamposCriarConta
+import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.HeaderCriarConta
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @Composable
@@ -50,15 +50,36 @@ fun CriarContaScreen(navController: NavController) {
                 .padding(top = 25.dp, start = 21.dp)
         ) {
             IconButton(
+
                 onClick = { navController.navigate("fazerLogin") }
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.baseline_chevron_left_24),
+                    painter = painterResource(id = R.drawable.baseline_chevron_left_24) ,
+
                     contentDescription = "Botão para voltar para tela anterior",
                     tint = Color.White,
                 )
             }
         }
+
+        HeaderCriarConta()
+        Spacer(modifier = Modifier.height(72.dp))
+        CamposCriarConta()
+        Spacer(modifier = Modifier.height(98.dp))
+        createButtonWithWidth(
+            textButton = stringResource(R.string.continuar) ,
+            naveController = navController ,
+            navName = "",
+            corBotao = GreenKalos,
+            width = 350.dp
+        )
+        Spacer(modifier = Modifier.height(41.dp))
+        Column (
+            modifier = Modifier.padding(30.dp)
+        ){
+            ContinueCom()
+        }
+
 
         HeaderCriarConta()
 
@@ -87,6 +108,7 @@ fun CriarContaScreen(navController: NavController) {
                 fontSize = 12.sp
             )
 
+
             Text(
                 text = stringResource(R.string.faca_login),
                 fontSize = 12.sp,
@@ -97,7 +119,10 @@ fun CriarContaScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(40.dp))
 
     }
-}
+
+
+    }
+
 
 //@Preview(showSystemUi = true, showBackground = true)
 //@Composable

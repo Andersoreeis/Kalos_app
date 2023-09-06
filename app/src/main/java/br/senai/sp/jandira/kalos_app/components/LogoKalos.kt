@@ -18,20 +18,19 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import br.senai.sp.jandira.kalos_app.R
 
+// Função para pegar a Logo
 @Composable
 fun getLogoKalos(size: Dp) {
-
     Image(
         painterResource(id = R.drawable.logo_kalos),
         contentDescription = "logo",
         modifier = Modifier.size(size)
     )
 }
+// Função para pegar a Logo Junto com o nome
 
 @Composable
 fun getLogoKalosCompleted() {
-
-
     Image(
         painterResource(id = R.drawable.logo_kalos),
         contentDescription = "logo",
@@ -46,6 +45,7 @@ fun getLogoKalosCompleted() {
             .height(100.dp)
     )
 
+
 }
 
 
@@ -59,4 +59,5 @@ fun LogoKalosPrev() {
         getLogoKalosCompleted()
 
     }
+
 }

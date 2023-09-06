@@ -6,16 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.screen.CriarContaScreen
-import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.screen.LoginScreen
-import br.senai.sp.jandira.kalos_app.screens.telaInicialComponent.screen.TelaInicial
+
+import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.screen.LoginScreen
+import br.senai.sp.jandira.kalos_app.screens.telaInicial.screen.TelaInicial
 import br.senai.sp.jandira.kalos_app.ui.theme.Kalos_appTheme
 
 class MainActivity : ComponentActivity() {
