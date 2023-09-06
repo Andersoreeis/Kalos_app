@@ -22,7 +22,7 @@ import br.senai.sp.jandira.kalos_app.R
 fun createButton(textButton: String, naveController: NavController, navName: String, corBotao: Color) {
     //cores
     Button(
-        onClick = { },
+        onClick = { naveController.navigate(navName) },
         modifier = Modifier
             .fillMaxWidth()
             .border(1.dp, corBotao, CircleShape),

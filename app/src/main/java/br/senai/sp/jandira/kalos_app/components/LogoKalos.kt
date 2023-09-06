@@ -37,15 +37,13 @@ fun getLogoKalosCompleted() {
         contentDescription = "logo",
         modifier = Modifier
             .size(150.dp)
-            .padding(10.dp)
     )
     Image(
         painterResource(id = R.drawable.logo_name_kalos),
         contentDescription = "nome Kalos",
         modifier = Modifier
-            .width(170.dp)
-            .height(42.dp)
-            .padding(10.dp)
+            .width(200.dp)
+            .height(100.dp)
     )
 
 }
