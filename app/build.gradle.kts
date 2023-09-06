@@ -69,7 +69,11 @@ dependencies {
 
 
     //Navigation
+
     implementation("androidx.navigation:navigation-compose:2.6.0")
     // Fontes do Google
     implementation ("androidx.compose.ui:ui-text-google-fonts:1.4.3")
+
+    //Mais icones
+    implementation ("androidx.compose.material:material-icons-extended:1.2.0")
 }

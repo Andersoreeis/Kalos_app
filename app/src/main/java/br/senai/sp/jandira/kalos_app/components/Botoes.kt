@@ -2,6 +2,7 @@ package br.senai.sp.jandira.app_kalos.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -22,17 +23,42 @@ import br.senai.sp.jandira.kalos_app.R
 @Composable
 fun createButton(textButton: String, naveController: NavController, navName: String, corBotao: Color) {
     //cores
-    var ColorGreenKalos = colorResource(id = R.color.green_kalos)
     Button(
-        onClick = { },
+        onClick = { naveController.navigate(navName) },
         modifier = Modifier
             .fillMaxWidth()
             .border(1.dp, corBotao, CircleShape),
+<<<<<<< HEAD
+=======
         colors = ButtonDefaults.buttonColors(Color.Transparent)
     ) {
         Text(
             text = textButton,
+            color = corBotao,
+            fontSize = 20.sp,
+            fontWeight = FontWeight(400)
+        )
+    }
+}
+
+@Composable
+fun createButtonWithWidth(textButton: String, naveController: NavController, navName: String, corBotao: Color, width: Dp) {
+    //cores
+    Button(
+        onClick = { },
+        modifier = Modifier
+            .width(width)
+            .border(1.dp, corBotao, CircleShape),
+>>>>>>> 1dac610d2455cc44df14d113ffdbda76fc480dcd
+        colors = ButtonDefaults.buttonColors(Color.Transparent)
+    ) {
+        Text(
+            text = textButton,
+<<<<<<< HEAD
             color =  corBotao,
+=======
+            color = corBotao,
+>>>>>>> 1dac610d2455cc44df14d113ffdbda76fc480dcd
             fontSize = 20.sp,
             fontWeight = FontWeight(400)
         )

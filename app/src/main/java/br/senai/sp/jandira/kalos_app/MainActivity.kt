@@ -10,6 +10,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.screen.CriarContaScreen
+import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.screen.LoginScreen
+import br.senai.sp.jandira.kalos_app.screens.telaInicialComponent.screen.TelaInicial
 import br.senai.sp.jandira.kalos_app.ui.theme.Kalos_appTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,25 +28,24 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController =  navController,
+                        startDestination = "criarConta" ){
+                        composable(route = "telaInicial"){
+                            TelaInicial(navController)
+                        }
+                        composable(route = "fazerLogin"){
+                        LoginScreen(navController)
+                        }
+                        composable(route = "criarConta"){
+                            CriarContaScreen(navController)
+                        }
+
+                    }
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Kalos_appTheme {
-        Greeting("Android")
-    }
-}

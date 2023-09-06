@@ -36,21 +36,29 @@ fun getLogoKalosCompleted() {
         contentDescription = "logo",
         modifier = Modifier
             .size(150.dp)
-            .padding(10.dp)
     )
     Image(
         painterResource(id = R.drawable.logo_name_kalos),
         contentDescription = "nome Kalos",
         modifier = Modifier
-            .width(170.dp)
-            .height(42.dp)
-            .padding(10.dp)
+            .width(200.dp)
+            .height(100.dp)
     )
-    Image(
-        painterResource(id = R.drawable.line_kalos),
-        contentDescription = "linha Kalos",
-        modifier = Modifier
-            .width(50.dp)
-            .padding(10.dp)
-    )
+<<<<<<< HEAD
+=======
+
+}
+
+
+
+
+
+@Preview
+@Composable
+fun LogoKalosPrev() {
+    Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+        getLogoKalosCompleted()
+
+    }
+>>>>>>> 1dac610d2455cc44df14d113ffdbda76fc480dcd
 }
