@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -23,6 +25,7 @@ import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createButton
 import br.senai.sp.jandira.app_kalos.components.createButtonWithWidth
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.components.ContinueCom
 import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.components.CamposCriarConta
 import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.components.HeaderCriarConta
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
@@ -32,7 +35,8 @@ fun CriarContaScreen( navController: NavController) {
     Column (
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black),
+            .background(Color.Black)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
@@ -51,19 +55,24 @@ fun CriarContaScreen( navController: NavController) {
                     )
                 }
             }
-
             HeaderCriarConta()
             Spacer(modifier = Modifier.height(72.dp))
             CamposCriarConta()
             Spacer(modifier = Modifier.height(98.dp))
-
-
-                createButtonWithWidth(
+            createButtonWithWidth(
                     textButton = stringResource(R.string.continuar) ,
                     naveController = navController ,
                     navName = "",
                     corBotao = GreenKalos,
-                    width = 350.dp)
+                    width = 350.dp
+            )
+            Spacer(modifier = Modifier.height(41.dp))
+            Column (
+                modifier = Modifier.padding(30.dp)
+            ){
+                ContinueCom()
+            }
+
 
 
         }
