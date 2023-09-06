@@ -40,32 +40,15 @@ fun CriarContaScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .verticalScroll(rememberScrollState()),
+            ,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(30.dp))
+        HeaderCriarConta(navController)
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 25.dp, start = 21.dp)
-        ) {
-            IconButton(
-
-                onClick = { navController.navigate("fazerLogin") }
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_chevron_left_24) ,
-
-                    contentDescription = "Botão para voltar para tela anterior",
-                    tint = Color.White,
-                )
-            }
-        }
-
-        HeaderCriarConta()
-        Spacer(modifier = Modifier.height(72.dp))
+        Spacer(modifier = Modifier.height(30.dp))
         CamposCriarConta()
-        Spacer(modifier = Modifier.height(98.dp))
+        Spacer(modifier = Modifier.height(40.dp))
         createButtonWithWidth(
             textButton = stringResource(R.string.continuar) ,
             naveController = navController ,
@@ -73,7 +56,7 @@ fun CriarContaScreen(navController: NavController) {
             corBotao = GreenKalos,
             width = 350.dp
         )
-        Spacer(modifier = Modifier.height(41.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         Column (
             modifier = Modifier.padding(30.dp)
         ){
@@ -97,7 +80,7 @@ fun CriarContaScreen(navController: NavController) {
                 modifier = Modifier.clickable { navController.navigate("fazerLogin") }
             )
         }
-        Spacer(modifier = Modifier.height(40.dp))
+
 
     }
 
