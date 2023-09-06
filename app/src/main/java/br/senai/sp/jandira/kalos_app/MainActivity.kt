@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                         LoginScreen(navController)
                         }
                         composable(route = "criarConta"){
-                            CriarContaScreen()
+                            CriarContaScreen(navController)
                         }
 
                     }
