@@ -26,8 +26,8 @@ import br.senai.sp.jandira.app_kalos.components.createButton
 import br.senai.sp.jandira.app_kalos.components.createButtonWithWidth
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.components.ContinueCom
-import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.components.CamposCriarConta
-import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.components.HeaderCriarConta
+import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamposCriarConta
+import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.HeaderCriarConta
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @Composable
@@ -38,44 +38,44 @@ fun CriarContaScreen( navController: NavController) {
             .background(Color.Black)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 25.dp, start = 21.dp)
         ) {
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 25.dp, start = 21.dp)
+            IconButton(
+                onClick = { /*TODO*/ }
             ) {
-                IconButton(
-                    onClick = { /*TODO*/ }
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_chevron_left_24) ,
-                        contentDescription = "Botão para voltar para tela anterior",
-                        tint = Color.White,
-                    )
-                }
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_chevron_left_24) ,
+                    contentDescription = "Botão para voltar para tela anterior",
+                    tint = Color.White,
+                )
             }
-            HeaderCriarConta()
-            Spacer(modifier = Modifier.height(72.dp))
-            CamposCriarConta()
-            Spacer(modifier = Modifier.height(98.dp))
-            createButtonWithWidth(
-                    textButton = stringResource(R.string.continuar) ,
-                    naveController = navController ,
-                    navName = "",
-                    corBotao = GreenKalos,
-                    width = 350.dp
-            )
-            Spacer(modifier = Modifier.height(41.dp))
-            Column (
-                modifier = Modifier.padding(30.dp)
-            ){
-                ContinueCom()
-            }
-
-
-
         }
+        HeaderCriarConta()
+        Spacer(modifier = Modifier.height(72.dp))
+        CamposCriarConta()
+        Spacer(modifier = Modifier.height(98.dp))
+        createButtonWithWidth(
+            textButton = stringResource(R.string.continuar) ,
+            naveController = navController ,
+            navName = "",
+            corBotao = GreenKalos,
+            width = 350.dp
+        )
+        Spacer(modifier = Modifier.height(41.dp))
+        Column (
+            modifier = Modifier.padding(30.dp)
+        ){
+            ContinueCom()
+        }
+
+
+
+    }
 
 }
 

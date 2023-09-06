@@ -44,8 +44,7 @@ fun getLogoKalosCompleted() {
             .width(200.dp)
             .height(100.dp)
     )
-<<<<<<< HEAD
-=======
+
 
 }
 
@@ -60,5 +59,5 @@ fun LogoKalosPrev() {
         getLogoKalosCompleted()
 
     }
->>>>>>> 1dac610d2455cc44df14d113ffdbda76fc480dcd
+
 }

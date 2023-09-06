@@ -28,8 +28,6 @@ fun createButton(textButton: String, naveController: NavController, navName: Str
         modifier = Modifier
             .fillMaxWidth()
             .border(1.dp, corBotao, CircleShape),
-<<<<<<< HEAD
-=======
         colors = ButtonDefaults.buttonColors(Color.Transparent)
     ) {
         Text(
@@ -49,16 +47,11 @@ fun createButtonWithWidth(textButton: String, naveController: NavController, nav
         modifier = Modifier
             .width(width)
             .border(1.dp, corBotao, CircleShape),
->>>>>>> 1dac610d2455cc44df14d113ffdbda76fc480dcd
         colors = ButtonDefaults.buttonColors(Color.Transparent)
     ) {
         Text(
             text = textButton,
-<<<<<<< HEAD
-            color =  corBotao,
-=======
             color = corBotao,
->>>>>>> 1dac610d2455cc44df14d113ffdbda76fc480dcd
             fontSize = 20.sp,
             fontWeight = FontWeight(400)
         )
