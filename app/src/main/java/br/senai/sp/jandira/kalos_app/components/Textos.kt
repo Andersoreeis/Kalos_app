@@ -1,7 +1,9 @@
 package br.senai.sp.jandira.app_kalos.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.text.font.Font
@@ -14,6 +16,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.style.TextAlign
+import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.R
 
 
@@ -28,6 +31,14 @@ fun createTitleKalos(content: String, sizeText: Int, colorText: Color, bold: Int
 @Composable
 fun createTextKalos(content: String, sizeText: Int, colorText: Color, bold: Int, alinhamento:TextAlign ) {
     Text(text = content, fontSize = sizeText.sp, color = colorText, fontWeight = FontWeight(bold), textAlign = alinhamento)
+
+}
+@Composable
+
+fun createTextKalosRedirection(content: String, sizeText: Int, colorText: Color, bold: Int, alinhamento:TextAlign , navControlelr: NavController, navName: String) {
+    Text(text = content, fontSize = sizeText.sp, color = colorText, fontWeight = FontWeight(bold), textAlign = alinhamento, modifier = Modifier .clickable {
+        navControlelr.navigate(navName)
+    })
 
 }
 

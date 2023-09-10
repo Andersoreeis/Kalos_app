@@ -40,10 +40,36 @@ fun createButton(textButton: String, naveController: NavController, navName: Str
 }
 
 @Composable
+fun createButtonWithFunction(
+    textButton: String,
+    corBotao: Color,
+    funcao: () -> Unit
+) {
+    // Cores
+    Button(
+        onClick = {
+            funcao()
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(1.dp, corBotao, CircleShape),
+        colors = ButtonDefaults.buttonColors(Color.Transparent)
+    ) {
+        Text(
+            text = textButton,
+            color = corBotao,
+            fontSize = 20.sp,
+            fontWeight = FontWeight(400)
+        )
+    }
+}
+
+
+@Composable
 fun createButtonWithWidth(textButton: String, naveController: NavController, navName: String, corBotao: Color, width: Dp) {
     //cores
     Button(
-        onClick = { },
+        onClick = {naveController.navigate(navName) },
         modifier = Modifier
             .width(width)
             .border(1.dp, corBotao, CircleShape),

@@ -3,6 +3,7 @@ package br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,9 +21,13 @@ import br.senai.sp.jandira.app_kalos.components.createButton
 import br.senai.sp.jandira.app_kalos.components.createTextKalos
 import br.senai.sp.jandira.app_kalos.components.createTitleKalos
 import br.senai.sp.jandira.app_kalos.components.getLogoKalos
+import br.senai.sp.jandira.kalos_app.components.ContinueCom
 import br.senai.sp.jandira.kalos_app.components.Espacamento
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CampoSenha
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamporEmail
+import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.CampoEmailLogin
+import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.CampoSenhaLogin
+import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.IrparaCadastro
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.esqueceuSenhaText
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
@@ -75,19 +80,20 @@ fun LoginScreen(navController: NavController) {
                 .fillMaxWidth()
                 .size(200.dp), verticalArrangement = Arrangement.Center
         ) {
-            CamporEmail(
+            CampoEmailLogin(
                 value = estadoEmail.value.toString(),
                 aoMudar = { estadoEmail.value = it },
                 placeholder = "Digite o email"
             )
             Espacamento(tamanho = 20.dp)
-            CampoSenha(
+            CampoSenhaLogin(
                 value = estadoSenha.value.toString(),
                 aoMudar = { estadoSenha.value = it },
                 placeholder = "Digite a senha"
             )
             Espacamento(tamanho = 15.dp)
 
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.End) {
             esqueceuSenhaText(
                 content = "Esqueci a senha",
                 sizeText = 12,
@@ -97,14 +103,26 @@ fun LoginScreen(navController: NavController) {
                 naveController = navController,
                 navName = "criarConta"
             )
-
+        }
 
 
         }
         Espacamento(tamanho = 50.dp)
 
-        createButton(textButton = "Entrar", naveController =  navController, navName = "" , corBotao = GreenKalos)
+        createButton(
+            textButton = "Entrar",
+            naveController = navController,
+            navName = "",
+            corBotao = GreenKalos
+        )
 
+        Espacamento(tamanho = 20.dp)
+
+        ContinueCom()
+
+        Espacamento(tamanho = 30.dp)
+
+        IrparaCadastro(navController = navController)
     }
 }
 

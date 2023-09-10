@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.screen.CriarContaScreen
 
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.screen.LoginScreen
+import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.screen.InformacoesPessoais
 import br.senai.sp.jandira.kalos_app.screens.telaInicial.screen.TelaInicial
 import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.screen.TelaSaudeLimitacoes
 import br.senai.sp.jandira.kalos_app.ui.theme.Kalos_appTheme
@@ -30,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController =  navController,
-                        startDestination = "saudeLimitacoes" ){
+                        startDestination = "telaInicial" ){
                         composable(route = "telaInicial"){
                             TelaInicial(navController)
                         }
@@ -39,6 +40,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "criarConta"){
                             CriarContaScreen(navController)
+                        }
+                        composable(route = "informacoesPessoais"){
+                            InformacoesPessoais(navController = navController)
                         }
                         composable(route = "saudeLimitacoes"){
                             TelaSaudeLimitacoes(navController = navController)

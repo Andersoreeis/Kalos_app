@@ -32,7 +32,6 @@ fun esqueceuSenhaText(
             .clickable {
                 naveController.navigate(navName)
             }
-            .fillMaxWidth()
     )
 
 }

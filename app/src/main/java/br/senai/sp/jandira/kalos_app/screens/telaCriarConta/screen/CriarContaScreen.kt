@@ -52,7 +52,7 @@ fun CriarContaScreen(navController: NavController) {
         createButtonWithWidth(
             textButton = stringResource(R.string.continuar) ,
             naveController = navController ,
-            navName = "",
+            navName = "informacoesPessoais",
             corBotao = GreenKalos,
             width = 350.dp
         )
