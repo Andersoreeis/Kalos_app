@@ -18,7 +18,7 @@ import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.components.Head
 fun TelaSaudeLimitacoes(navController: NavController) {
 
     Spacer(modifier = Modifier.height(40.dp))
-    HeaderSaudeLimitacoes(navController = navController)
+//    HeaderSaudeLimitacoes(navController = navController)
     Spacer(modifier = Modifier.height(50.dp))
     FormSaudeLimitacoes()
   }

@@ -1,11 +1,9 @@
-package br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.components
+package br.senai.sp.jandira.kalos_app.screens.telaObjetivo.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,11 +22,11 @@ import br.senai.sp.jandira.app_kalos.components.getLogoKalos
 import br.senai.sp.jandira.kalos_app.R
 
 @Composable
-fun HeaderSaudeLimitacoes(navController: NavController) {
+fun HeaderObjetivo(navController: NavController) {
     Column (
         modifier = Modifier
             .fillMaxWidth()
-            ,
+        ,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box() {
@@ -47,7 +45,7 @@ fun HeaderSaudeLimitacoes(navController: NavController) {
             }
         }
         Text(
-            text = stringResource(R.string.saude_limitacoes),
+            text = stringResource(R.string.objetivo),
             color = Color.White,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
