@@ -16,8 +16,7 @@ import br.senai.sp.jandira.kalos_app.R
 fun SetaParaVoltar(navController: NavController, navName: String) {
     IconButton(
 
-        onClick = { navController.navigate("fazerLogin") },
-        modifier = Modifier.offset(x= -170.dp)
+        onClick = { navController.navigate(navName) },
     ) {
         Icon(
             painter = painterResource(id = R.drawable.baseline_chevron_left_24),

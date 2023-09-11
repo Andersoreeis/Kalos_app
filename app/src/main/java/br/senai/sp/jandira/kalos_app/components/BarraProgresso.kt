@@ -23,17 +23,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createButtonWithFunction
+import br.senai.sp.jandira.kalos_app.screens.InformacoesCliente.screen.TelasInformacoesdoCliente
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CampoSenha
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamposCriarConta
+import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.screen.InformacoesPessoais
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 
 @Composable
-fun BarraProgresso() {
+fun BarraProgresso(navController: NavController) {
 
     val context = LocalContext.current
     var progressCount = remember { mutableStateOf(0) }
@@ -65,75 +69,112 @@ fun BarraProgresso() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 100.dp, start = 30.dp, end = 30.dp)
+            .background(Color.Black)
+            .padding(20.dp)
     ) {
 
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .height(400.dp)) {
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .height(400.dp)) {
-                if (progressCount.value == 0) {
-                    CamposCriarConta()
-                } else if (progressCount.value == 2) {
-                    CampoSenha(value = "", aoMudar = { "" }, placeholder = "sdfsdf")
-                }
+        if (progressCount.value == 0)
+            InformacoesPessoais(navController = navController)
+        else if (progressCount.value == 2)
+            Text(text = "parte 2")
+        else if (progressCount.value == 4)
+            Text(text = "parte 4")
+        else if (progressCount.value == 6)
+            Text(text = "parte 6")
 
-            }
-        }
-        Row(
+
+
+
+        Column(
             modifier = Modifier
-                .widthIn(min = 30.dp)
-                .fillMaxWidth(size.value),
-            horizontalArrangement = Arrangement.End
+                .fillMaxSize()
+                .padding(bottom = 60.dp), verticalArrangement = Arrangement.Bottom
         ) {
-            Text(text = "${progressCount.value}")
-        }
-        // Progress Bar
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(5.dp)
-        ) {
+            // Progress Bar
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
-
-                    .background(GrayKalos)
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(size.value)
-                    .fillMaxHeight()
-                    .clip(RoundedCornerShape(9.dp))
-                    .background(GreenKalos)
-                    .animateContentSize()
-            )
-
-
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 30.dp),
-        ) {
-
-            fun increment() {
-                if (progressCount.value < 6) {
-                    progressCount.value += 2
-                } else {
-                    Toast.makeText(context, "Erro", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            createButtonWithFunction(
-                textButton = "Continue",
-                corBotao = GreenKalos
-
+                    .fillMaxWidth()
+                    .height(5.dp)
             ) {
-                increment()
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+
+                        .background(GrayKalos)
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(size.value)
+                        .fillMaxHeight()
+                        .clip(RoundedCornerShape(9.dp))
+                        .background(GreenKalos)
+                        .animateContentSize()
+                )
+
+
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 30.dp),
+            ) {
+
+                fun increment() {
+                    if (progressCount.value < 6) {
+                        progressCount.value += 2
+                    } else {
+                        Toast.makeText(context, "Erro", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+
+                if (progressCount.value == 0) {
+                    createButtonWithFunction(
+                        textButton = "Continue",
+                        corBotao = GreenKalos
+
+                    ) {
+                        increment()
+                    }
+                } else if (progressCount.value == 2) {
+                    createButtonWithFunction(
+                        textButton = "Continue",
+                        corBotao = GreenKalos
+
+                    ) {
+                        increment()
+                    }
+                } else if (progressCount.value == 4) {
+                   Column (modifier = Modifier.fillMaxWidth()) {
+                       createButtonWithFunction(
+                           textButton = "Continue",
+                           corBotao = GreenKalos
+
+                       ) {
+                           increment()
+                       }
+                       Espacamento(tamanho = 15.dp)
+                       createButtonWithFunction(
+                           textButton = "Pular",
+                           corBotao = Color.Red
+
+                       ) {
+                           increment()
+                       }
+                   }
+                } else if (progressCount.value == 6) {
+                    createButtonWithFunction(
+                        textButton = "Continue",
+                        corBotao = GreenKalos
+
+                    ) {
+                        increment()
+                    }
+                }
+
+
+
             }
         }
 
