@@ -32,6 +32,7 @@ import br.senai.sp.jandira.kalos_app.screens.InformacoesCliente.screen.TelasInfo
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CampoSenha
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamposCriarConta
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.screen.InformacoesPessoais
+import br.senai.sp.jandira.kalos_app.screens.telaMetricas.screen.TelaMetricas
 import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.screen.TelaSaudeLimitacoes
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
@@ -79,7 +80,7 @@ fun BarraProgresso(navController: NavController) {
         else if (progressCount.value == 2)
             TelaSaudeLimitacoes(navController = navController)
         else if (progressCount.value == 4)
-            Text(text = "parte 4")
+            TelaMetricas(navController = navController)
         else if (progressCount.value == 6)
             Text(text = "parte 6")
 
