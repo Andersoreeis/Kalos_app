@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,13 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createButtonWithFunction
-import br.senai.sp.jandira.kalos_app.screens.InformacoesCliente.screen.TelasInformacoesdoCliente
-import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CampoSenha
-import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamposCriarConta
+import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.screen.InformacoesPessoais
+import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.screen.TelaObjetivo
 import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.screen.TelaSaudeLimitacoes
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
@@ -64,7 +63,21 @@ fun BarraProgresso(navController: NavController) {
         )
     )
 
+    fun increment() {
+        if (progressCount.value < 6) {
+            progressCount.value += 2
+        } else {
+            Toast.makeText(context, "Erro", Toast.LENGTH_SHORT).show()
+        }
+    }
 
+    fun decrement() {
+        if (progressCount.value >= 2) {
+            progressCount.value -= 2
+        } else {
+            Toast.makeText(context, "Erro", Toast.LENGTH_SHORT).show()
+        }
+    }
 
 
     Column(
@@ -74,6 +87,20 @@ fun BarraProgresso(navController: NavController) {
             .padding(20.dp)
     ) {
 
+        if(progressCount.value == 2){
+            HeaderTelaInformacoes(titulo = stringResource(id = R.string.saude_limitacoes) ) {
+                decrement()
+            }
+        }else if(progressCount.value == 4){
+            HeaderTelaInformacoes(titulo =  "Suas Métricas" ) {
+                decrement()
+            }
+        }else if( progressCount.value == 6) {
+            HeaderTelaInformacoes(titulo = stringResource(id = R.string.objetivo) ) {
+                decrement()
+            }
+        }
+
         if (progressCount.value == 0)
             InformacoesPessoais(navController = navController)
         else if (progressCount.value == 2)
@@ -81,9 +108,7 @@ fun BarraProgresso(navController: NavController) {
         else if (progressCount.value == 4)
             Text(text = "parte 4")
         else if (progressCount.value == 6)
-            Text(text = "parte 6")
-
-
+            TelaObjetivo(navController = navController)
 
 
         Column(
@@ -120,14 +145,6 @@ fun BarraProgresso(navController: NavController) {
                     .fillMaxWidth()
                     .padding(top = 30.dp),
             ) {
-
-                fun increment() {
-                    if (progressCount.value < 6) {
-                        progressCount.value += 2
-                    } else {
-                        Toast.makeText(context, "Erro", Toast.LENGTH_SHORT).show()
-                    }
-                }
 
 
                 if (progressCount.value == 0) {
