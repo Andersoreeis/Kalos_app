@@ -16,21 +16,10 @@ import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.components.Head
 
 @Composable
 fun TelaSaudeLimitacoes(navController: NavController) {
-  Column(
-    modifier = Modifier
-      .fillMaxSize()
-      .background(Color.Black)
 
-  ) {
-    Spacer(modifier = Modifier.height(30.dp))
+    Spacer(modifier = Modifier.height(40.dp))
     HeaderSaudeLimitacoes(navController = navController)
     Spacer(modifier = Modifier.height(50.dp))
     FormSaudeLimitacoes()
   }
-}
 
-//@Preview
-//@Composable
-//fun TelaSaudeLimitacoesPreview() {
-//    TelaSaudeLimitacoes()
-//}

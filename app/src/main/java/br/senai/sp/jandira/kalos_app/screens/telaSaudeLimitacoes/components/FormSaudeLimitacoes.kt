@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,26 +37,25 @@ fun FormSaudeLimitacoes() {
     }
 
     Column(
-      modifier = Modifier
-          .fillMaxWidth()
-          .padding(horizontal = 20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            ,
+        verticalArrangement = Arrangement.Center
     ) {
         TextoCampoSaudeLimitacoes(
             texto = stringResource(R.string.condicao_medica),
-            aoMudar = { condicaoMedicaState = it} ,
+            aoMudar = { condicaoMedicaState = it },
             value = condicaoMedicaState
         )
         Spacer(modifier = Modifier.height(20.dp))
         TextoCampoSaudeLimitacoes(
             texto = stringResource(R.string.lesoes),
-            aoMudar = { lesoesState = it} ,
+            aoMudar = { lesoesState = it },
             value = lesoesState
         )
         Spacer(modifier = Modifier.height(20.dp))
         TextoCampoSaudeLimitacoes(
             texto = stringResource(R.string.medicamentos),
-            aoMudar = { medicamentoState = it} ,
+            aoMudar = { medicamentoState = it },
             value = medicamentoState
         )
     }

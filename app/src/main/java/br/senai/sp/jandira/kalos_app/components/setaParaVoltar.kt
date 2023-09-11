@@ -17,6 +17,7 @@ fun SetaParaVoltar(navController: NavController, navName: String) {
     IconButton(
 
         onClick = { navController.navigate(navName) },
+
     ) {
         Icon(
             painter = painterResource(id = R.drawable.baseline_chevron_left_24),

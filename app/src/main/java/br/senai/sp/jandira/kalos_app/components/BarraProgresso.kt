@@ -32,6 +32,7 @@ import br.senai.sp.jandira.kalos_app.screens.InformacoesCliente.screen.TelasInfo
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CampoSenha
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamposCriarConta
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.screen.InformacoesPessoais
+import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.screen.TelaSaudeLimitacoes
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
@@ -76,7 +77,7 @@ fun BarraProgresso(navController: NavController) {
         if (progressCount.value == 0)
             InformacoesPessoais(navController = navController)
         else if (progressCount.value == 2)
-            Text(text = "parte 2")
+            TelaSaudeLimitacoes(navController = navController)
         else if (progressCount.value == 4)
             Text(text = "parte 4")
         else if (progressCount.value == 6)
@@ -146,23 +147,23 @@ fun BarraProgresso(navController: NavController) {
                         increment()
                     }
                 } else if (progressCount.value == 4) {
-                   Column (modifier = Modifier.fillMaxWidth()) {
-                       createButtonWithFunction(
-                           textButton = "Continue",
-                           corBotao = GreenKalos
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        createButtonWithFunction(
+                            textButton = "Continue",
+                            corBotao = GreenKalos
 
-                       ) {
-                           increment()
-                       }
-                       Espacamento(tamanho = 15.dp)
-                       createButtonWithFunction(
-                           textButton = "Pular",
-                           corBotao = Color.Red
+                        ) {
+                            increment()
+                        }
+                        Espacamento(tamanho = 15.dp)
+                        createButtonWithFunction(
+                            textButton = "Pular",
+                            corBotao = Color.Red
 
-                       ) {
-                           increment()
-                       }
-                   }
+                        ) {
+                            increment()
+                        }
+                    }
                 } else if (progressCount.value == 6) {
                     createButtonWithFunction(
                         textButton = "Continue",
@@ -172,7 +173,6 @@ fun BarraProgresso(navController: NavController) {
                         increment()
                     }
                 }
-
 
 
             }
