@@ -33,23 +33,6 @@ fun TelaMetricas(navController: NavController) {
     }
 
 
-
-    Column(
-        modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-            SetaParaVoltar(navController = navController, navName = "criarConta")
-        }
-        getLogoKalos(size = 80.dp)
-        createTitleKalos(
-            content = "Suas Metricas",
-            sizeText = 24,
-            colorText = Color.White,
-            bold = 700,
-            alinhamento = TextAlign.Center
-        )
-    }
     Espacamento(tamanho = 40.dp)
 
 
