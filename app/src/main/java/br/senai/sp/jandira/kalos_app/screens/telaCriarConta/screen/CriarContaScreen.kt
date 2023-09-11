@@ -80,13 +80,8 @@ fun CriarContaScreen(navController: NavController) {
                 modifier = Modifier.clickable { navController.navigate("fazerLogin") }
             )
         }
-
-
     }
-
-
     }
-
 
 //@Preview(showSystemUi = true, showBackground = true)
 //@Composable

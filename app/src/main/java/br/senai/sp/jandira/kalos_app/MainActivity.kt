@@ -45,6 +45,9 @@ class MainActivity : ComponentActivity() {
                         composable(route = "telaInformacoesDoCliente"){
                             TelasInformacoesdoCliente(navController)
                         }
+                        composable(route = "saudeLimitacoes"){
+                            TelaSaudeLimitacoes(navController = navController)
+                        }
 
 
                     }
