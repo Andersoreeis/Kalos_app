@@ -31,6 +31,7 @@ import br.senai.sp.jandira.app_kalos.components.createButtonWithFunction
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.screen.InformacoesPessoais
 import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.screen.TelaObjetivo
+import br.senai.sp.jandira.kalos_app.screens.telaMetricas.screen.TelaMetricas
 import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.screen.TelaSaudeLimitacoes
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
@@ -106,7 +107,7 @@ fun BarraProgresso(navController: NavController) {
         else if (progressCount.value == 2)
             TelaSaudeLimitacoes(navController = navController)
         else if (progressCount.value == 4)
-            Text(text = "parte 4")
+            TelaMetricas(navController = navController)
         else if (progressCount.value == 6)
             TelaObjetivo(navController = navController)
 
