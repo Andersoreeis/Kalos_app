@@ -9,4 +9,7 @@
     <string name="faca_login">Faça login</string>
     <string name="saude_limitacoes">Saúde e limitações</string>
     <string name="seja_bem_vindo">Seja bem vindo!</string>
+    <string name="condicao_medica">Você possui alguma condição médica que possa afetar seu exercício físico?</string>
+    <string name="lesoes">Você já teve ou tem lesões recentes? Se sim, quais?</string>
+    <string name="medicamentos">Você está tomando algum medicamento atualmente?</string>
 </resources>

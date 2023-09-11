@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.components.FormSaudeLimitacoes
 import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.components.HeaderSaudeLimitacoes
 
 @Composable
@@ -23,6 +24,8 @@ fun TelaSaudeLimitacoes(navController: NavController) {
   ) {
     Spacer(modifier = Modifier.height(30.dp))
     HeaderSaudeLimitacoes(navController = navController)
+    Spacer(modifier = Modifier.height(50.dp))
+    FormSaudeLimitacoes()
   }
 }
 
