@@ -12,4 +12,6 @@
     <string name="condicao_medica">Você possui alguma condição médica que possa afetar seu exercício físico?</string>
     <string name="lesoes">Você já teve ou tem lesões recentes? Se sim, quais?</string>
     <string name="medicamentos">Você está tomando algum medicamento atualmente?</string>
+    <string name="objetivo">Objetivo</string>
+    <string name="texto_objetivo">Qual seu maior objetivo de condicionamento físico? (Perda de peso, ganho de massa muscular, condicionamento cardiovascular, etc.)</string>
 </resources>

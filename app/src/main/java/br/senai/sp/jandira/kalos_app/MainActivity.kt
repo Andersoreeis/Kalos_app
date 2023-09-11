@@ -15,6 +15,7 @@ import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.screen.CriarCon
 
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.screen.LoginScreen
 import br.senai.sp.jandira.kalos_app.screens.telaInicial.screen.TelaInicial
+import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.screen.TelaObjetivo
 import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.screen.TelaSaudeLimitacoes
 import br.senai.sp.jandira.kalos_app.ui.theme.Kalos_appTheme
 
@@ -46,6 +47,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "saudeLimitacoes"){
                             TelaSaudeLimitacoes(navController = navController)
+                        }
+                        composable(route = "objetivo"){
+                            TelaObjetivo(navController = navController)
                         }
 
 
