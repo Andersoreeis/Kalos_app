@@ -32,7 +32,7 @@ fun getLogoKalos(size: Dp) {
 @Composable
 fun getLogoKalosCompleted() {
     Image(
-        painterResource(id = R.drawable.logo_kalos),
+        painterResource(id = R.drawable.logo_kalos_app),
         contentDescription = "logo",
         modifier = Modifier
             .size(150.dp)
@@ -47,6 +47,9 @@ fun getLogoKalosCompleted() {
 
 
 }
+
+
+
 
 
 

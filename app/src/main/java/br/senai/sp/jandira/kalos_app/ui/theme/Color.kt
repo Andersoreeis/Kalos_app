@@ -11,5 +11,6 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val GreenKalos = Color(0xFF00FE90)
-val GrayKalos = Color(0xFF606060
-)
+val GrayKalos = Color(0xFF606060)
+
+val GrayKalosEscuro = Color(0xFF1E1E1E)
