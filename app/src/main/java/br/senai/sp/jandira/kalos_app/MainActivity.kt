@@ -28,9 +28,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        lateinit var alunoService:AlunoService
+        alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
         setContent {
-            lateinit var alunoService:AlunoService
-            alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
+
             Kalos_appTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -62,20 +63,22 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
-//                fun getUser() {
-//                    lifecycleScope.launch {
-//                        val result = alunoService.getAlunos()
-//
-//                        if(result.isSuccessful){
-//                            Log.e("GETTING-DATA", "${result.body()?.data}")
-//                        }else{
-//                            Log.e("GETTING-DATA", "${result.message()}")
-//                        }
-//                    }
-//                }
-//                getUser()
+
             }
         }
+
+        fun getUserByID() {
+            lifecycleScope.launch {
+                val result = alunoService.getAlunoByID("1")
+
+                if(result.isSuccessful){
+                    Log.e("GETTING-DATA", "${result.body()?.data}")
+                }else{
+                    Log.e("GETTING-DATA", "${result.message()}")
+                }
+            }
+        }
+        getUserByID()
     }
 }
 
