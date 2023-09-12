@@ -7,8 +7,8 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface AlunoService {
-//    @GET("kalos/aluno/id/{id}")
-//    suspend fun getAlunoByID(@Path("id") id: String): Response<BaseResponse<AlunoResponse>>
+    @GET("kalos/aluno/id/{id}")
+    suspend fun getAlunoByID(@Path("id") id: String): Response<BaseResponse<AlunoResponse>>
 
     @GET("kalos/aluno")
     suspend fun getAlunos(): Response<BaseResponse<AlunoResponse>>
