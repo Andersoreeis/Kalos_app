@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createButton
+import br.senai.sp.jandira.app_kalos.components.createButtonWithError
 import br.senai.sp.jandira.app_kalos.components.createTextKalos
 import br.senai.sp.jandira.app_kalos.components.createTitleKalos
 import br.senai.sp.jandira.app_kalos.components.getLogoKalos
@@ -31,8 +32,12 @@ import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.IrparaCada
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.esqueceuSenhaText
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
+
 @Composable
 fun LoginScreen(navController: NavController) {
+    var hasError = remember {
+        mutableStateOf("")
+    }
 
     val estadoEmail = remember {
         mutableStateOf("")
@@ -40,6 +45,20 @@ fun LoginScreen(navController: NavController) {
 
     val estadoSenha = remember {
         mutableStateOf("")
+    }
+
+    @Composable
+    fun tratamentoErro(estado: String): Boolean {
+        var status = true
+        if ( estado.length > 20) {
+            hasError.value = "Erro"
+            createTextKalos(content = "Tente denovo deu erro ", sizeText = 16, colorText = Color.Red , bold = 300 , alinhamento = TextAlign.Center )
+            status = true
+
+        } else {
+            status = false
+        }
+        return status
     }
 
 
@@ -83,7 +102,8 @@ fun LoginScreen(navController: NavController) {
             CampoEmailLogin(
                 value = estadoEmail.value.toString(),
                 aoMudar = { estadoEmail.value = it },
-                placeholder = "Digite o email"
+                placeholder = "Digite o email",
+                isError = tratamentoErro(estadoEmail.value)
             )
             Espacamento(tamanho = 20.dp)
             CampoSenhaLogin(
@@ -93,28 +113,39 @@ fun LoginScreen(navController: NavController) {
             )
             Espacamento(tamanho = 15.dp)
 
-        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.End) {
-            esqueceuSenhaText(
-                content = "Esqueci a senha",
-                sizeText = 12,
-                colorText = Color.White,
-                bold = 400,
-                alinhamento = TextAlign.End,
-                naveController = navController,
-                navName = "criarConta"
-            )
-        }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.End
+            ) {
+                esqueceuSenhaText(
+                    content = "Esqueci a senha",
+                    sizeText = 12,
+                    colorText = Color.White,
+                    bold = 400,
+                    alinhamento = TextAlign.End,
+                    naveController = navController,
+                    navName = "criarConta"
+                )
+            }
 
 
         }
         Espacamento(tamanho = 50.dp)
 
-        createButton(
+        createButtonWithError(
             textButton = "Entrar",
+            corBotao = GreenKalos,
+
             naveController = navController,
             navName = "",
-            corBotao = GreenKalos
-        )
+            estadoError = hasError.value,
+            estado = estadoEmail.value
+
+
+            )
+
+
 
         Espacamento(tamanho = 20.dp)
 

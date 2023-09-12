@@ -18,12 +18,13 @@ import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.ui.theme.fontFamily
 
 
 @Composable
 fun createTitleKalos(content: String, sizeText: Int, colorText: Color, bold: Int, alinhamento: TextAlign) {
     Text(
-        text = content, fontSize = sizeText.sp, color = colorText, fontWeight = FontWeight(bold), textAlign = alinhamento
+        text = content, fontSize = sizeText.sp, color = colorText, fontWeight = FontWeight(bold), textAlign = alinhamento, fontFamily = fontFamily
     )
 
 }
