@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createButton
+import br.senai.sp.jandira.app_kalos.components.createButtonWithError
 import br.senai.sp.jandira.app_kalos.components.createTextKalos
 import br.senai.sp.jandira.app_kalos.components.createTitleKalos
 import br.senai.sp.jandira.app_kalos.components.getLogoKalos
@@ -31,18 +33,14 @@ import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.IrparaCada
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.esqueceuSenhaText
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
+
 @Composable
+
 fun LoginScreen(navController: NavController) {
-
-    val estadoEmail = remember {
-        mutableStateOf("")
-    }
-
-    val estadoSenha = remember {
-        mutableStateOf("")
-    }
-
-
+    val estadoEmail = remember { mutableStateOf("") }
+    val estadoSenha = remember { mutableStateOf("") }
+    val estadoErroEmail = remember { mutableStateOf("") }
+    val estadoErroSenha = remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -51,9 +49,9 @@ fun LoginScreen(navController: NavController) {
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Column(
-            modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Espacamento(tamanho = 10.dp)
             getLogoKalos(size = 80.dp)
@@ -72,51 +70,92 @@ fun LoginScreen(navController: NavController) {
                 bold = 400,
                 alinhamento = TextAlign.Center
             )
-
         }
         Espacamento(tamanho = 80.dp)
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .size(200.dp), verticalArrangement = Arrangement.Center
+                .size(200.dp),
+            verticalArrangement = Arrangement.Center
         ) {
+            if (estadoErroEmail.value.isNotEmpty()) {
+                createTextKalos(
+                    content = estadoErroEmail.value,
+                    sizeText = 16,
+                    colorText = Color.Red,
+                    bold = 300,
+                    alinhamento = TextAlign.Center
+                )
+            }
             CampoEmailLogin(
                 value = estadoEmail.value.toString(),
-                aoMudar = { estadoEmail.value = it },
-                placeholder = "Digite o email"
+                aoMudar = { novoValor ->
+                    estadoEmail.value = novoValor
+                    estadoErroEmail.value = ""
+                },
+                placeholder = "Digite o email",
+                isError = estadoErroEmail.value.isNotEmpty()
             )
+
             Espacamento(tamanho = 20.dp)
+            if (estadoErroSenha.value.isNotEmpty()) {
+                createTextKalos(
+                    content = estadoErroSenha.value,
+                    sizeText = 16,
+                    colorText = Color.Red,
+                    bold = 300,
+                    alinhamento = TextAlign.Center
+                )
+            }
             CampoSenhaLogin(
                 value = estadoSenha.value.toString(),
-                aoMudar = { estadoSenha.value = it },
-                placeholder = "Digite a senha"
+                aoMudar = { novoValor ->
+                    estadoSenha.value = novoValor
+                    estadoErroSenha.value = ""
+                },
+                placeholder = "Digite a senha",
+                isError = estadoErroSenha.value.isNotEmpty()
             )
-            Espacamento(tamanho = 15.dp)
-
-        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.End) {
-            esqueceuSenhaText(
-                content = "Esqueci a senha",
-                sizeText = 12,
-                colorText = Color.White,
-                bold = 400,
-                alinhamento = TextAlign.End,
-                naveController = navController,
-                navName = "criarConta"
-            )
-        }
 
 
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(30.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.End
+            ) {
+                esqueceuSenhaText(
+                    content = "Esqueci a senha",
+                    sizeText = 12,
+                    colorText = Color.White,
+                    bold = 400,
+                    alinhamento = TextAlign.End,
+                    naveController = navController,
+                    navName = "criarConta"
+                )
+            }
         }
         Espacamento(tamanho = 50.dp)
 
-        createButton(
+        createButtonWithError(
             textButton = "Entrar",
-            naveController = navController,
-            navName = "",
-            corBotao = GreenKalos
-        )
+            corBotao = GreenKalos,
 
-        Espacamento(tamanho = 20.dp)
+        ) {
+            val email = estadoEmail.value
+            val senha = estadoSenha.value
+            val erroEmail = validarEmail(email)
+            val erroSenha = validarSenha(senha)
+
+            estadoErroEmail.value = erroEmail ?: ""
+            estadoErroSenha.value = erroSenha ?: ""
+
+            if (erroEmail == null && erroSenha == null) {
+                // Navegar para a próxima tela
+                navController.navigate("telaInformacoesDoCliente")
+            }
+        }
 
         ContinueCom()
 
@@ -125,6 +164,39 @@ fun LoginScreen(navController: NavController) {
         IrparaCadastro(navController = navController)
     }
 }
+
+fun validarEmail(email: String): String? {
+
+    if (email.length > 30 ){
+
+        return "O limite de caracteres ultrapassou o necessário"
+
+    }else if ( email.isEmpty()){
+
+        return "Não pode estár vázio"
+
+
+    }else {
+        return null // Retorna null se o email for válido
+
+    }
+}
+
+fun validarSenha(senha: String): String? {
+
+    if (senha.length > 30 ){
+
+        return "O limite de caracteres ultrapassou o necessário"
+
+    }else if ( senha.isEmpty()){
+
+        return "Não pode estár vázio"
+
+
+    }else {
+        return null
+
+    }}
 
 
 
