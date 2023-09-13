@@ -31,6 +31,10 @@ fun CamposCriarConta() {
         mutableStateOf("")
     }
 
+    var validationMessage by remember{
+        mutableStateOf("")
+    }
+
     Column (
         modifier = Modifier
             .fillMaxWidth()
