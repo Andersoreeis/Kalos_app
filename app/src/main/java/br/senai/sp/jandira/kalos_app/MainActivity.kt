@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
                             TelaInicial(navController)
                         }
                         composable(route = "fazerLogin"){
-                            LoginScreen(navController)
+                            LoginScreen(navController, lifecycleScope)
                         }
                         composable(route = "criarConta"){
 
@@ -76,7 +76,6 @@ class MainActivity : ComponentActivity() {
         }
 
 
-    }
-}
+
 
 

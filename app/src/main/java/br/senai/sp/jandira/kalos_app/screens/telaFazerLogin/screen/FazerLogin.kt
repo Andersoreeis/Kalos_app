@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,12 +10,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.lifecycle.LifecycleCoroutineScope
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -31,16 +39,21 @@ import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.CampoEmail
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.CampoSenhaLogin
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.IrparaCadastro
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.esqueceuSenhaText
+import br.senai.sp.jandira.kalos_app.service.AlunoService
+import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
+import com.google.gson.JsonObject
+import kotlinx.coroutines.launch
 
 
 @Composable
 
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutineScope) {
     val estadoEmail = remember { mutableStateOf("") }
     val estadoSenha = remember { mutableStateOf("") }
     val estadoErroEmail = remember { mutableStateOf("") }
     val estadoErroSenha = remember { mutableStateOf("") }
+     val focusManger = LocalFocusManager.current
 
     Column(
         modifier = Modifier
@@ -89,6 +102,11 @@ fun LoginScreen(navController: NavController) {
             }
             CampoEmailLogin(
                 value = estadoEmail.value.toString(),
+                keyboarActions = KeyboardActions(
+                    onNext = {focusManger.moveFocus(focusDirection = FocusDirection.Down)}
+                ), keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next
+                ),
                 aoMudar = { novoValor ->
                     estadoEmail.value = novoValor
                     estadoErroEmail.value = ""
@@ -138,6 +156,31 @@ fun LoginScreen(navController: NavController) {
         }
         Espacamento(tamanho = 50.dp)
 
+        lateinit var alunoService:AlunoService
+        alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
+        fun auntenticarAluno(email: String, senha: String) {
+            lifecycleScope.launch {
+                val body = JsonObject().apply{
+                    addProperty("email", email)
+                    addProperty("senha", senha)
+                }
+
+                Log.e("teste", body.toString())
+                val result = alunoService.autenticarAluno(body)
+
+
+
+                if(result.isSuccessful){
+                    Log.e("CREAT-DATA", "${result.body()}")
+                }else{
+                    Log.e("CREAT-DATA", "${result.message()}")
+                }
+            }
+
+
+
+
+        }
         createButtonWithError(
             textButton = "Entrar",
             corBotao = GreenKalos,
@@ -152,7 +195,7 @@ fun LoginScreen(navController: NavController) {
             estadoErroSenha.value = erroSenha ?: ""
 
             if (erroEmail == null && erroSenha == null) {
-                // Navegar para a próxima tela
+                auntenticarAluno(email, senha)
                 navController.navigate("telaInformacoesDoCliente")
             }
         }
@@ -162,24 +205,31 @@ fun LoginScreen(navController: NavController) {
         Espacamento(tamanho = 30.dp)
 
         IrparaCadastro(navController = navController)
+
+
+
+        }
     }
+
+
+
+
+fun validarEmail(email: String): String? {  if (email.length > 30 ){
+
+    return "O limite de caracteres ultrapassou o necessário"
+
+}else if ( email.isEmpty()){
+
+    return "Não pode estár vázio"
+
+
+}else {
+
+    return null
+
 }
 
-fun validarEmail(email: String): String? {
 
-    if (email.length > 30 ){
-
-        return "O limite de caracteres ultrapassou o necessário"
-
-    }else if ( email.isEmpty()){
-
-        return "Não pode estár vázio"
-
-
-    }else {
-        return null // Retorna null se o email for válido
-
-    }
 }
 
 fun validarSenha(senha: String): String? {
@@ -197,6 +247,13 @@ fun validarSenha(senha: String): String? {
         return null
 
     }}
+
+
+
+
+
+
+
 
 
 
