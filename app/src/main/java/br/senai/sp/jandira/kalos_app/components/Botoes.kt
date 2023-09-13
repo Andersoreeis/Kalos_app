@@ -126,6 +126,25 @@ fun createButtonWithWidth(
     }
 }
 
+@Composable
+fun createButtonWithWidth2(textButton: String, naveController: NavController, aoMudar: () -> Unit, corBotao: Color, width: Dp) {
+    //cores
+    Button(
+        onClick = { aoMudar() },
+        modifier = Modifier
+            .width(width)
+            .border(1.dp, corBotao, CircleShape),
+        colors = ButtonDefaults.buttonColors(Color.Transparent)
+    ) {
+        Text(
+            text = textButton,
+            color = corBotao,
+            fontSize = 20.sp,
+            fontWeight = FontWeight(400)
+        )
+    }
+}
+
 
 @Preview
 @Composable

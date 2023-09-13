@@ -28,8 +28,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lateinit var alunoService:AlunoService
-        alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
+
+
         setContent {
 
             Kalos_appTheme {
@@ -50,7 +50,8 @@ class MainActivity : ComponentActivity() {
                             LoginScreen(navController)
                         }
                         composable(route = "criarConta"){
-                            CriarContaScreen(navController)
+
+                            CriarContaScreen(navController, lifecycleScope)
                         }
                         composable(route = "telaInformacoesDoCliente"){
                             TelasInformacoesdoCliente(navController)
@@ -62,22 +63,19 @@ class MainActivity : ComponentActivity() {
                             TelaObjetivo(navController = navController)
                         }
                     }
+
+
+
                 }
 
             }
         }
 
-//      fun getUserByID() {
-//          lifecycleScope.launch {
-//              val result = alunoService.getAlunoByID("1")
-//             if(result.isSuccessful){
-//                  Log.e("GETTING-DATA", "${result.body()?.data}")
-//              }else{
-//                    Log.e("GETTING-DATA", "${result.message()}")
-//                }
-//           }
-//      }
-//        getUserByID()
+
+            }
+        }
+
+
     }
 }
 
