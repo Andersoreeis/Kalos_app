@@ -67,17 +67,16 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-//        fun getUserByID() {
-//            lifecycleScope.launch {
-//                val result = alunoService.getAlunoByID("1")
-//
-//                if(result.isSuccessful){
-//                    Log.e("GETTING-DATA", "${result.body()?.data}")
-//                }else{
+//      fun getUserByID() {
+//          lifecycleScope.launch {
+//              val result = alunoService.getAlunoByID("1")
+//             if(result.isSuccessful){
+//                  Log.e("GETTING-DATA", "${result.body()?.data}")
+//              }else{
 //                    Log.e("GETTING-DATA", "${result.message()}")
 //                }
-//            }
-//        }
+//           }
+//      }
 //        getUserByID()
     }
 }

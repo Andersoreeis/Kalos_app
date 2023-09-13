@@ -52,20 +52,13 @@ fun createButton(
 fun createButtonWithError(
     textButton: String,
     corBotao: Color,
-    naveController: NavController,
-    navName: String,
-    estadoError: String,
-    estado: String
+    funcao: () -> Unit
 ) {
-    var hasError = estadoError
 
     Button(
         onClick = {
-            if (hasError != "Erro") {
-                naveController.navigate(navName)
-            }else if (estado.isEmpty() || estado.length > 20){
-                Log.e("", "Error")
-            }
+            funcao()
+
         },
         modifier = Modifier
             .fillMaxWidth()

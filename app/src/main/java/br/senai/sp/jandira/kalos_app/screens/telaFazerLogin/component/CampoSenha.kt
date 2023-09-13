@@ -28,23 +28,35 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CampoSenhaLogin(value: String, aoMudar: (String) -> Unit, placeholder: String) {
+fun CampoSenhaLogin(
+    value: String,
+    aoMudar: (String) -> Unit,
+    placeholder: String,
+    isError: Boolean
+) {
+
+
     var passwordVisibilityState by remember {
         mutableStateOf(false)
     }
+
+    val errorText = remember { mutableStateOf("") }
+
     OutlinedTextField(
-        value =  value,
-        onValueChange = {
-            aoMudar (it)
+        value = value,
+        onValueChange = { newValue ->
+            val transformedValue = aoMudar(newValue)
+
+            errorText.value = ""
+
         },
         placeholder = {
             Text(text = placeholder, color = Color(0xFF606060))
         },
         modifier = Modifier
             .background(Color.Black)
-            .fillMaxWidth()
-
-        ,
+            .fillMaxWidth(),
+        singleLine = true,
         trailingIcon = {
             IconButton(
                 onClick = {
@@ -52,7 +64,7 @@ fun CampoSenhaLogin(value: String, aoMudar: (String) -> Unit, placeholder: Strin
                 }
             ) {
                 Icon(
-                    imageVector = if(passwordVisibilityState)
+                    imageVector = if (passwordVisibilityState)
 
                         Icons.Default.VisibilityOff
                     else
@@ -63,7 +75,8 @@ fun CampoSenhaLogin(value: String, aoMudar: (String) -> Unit, placeholder: Strin
                 )
             }
         },
-        visualTransformation = if(!passwordVisibilityState)
+        isError = isError,
+        visualTransformation = if (!passwordVisibilityState)
             PasswordVisualTransformation()
         else
             VisualTransformation.None,
@@ -79,8 +92,3 @@ fun CampoSenhaLogin(value: String, aoMudar: (String) -> Unit, placeholder: Strin
 
 }
 
-//@Preview
-//@Composable
-//fun CampoSenhaPreview() {
-//    CampoSenha("", {"" = it}, "Digite a senha")
-//}
