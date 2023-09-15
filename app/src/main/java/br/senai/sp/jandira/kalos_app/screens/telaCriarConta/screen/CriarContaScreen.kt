@@ -34,40 +34,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun CriarContaScreen(navController: NavController, lifecycleScope: LifecycleCoroutineScope) {
 
-    lateinit var alunoService:AlunoService
-    alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
-
-    fun getUserByID() {
-        lifecycleScope.launch {
-            val result = alunoService.getAlunoByID("1")
-
-            if(result.isSuccessful){
-                Log.e("GETTING-DATA", "${result.body()?.data}")
-            }else{
-                Log.e("GETTING-DATA", "${result.message()}")
-            }
-        }
-    }
-
-    fun auntenticarAluno(email: String, senha: String) {
-        lifecycleScope.launch {
-            val body = JsonObject().apply{
-                addProperty("email", email)
-                addProperty("senha", senha)
-            }
-
-            Log.e("teste", body.toString())
-            val result = alunoService.autenticarAluno(body)
-
-            if(result.isSuccessful){
-                Log.e("CREAT-DATA", "${result.body()}")
-            }else{
-                Log.e("CREAT-DATA", "${result.message()}")
-            }
-        }
-    }
-
-
 
     Column(
         modifier = Modifier
@@ -80,25 +46,8 @@ fun CriarContaScreen(navController: NavController, lifecycleScope: LifecycleCoro
         HeaderCriarConta(navController)
 
         Spacer(modifier = Modifier.height(30.dp))
-        CamposCriarConta()
-        Spacer(modifier = Modifier.height(40.dp))
-//        createButtonWithWidth2(
-//            textButton = stringResource(R.string.continuar) ,
-//            naveController = navController ,
-//            aoMudar = {
-//                getUserByID()
-//                auntenticarAluno()
-//                      },
-//            corBotao = GreenKalos,
-//            width = 350.dp
-//        )
-        createButtonWithWidth(
-            textButton = stringResource(R.string.continuar) ,
-            naveController = navController ,
-            navName = "telaInformacoesDoCliente",
-            corBotao = GreenKalos,
-            width = 350.dp
-        )
+        CamposCriarConta(navController)
+
 
         Column (
             modifier = Modifier.padding(30.dp)
