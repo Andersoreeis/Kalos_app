@@ -1,5 +1,7 @@
 package br.senai.sp.jandira.kalos_app.components
 
+import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
@@ -28,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createButtonWithFunction
+import br.senai.sp.jandira.kalos_app.LocalStorage
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.screen.InformacoesPessoais
 import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.screen.TelaObjetivo
@@ -44,6 +47,9 @@ fun BarraProgresso(navController: NavController) {
     var progressCount = remember { mutableStateOf(0) }
     var progress = remember { mutableStateOf(0.3f) }
 
+    LocalStorage.getFromSharedPreferences(context, "email")
+
+    Log.e("TAG",LocalStorage.getFromSharedPreferences(context, "email").toString()  )
     when (progressCount.value) {
 
         1 -> progress.value = 0.3f

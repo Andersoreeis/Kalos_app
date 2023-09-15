@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,11 +15,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import br.senai.sp.jandira.app_kalos.components.createButtonWithWidth
+import br.senai.sp.jandira.kalos_app.LocalStorage
+import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @Composable
-fun CamposCriarConta() {
+fun CamposCriarConta(navController: NavController) {
+
+    val context = LocalContext.current
     var senhaState by remember{
         mutableStateOf("")
     }
@@ -35,6 +45,8 @@ fun CamposCriarConta() {
         mutableStateOf("")
     }
 
+    LocalStorage.saveToSharedPreferences(context = context, "email", emailState)
+
     Column (
         modifier = Modifier
             .fillMaxWidth()
@@ -49,6 +61,15 @@ fun CamposCriarConta() {
         CampoSenha(senhaState , {senhaState= it}, "Digite a senha" )
         Spacer(modifier = Modifier.height(30.dp))
         CampoSenha(confirmarSenha, {confirmarSenha = it}, "Confirme a senha" )
+        Spacer(modifier = Modifier.height(40.dp))
+
+        createButtonWithWidth(
+            textButton = stringResource(R.string.continuar) ,
+            naveController = navController ,
+            navName = "telaInformacoesDoCliente",
+            corBotao = GreenKalos,
+            width = 350.dp
+        )
 
 
 
