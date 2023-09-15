@@ -52,12 +52,12 @@ fun createButton(
 fun createButtonWithError(
     textButton: String,
     corBotao: Color,
-    funcao: () -> Unit
+    funcao:  () -> Unit
 ) {
 
     Button(
         onClick = {
-            funcao()
+           funcao()
 
         },
         modifier = Modifier
