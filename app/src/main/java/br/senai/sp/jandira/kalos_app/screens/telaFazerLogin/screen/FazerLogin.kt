@@ -1,6 +1,7 @@
 package br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.screen
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,12 +16,15 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.lifecycle.LifecycleCoroutineScope
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -43,6 +47,7 @@ import br.senai.sp.jandira.kalos_app.service.AlunoService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 import com.google.gson.JsonObject
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
@@ -53,7 +58,9 @@ fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutine
     val estadoSenha = remember { mutableStateOf("") }
     val estadoErroEmail = remember { mutableStateOf("") }
     val estadoErroSenha = remember { mutableStateOf("") }
-     val focusManger = LocalFocusManager.current
+    val context = LocalContext.current
+
+    val focusManger = LocalFocusManager.current
 
     Column(
         modifier = Modifier
@@ -158,29 +165,10 @@ fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutine
 
         lateinit var alunoService:AlunoService
         alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
-        fun auntenticarAluno(email: String, senha: String) {
-            lifecycleScope.launch {
-                val body = JsonObject().apply{
-                    addProperty("email", email)
-                    addProperty("senha", senha)
-                }
-
-                Log.e("teste", body.toString())
-                val result = alunoService.autenticarAluno(body)
-
-
-
-                if(result.isSuccessful){
-                    Log.e("CREAT-DATA", "${result.body()}")
-                }else{
-                    Log.e("CREAT-DATA", "${result.message()}")
-                }
-            }
 
 
 
 
-        }
         createButtonWithError(
             textButton = "Entrar",
             corBotao = GreenKalos,
@@ -191,14 +179,54 @@ fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutine
             val erroEmail = validarEmail(email)
             val erroSenha = validarSenha(senha)
 
+
             estadoErroEmail.value = erroEmail ?: ""
             estadoErroSenha.value = erroSenha ?: ""
 
-            if (erroEmail == null && erroSenha == null) {
-                auntenticarAluno(email, senha)
-                navController.navigate("telaInformacoesDoCliente")
-            }
-        }
+            Log.e("TAG", "$erroEmail" )
+            Log.e("TAG", "$erroSenha" )
+
+
+             if (erroEmail == null && erroSenha == null  )  {
+
+                 lifecycleScope.launch {
+
+                     val body = JsonObject().apply{
+                         addProperty("email", email)
+                         addProperty("senha", senha)
+                     }
+
+                     Log.e("teste", body.toString())
+                     val result = alunoService.autenticarAluno(body)
+
+
+
+                     if(result.isSuccessful){
+                         Log.e("CREAT-DATA", "${result.body()}")
+                         val checagem = result.body()?.get("status")
+                         if(checagem.toString() == "401"){
+                             Log.e("TAG", "Deu erro", )
+                             Toast.makeText(context, "Erro senha ou email encorretos", Toast.LENGTH_SHORT).show()
+
+                         }else{
+                             Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show()
+
+                             navController.navigate("telaInformacoesDoCliente")
+                         }
+
+
+                     }else{
+                         Log.e("CREAT-DATA", result.message())
+                     }
+
+
+                 }
+
+
+
+             }
+
+         }
 
         ContinueCom()
 
@@ -214,7 +242,8 @@ fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutine
 
 
 
-fun validarEmail(email: String): String? {  if (email.length > 30 ){
+fun validarEmail(email: String): String? {
+    if (email.length > 30 ){
 
     return "O limite de caracteres ultrapassou o necessário"
 

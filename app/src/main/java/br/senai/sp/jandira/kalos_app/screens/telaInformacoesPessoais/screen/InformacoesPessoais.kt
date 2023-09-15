@@ -21,6 +21,7 @@ import br.senai.sp.jandira.app_kalos.components.createTitleKalos
 import br.senai.sp.jandira.app_kalos.components.getLogoKalos
 import br.senai.sp.jandira.kalos_app.components.BarraProgresso
 import br.senai.sp.jandira.kalos_app.components.Espacamento
+import br.senai.sp.jandira.kalos_app.components.HeaderTelaInformacoes
 import br.senai.sp.jandira.kalos_app.components.SetaParaVoltar
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamposCriarConta
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.CampoEmailLogin
@@ -51,25 +52,9 @@ fun InformacoesPessoais(navController: NavController) {
     }
 
 
-
-
-
-        Column(
-            modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-                SetaParaVoltar(navController = navController, navName = "criarConta")
-            }
-            getLogoKalos(size = 80.dp)
-            createTitleKalos(
-                content = "Informações Pessoais",
-                sizeText = 24,
-                colorText = Color.White,
-                bold = 700,
-                alinhamento = TextAlign.Center
-            )
-        }
+    HeaderTelaInformacoes(titulo ="Informações Pessoais" ) {
+        navController.navigate("criarConta")
+    }
     Espacamento(tamanho = 40.dp)
 
 
