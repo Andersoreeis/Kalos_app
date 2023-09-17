@@ -14,12 +14,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createTitleKalos
 import br.senai.sp.jandira.app_kalos.components.getLogoKalos
+import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.components.BarraProgresso
+import br.senai.sp.jandira.kalos_app.components.CampoGenero
 import br.senai.sp.jandira.kalos_app.components.Espacamento
 import br.senai.sp.jandira.kalos_app.components.HeaderTelaInformacoes
 import br.senai.sp.jandira.kalos_app.components.SetaParaVoltar
@@ -32,8 +35,9 @@ import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.C
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.CampoTelefone
 
 @Composable
-fun InformacoesPessoais(navController: NavController) {
+fun InformacoesPessoais(navController: NavController, localStorage: Storage) {
 
+    val context = LocalContext.current
     val estadoNome = remember {
         mutableStateOf("")
     }
@@ -67,25 +71,35 @@ fun InformacoesPessoais(navController: NavController) {
 
             CampoNome(
                 value = estadoNome.value.toString(),
-                aoMudar = { estadoNome.value = it },
+                aoMudar = {
+                    estadoNome.value = it
+                    localStorage.salvarValor(context, estadoNome.value, "nome")
+
+                          },
                 placeholder = "Digite o nome"
             )
             Espacamento(tamanho = 20.dp)
 
             CampoDataNascimento(
                 value = estadoDataNascimento.value.toString(),
-                aoMudar = { estadoDataNascimento.value = it },
+                aoMudar = {
+                    estadoDataNascimento.value = it
+                    localStorage.salvarValor(context, estadoDataNascimento.value, "dataNascimento")
+                          },
                 placeholder = "Digite a data de nascimento"
             )
             Espacamento(tamanho = 20.dp)
 
-            CampoGeneroTelaInformacoesPessoais()
+            CampoGenero(localStorage)
             Espacamento(tamanho = 20.dp)
 
 
             CampoTelefone(
                 value = estadoTelefone.value.toString(),
-                aoMudar = { estadoTelefone.value = it },
+                aoMudar = {
+                    estadoTelefone.value = it
+                    localStorage.salvarValor(context, estadoTelefone.value, "telefone")
+                          },
                 placeholder = "Digite o telefone"
             )
             Espacamento(tamanho = 20.dp)
@@ -93,7 +107,10 @@ fun InformacoesPessoais(navController: NavController) {
 
             CampoCpf(
                 value = estadoCpf.value.toString(),
-                aoMudar = { estadoCpf.value = it },
+                aoMudar = {
+                    estadoCpf.value = it
+                    localStorage.salvarValor(context, estadoCpf.value, "cpf")
+                          },
                 placeholder = "Digite o cpf"
             )
             Espacamento(tamanho = 20.dp)

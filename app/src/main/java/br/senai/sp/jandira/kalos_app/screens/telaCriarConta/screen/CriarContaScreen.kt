@@ -1,6 +1,5 @@
 package br.senai.sp.jandira.kalos_app.screens.criarContaComponent.screen
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -19,20 +18,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
-import br.senai.sp.jandira.app_kalos.components.createButtonWithWidth
-import br.senai.sp.jandira.app_kalos.components.createButtonWithWidth2
+import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.components.ContinueCom
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamposCriarConta
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.HeaderCriarConta
-import br.senai.sp.jandira.kalos_app.service.AlunoService
-import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
-import com.google.gson.JsonObject
-import kotlinx.coroutines.launch
 
 @Composable
-fun CriarContaScreen(navController: NavController, lifecycleScope: LifecycleCoroutineScope) {
+fun CriarContaScreen(navController: NavController, lifecycleScope: LifecycleCoroutineScope, classe: Storage) {
 
 
     Column(
@@ -46,7 +40,7 @@ fun CriarContaScreen(navController: NavController, lifecycleScope: LifecycleCoro
         HeaderCriarConta(navController)
 
         Spacer(modifier = Modifier.height(30.dp))
-        CamposCriarConta(navController)
+        CamposCriarConta(navController, classe)
 
 
         Column (

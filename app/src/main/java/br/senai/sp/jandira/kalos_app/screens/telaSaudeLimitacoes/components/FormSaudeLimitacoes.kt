@@ -17,15 +17,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamporEmail
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FormSaudeLimitacoes() {
+fun FormSaudeLimitacoes(localStorage: Storage) {
+    val context = LocalContext.current
     var condicaoMedicaState by remember {
         mutableStateOf("")
     }
@@ -43,19 +46,28 @@ fun FormSaudeLimitacoes() {
     ) {
         TextoCampoSaudeLimitacoes(
             texto = stringResource(R.string.condicao_medica),
-            aoMudar = { condicaoMedicaState = it },
+            aoMudar = {
+                condicaoMedicaState = it
+                localStorage.salvarValor(context, condicaoMedicaState, "condicaoMedica")
+                      },
             value = condicaoMedicaState
         )
         Spacer(modifier = Modifier.height(20.dp))
         TextoCampoSaudeLimitacoes(
             texto = stringResource(R.string.lesoes),
-            aoMudar = { lesoesState = it },
+            aoMudar = {
+                lesoesState = it
+                localStorage.salvarValor(context, lesoesState, "lesoes")
+                      },
             value = lesoesState
         )
         Spacer(modifier = Modifier.height(20.dp))
         TextoCampoSaudeLimitacoes(
             texto = stringResource(R.string.medicamentos),
-            aoMudar = { medicamentoState = it },
+            aoMudar = {
+                medicamentoState = it
+                localStorage.salvarValor(context, medicamentoState, "medicamento")
+                      },
             value = medicamentoState
         )
     }
