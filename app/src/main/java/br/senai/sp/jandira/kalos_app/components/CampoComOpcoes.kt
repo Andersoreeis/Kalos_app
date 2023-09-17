@@ -24,17 +24,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
+import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 @Composable
-fun CampoGenero() {
+fun CampoGenero(localStorage: Storage) {
+    val context = LocalContext.current
     val categories = listOf(
         "Masculino",
         "Feminino",
@@ -76,6 +79,7 @@ fun CampoGenero() {
                 onValueChange = {
                     category = it
                     expanded = true
+
                 },
 
                 textStyle = TextStyle(fontSize = 16.sp),
@@ -130,6 +134,7 @@ fun CampoGenero() {
                         ) { title ->
                             CategoryItem(title = title) {
                                 category = title
+                                localStorage.salvarValor(context, category, "genero")
                                 expanded = false
                             }
                         }

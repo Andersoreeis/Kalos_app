@@ -10,20 +10,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createTitleKalos
 import br.senai.sp.jandira.app_kalos.components.getLogoKalos
+import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.components.Espacamento
 import br.senai.sp.jandira.kalos_app.components.SetaParaVoltar
 import br.senai.sp.jandira.kalos_app.screens.telaMetricas.component.TextoCampoAltura
 import br.senai.sp.jandira.kalos_app.screens.telaMetricas.component.TextoCampoPeso
 
 @Composable
-fun TelaMetricas(navController: NavController) {
+fun TelaMetricas(navController: NavController, localStorage: Storage) {
 
-
+    val context = LocalContext.current
     var estadoPeso = remember {
         mutableStateOf("")
     }
@@ -37,11 +39,23 @@ fun TelaMetricas(navController: NavController) {
 
 
 
-    TextoCampoPeso(texto = "Digite seu peso atualmente (em kg):", aoMudar = {estadoPeso.value = it} , value = estadoPeso.value)
+    TextoCampoPeso(
+        texto = "Digite seu peso atualmente (em kg):",
+        aoMudar = {
+            estadoPeso.value = it
+            localStorage.salvarValor(context,estadoPeso.value, "peso")
+                  } ,
+        value = estadoPeso.value)
 
     Espacamento(tamanho = 20.dp)
 
-    TextoCampoAltura(texto = "Digite sua altura em cm:", aoMudar = {estadoAltura.value = it} , value = estadoAltura.value)
+    TextoCampoAltura(
+        texto = "Digite sua altura em cm:",
+        aoMudar = {
+            estadoAltura.value = it
+            localStorage.salvarValor(context,estadoAltura.value, "altura")
+                  } ,
+        value = estadoAltura.value)
 
 
 }

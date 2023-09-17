@@ -1,6 +1,5 @@
 package br.senai.sp.jandira.kalos_app.components
 
-import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.animateContentSize
@@ -18,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createButtonWithFunction
-import br.senai.sp.jandira.kalos_app.LocalStorage
+import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.screen.InformacoesPessoais
 import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.screen.TelaObjetivo
@@ -41,15 +39,17 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 
 @Composable
-fun BarraProgresso(navController: NavController) {
+fun BarraProgresso(navController: NavController, localStorage: Storage) {
 
     val context = LocalContext.current
     var progressCount = remember { mutableStateOf(0) }
     var progress = remember { mutableStateOf(0.3f) }
 
-    LocalStorage.getFromSharedPreferences(context, "email")
+   // LocalStorage.getFromSharedPreferences(context, "emailState")
 
-    Log.e("TAG",LocalStorage.getFromSharedPreferences(context, "email").toString()  )
+    //Log.e("TAG",LocalStorage.getFromSharedPreferences(context, "email").toString())
+    //val minhaClasse : Storage = Storage()
+
     when (progressCount.value) {
 
         1 -> progress.value = 0.3f
@@ -109,13 +109,13 @@ fun BarraProgresso(navController: NavController) {
         }
 
         if (progressCount.value == 0)
-            InformacoesPessoais(navController = navController)
+            InformacoesPessoais(navController = navController, localStorage)
         else if (progressCount.value == 2)
-            TelaSaudeLimitacoes(navController = navController)
+            TelaSaudeLimitacoes(navController = navController, localStorage)
         else if (progressCount.value == 4)
-            TelaMetricas(navController = navController)
+            TelaMetricas(navController = navController, localStorage)
         else if (progressCount.value == 6)
-            TelaObjetivo(navController = navController)
+            TelaObjetivo(navController = navController, localStorage)
 
 
         Column(
@@ -178,6 +178,7 @@ fun BarraProgresso(navController: NavController) {
 
                         ) {
                             increment()
+
                         }
                         Espacamento(tamanho = 15.dp)
                         createButtonWithFunction(
@@ -195,6 +196,21 @@ fun BarraProgresso(navController: NavController) {
 
                     ) {
                         increment()
+
+                        Log.e("FOI?", localStorage.lerValor(context, "email").toString() )
+                        Log.e("FOI?", localStorage.lerValor(context, "senha").toString() )
+                        Log.e("FOI?", localStorage.lerValor(context, "nome").toString() )
+                        Log.e("FOI?", localStorage.lerValor(context, "dataNascimento").toString() )
+                        Log.e("FOI?", localStorage.lerValor(context, "cpf").toString() )
+                        Log.e("FOI?", localStorage.lerValor(context, "telefone").toString() )
+                        Log.e("FOI?", localStorage.lerValor(context, "genero").toString() )
+                        Log.e("FOI?", localStorage.lerValor(context, "condicaoMedica").toString() )
+                        Log.e("FOI?", localStorage.lerValor(context, "lesoes").toString() )
+                        Log.e("FOI?", localStorage.lerValor(context, "medicamentos").toString() )
+                        Log.e("FOI?", localStorage.lerValor(context, "peso").toString() )
+                        Log.e("FOI?", localStorage.lerValor(context, "altura").toString() )
+                        Log.e("FOI?", localStorage.lerValor(context, "objetivo").toString() )
+
                     }
                 }
 

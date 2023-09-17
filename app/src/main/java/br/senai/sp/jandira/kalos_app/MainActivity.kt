@@ -1,7 +1,6 @@
 package br.senai.sp.jandira.kalos_app
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,10 +18,7 @@ import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.screen.LoginScreen
 import br.senai.sp.jandira.kalos_app.screens.telaInicial.screen.TelaInicial
 import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.screen.TelaObjetivo
 import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.screen.TelaSaudeLimitacoes
-import br.senai.sp.jandira.kalos_app.service.AlunoService
-import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.Kalos_appTheme
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -39,6 +35,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 
+                    val localStorage: Storage = Storage()
                     val navController = rememberNavController()
                     NavHost(
                         navController =  navController,
@@ -51,16 +48,16 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "criarConta"){
 
-                            CriarContaScreen(navController, lifecycleScope)
+                            CriarContaScreen(navController, lifecycleScope, localStorage)
                         }
                         composable(route = "telaInformacoesDoCliente"){
-                            TelasInformacoesdoCliente(navController)
+                            TelasInformacoesdoCliente(navController, localStorage)
                         }
                         composable(route = "saudeLimitacoes"){
-                            TelaSaudeLimitacoes(navController = navController)
+                            TelaSaudeLimitacoes(navController = navController,localStorage)
                         }
                         composable(route = "objetivo"){
-                            TelaObjetivo(navController = navController)
+                            TelaObjetivo(navController = navController,localStorage)
                         }
                     }
 

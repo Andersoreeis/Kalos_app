@@ -14,7 +14,7 @@ object LocalStorage {
     // Função para recuperar um valor das SharedPreferences
     fun getFromSharedPreferences(context: Context, key: String): String? {
         val sharedPrefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        return sharedPrefs.getString(key, null)
+        return sharedPrefs.getString(key, "alo")
     }
 
 
