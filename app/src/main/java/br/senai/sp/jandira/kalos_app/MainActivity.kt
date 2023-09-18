@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
                             CriarContaScreen(navController, lifecycleScope, localStorage)
                         }
                         composable(route = "telaInformacoesDoCliente"){
-                            TelasInformacoesdoCliente(navController, localStorage)
+                            TelasInformacoesdoCliente(navController, localStorage, lifecycleScope)
                         }
                         composable(route = "saudeLimitacoes"){
                             TelaSaudeLimitacoes(navController = navController,localStorage)
