@@ -15,6 +15,7 @@ import br.senai.sp.jandira.kalos_app.screens.InformacoesCliente.screen.TelasInfo
 import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.screen.CriarContaScreen
 
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.screen.LoginScreen
+import br.senai.sp.jandira.kalos_app.screens.telaHome.screen.TelaHome
 import br.senai.sp.jandira.kalos_app.screens.telaInicial.screen.TelaInicial
 import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.screen.TelaObjetivo
 import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.screen.TelaSaudeLimitacoes
@@ -59,6 +60,10 @@ class MainActivity : ComponentActivity() {
                         composable(route = "objetivo"){
                             TelaObjetivo(navController = navController,localStorage)
                         }
+                        composable(route= "home"){
+                            TelaHome()
+                        }
+
                     }
 
 
