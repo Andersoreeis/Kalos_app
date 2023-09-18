@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.Storage
-import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamporEmail
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

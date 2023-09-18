@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -28,7 +30,7 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CampoSenha(value: String, aoMudar: (String) -> Unit, placeholder: String) {
+fun CampoSenhaCadastrar(value: String, aoMudar: (String) -> Unit, placeholder: String, isError: Boolean, keyboarActions: KeyboardActions, keyboardOptions: KeyboardOptions) {
     var passwordVisibilityState by remember {
         mutableStateOf(false)
     }
@@ -40,6 +42,12 @@ fun CampoSenha(value: String, aoMudar: (String) -> Unit, placeholder: String) {
         placeholder = {
                 Text(text = placeholder, color = Color(0xFF606060))
         },
+        keyboardActions = keyboarActions,
+        isError = isError,
+        keyboardOptions = keyboardOptions ,
+
+
+        singleLine = true,
         modifier = Modifier
             .background(Color.Black)
             .fillMaxWidth()

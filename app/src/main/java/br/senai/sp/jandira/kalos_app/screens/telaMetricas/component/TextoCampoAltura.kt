@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamporEmail
+import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CampoEmailCadastrar
 
 @Composable
     fun TextoCampoAltura(texto: String, aoMudar: (String) -> Unit, value: String) {
@@ -23,9 +23,9 @@ import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamporEma
                 color = Color(0xFFABABAB)
             )
             Spacer(modifier = Modifier.height(5.dp))
-            CamporEmail(
-                value = value ,
-                aoMudar = aoMudar,
-                placeholder = "" )
-        }
-    }
+//            CampoEmailCadastrar(
+//                value = value ,
+//                aoMudar = aoMudar,
+//                placeholder = "" )
+//        }
+    }}

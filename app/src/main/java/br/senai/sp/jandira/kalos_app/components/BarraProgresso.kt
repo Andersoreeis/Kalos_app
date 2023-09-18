@@ -217,8 +217,23 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
 //                        Log.e("FOI?", localStorage.lerValor(context, "peso").toString() )
 //                        Log.e("FOI?", localStorage.lerValor(context, "altura").toString() )
 //                        Log.e("FOI?", localStorage.lerValor(context, "objetivo").toString() )
+
+
+                        val email = localStorage.lerValor(context, "email").toString()
+                        val senha = localStorage.lerValor(context, "senha").toString()
+                        val nome = localStorage.lerValor(context, "nome").toString()
+                        val dataNascimento = localStorage.lerValor(context, "dataNascimento").toString()
+                        val cpf = localStorage.lerValor(context, "cpf").toString()
+                        val telefone = localStorage.lerValor(context, "telefone").toString()
+                        val condicaoMedica = localStorage.lerValor(context, "condicaoMedica").toString()
+                        val lesoes = localStorage.lerValor(context, "lesoes").toString()
+                        val medicamentos = localStorage.lerValor(context, "medicamentos").toString()
+                        val peso = localStorage.lerValor(context, "peso").toString()
+                        val altura = localStorage.lerValor(context, "altura").toString()
+                        val objetivo = localStorage.lerValor(context, "objetivo").toString()
                         var generoText = localStorage.lerValor(context, "genero").toString()
                         var genero: Int
+
                         if(generoText == "Masculino")
                                         genero = 1
                         else if (generoText == "Feminino"){
@@ -229,19 +244,19 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
 
                         lifecycleScope.launch {
                             val body = JsonObject().apply{
-                                addProperty("email",localStorage.lerValor(context, "email").toString() )
-                                addProperty("senha",localStorage.lerValor(context, "senha").toString())
-                                addProperty("nome", localStorage.lerValor(context, "nome").toString() )
-                                addProperty("data_nascimento", localStorage.lerValor(context, "dataNascimento").toString() )
-                                addProperty("cpf", localStorage.lerValor(context, "cpf").toString() )
-                                addProperty("telefone", localStorage.lerValor(context, "telefone").toString() )
-                                addProperty("id_genero", genero )
-                                addProperty("questao_condicao_medica", localStorage.lerValor(context, "condicaoMedica").toString() )
-                                addProperty("questao_lesoes", localStorage.lerValor(context, "lesoes").toString() )
-                                addProperty("questao_medicamento", localStorage.lerValor(context, "medicamento").toString() )
-                                addProperty("peso", localStorage.lerValor(context, "peso").toString() )
-                                addProperty("altura", localStorage.lerValor(context, "altura").toString() )
-                                addProperty("objetivo", localStorage.lerValor(context, "objetivo").toString() )
+                                addProperty("email", email)
+                                addProperty("senha", senha)
+                                addProperty("nome", nome)
+                                addProperty("data_nascimento", dataNascimento)
+                                addProperty("cpf", cpf)
+                                addProperty("telefone", telefone)
+                                addProperty("id_genero", 1)
+                                addProperty("questao_condicao_medica", condicaoMedica)
+                                addProperty("questao_lesoes", lesoes)
+                                addProperty("questao_medicamento", medicamentos)
+                                addProperty("peso", peso)
+                                addProperty("altura", altura)
+                                addProperty("objetivo", objetivo)
                             }
 
                             val result = alunoService.cadastrarAluno(body)

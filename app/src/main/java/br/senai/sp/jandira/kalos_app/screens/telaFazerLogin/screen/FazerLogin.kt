@@ -37,8 +37,6 @@ import br.senai.sp.jandira.app_kalos.components.createTitleKalos
 import br.senai.sp.jandira.app_kalos.components.getLogoKalos
 import br.senai.sp.jandira.kalos_app.components.ContinueCom
 import br.senai.sp.jandira.kalos_app.components.Espacamento
-import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CampoSenha
-import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamporEmail
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.CampoEmailLogin
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.CampoSenhaLogin
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.IrparaCadastro
@@ -103,14 +101,15 @@ fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutine
                     content = estadoErroEmail.value,
                     sizeText = 16,
                     colorText = Color.Red,
-                    bold = 300,
-                    alinhamento = TextAlign.Center
+                    bold = 150,
+                    alinhamento = TextAlign.Left,
+                    modifier = Modifier.padding(start = 10.dp)
                 )
             }
             CampoEmailLogin(
                 value = estadoEmail.value.toString(),
                 keyboarActions = KeyboardActions(
-                    onNext = {focusManger.moveFocus(focusDirection = FocusDirection.Down)}
+                    onNext = { focusManger.moveFocus(focusDirection = FocusDirection.Down) }
                 ), keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
                 ),
@@ -128,8 +127,10 @@ fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutine
                     content = estadoErroSenha.value,
                     sizeText = 16,
                     colorText = Color.Red,
-                    bold = 300,
-                    alinhamento = TextAlign.Center
+                    bold = 150,
+                    alinhamento = TextAlign.Left,
+                    modifier = Modifier.padding(start = 10.dp)
+
                 )
             }
             CampoSenhaLogin(
@@ -163,7 +164,7 @@ fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutine
         }
         Espacamento(tamanho = 50.dp)
 
-        lateinit var alunoService:AlunoService
+        lateinit var alunoService: AlunoService
         alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
 
 
@@ -173,7 +174,7 @@ fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutine
             textButton = "Entrar",
             corBotao = GreenKalos,
 
-        ) {
+            ) {
             val email = estadoEmail.value
             val senha = estadoSenha.value
             val erroEmail = validarEmail(email)
@@ -183,50 +184,53 @@ fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutine
             estadoErroEmail.value = erroEmail ?: ""
             estadoErroSenha.value = erroSenha ?: ""
 
-            Log.e("TAG", "$erroEmail" )
-            Log.e("TAG", "$erroSenha" )
+            Log.e("TAG", "$erroEmail")
+            Log.e("TAG", "$erroSenha")
 
 
-             if (erroEmail == null && erroSenha == null  )  {
+            if (erroEmail == null && erroSenha == null) {
 
-                 lifecycleScope.launch {
+                lifecycleScope.launch {
 
-                     val body = JsonObject().apply{
-                         addProperty("email", email)
-                         addProperty("senha", senha)
-                     }
+                    val body = JsonObject().apply {
+                        addProperty("email", email)
+                        addProperty("senha", senha)
+                    }
 
-                     Log.e("teste", body.toString())
-                     val result = alunoService.autenticarAluno(body)
-
-
-
-                     if(result.isSuccessful){
-                         Log.e("CREAT-DATA", "${result.body()}")
-                         val checagem = result.body()?.get("status")
-                         if(checagem.toString() == "401"){
-                             Log.e("TAG", "Deu erro", )
-                             Toast.makeText(context, "Erro senha ou email encorretos", Toast.LENGTH_SHORT).show()
-
-                         }else{
-                             Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show()
-
-                             navController.navigate("telaInformacoesDoCliente")
-                         }
-
-
-                     }else{
-                         Log.e("CREAT-DATA", result.message())
-                     }
-
-
-                 }
+                    Log.e("teste", body.toString())
+                    val result = alunoService.autenticarAluno(body)
 
 
 
-             }
+                    if (result.isSuccessful) {
+                        Log.e("CREAT-DATA", "${result.body()}")
+                        val checagem = result.body()?.get("status")
+                        if (checagem.toString() == "401") {
+                            Log.e("TAG", "Deu erro")
+                            Toast.makeText(
+                                context,
+                                "Erro senha ou email encorretos",
+                                Toast.LENGTH_SHORT
+                            ).show()
 
-         }
+                        } else {
+                            Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show()
+
+                            navController.navigate("telaInformacoesDoCliente")
+                        }
+
+
+                    } else {
+                        Log.e("CREAT-DATA", result.message())
+                    }
+
+
+                }
+
+
+            }
+
+        }
 
         ContinueCom()
 
@@ -235,47 +239,39 @@ fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutine
         IrparaCadastro(navController = navController)
 
 
-
-        }
     }
-
-
+}
 
 
 fun validarEmail(email: String): String? {
-    if (email.length > 30 ){
-
-    return "O limite de caracteres ultrapassou o necessário"
-
-}else if ( email.isEmpty()){
-
-    return "Não pode estár vázio"
-
-
-}else {
-
-    return null
-
-}
-
-
+    if (email.isEmpty()) {
+        return "O campo de email não pode estar vazio"
+    } else if (email.length < 5) {
+        return "O email deve conter pelo menos 5 caracteres"
+    } else if (email.length > 255) {
+        return "O email excedeu o limite de 255 caracteres"
+    } else if (!email.contains("@")) {
+        return "O email deve conter o símbolo @"
+    } else if (!email.endsWith(".com")) {
+        return "O email deve terminar com a extensão .com"
+    } else if (email.count { it == '@' } > 1) {
+        return "O email não pode conter múltiplos símbolos @"
+    } else {
+        return null
+    }
 }
 
 fun validarSenha(senha: String): String? {
-
-    if (senha.length > 30 ){
-
-        return "O limite de caracteres ultrapassou o necessário"
-
-    }else if ( senha.isEmpty()){
-
-        return "Não pode estár vázio"
-
-
-    }else {
+    if (senha.isEmpty()) {
+        return "Os campos de senha não podem estar vazios"
+    } else if (senha.length < 8) {
+        return "A senha deve conter pelo menos 8 caracteres"
+    } else if (senha.length > 12) {
+        return "A senha excedeu o limite de 30 caracteres"
+    } else {
         return null
-
-    }}
+    }
+}
 
 
 

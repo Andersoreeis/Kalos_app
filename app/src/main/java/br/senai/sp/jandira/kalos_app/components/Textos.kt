@@ -30,8 +30,8 @@ fun createTitleKalos(content: String, sizeText: Int, colorText: Color, bold: Int
 }
 
 @Composable
-fun createTextKalos(content: String, sizeText: Int, colorText: Color, bold: Int, alinhamento:TextAlign ) {
-    Text(text = content, fontSize = sizeText.sp, color = colorText, fontWeight = FontWeight(bold), textAlign = alinhamento)
+fun createTextKalos(content: String, sizeText: Int, colorText: Color, bold: Int, alinhamento:TextAlign , modifier: Modifier = Modifier) {
+    Text(text = content, fontSize = sizeText.sp, color = colorText, fontWeight = FontWeight(bold), textAlign = alinhamento, modifier = modifier)
 
 }
 @Composable
@@ -47,5 +47,5 @@ fun createTextKalosRedirection(content: String, sizeText: Int, colorText: Color,
 @Preview
 @Composable
 fun teste() {
-    createTextKalos(content = "sdfdsfdsf", sizeText = 10, colorText = Color.Red, bold = 20, alinhamento = TextAlign.Center)
+    createTextKalos(content = "sdfdsfdsf", sizeText = 10, colorText = Color.Red, bold = 20, alinhamento = TextAlign.Center, )
 }

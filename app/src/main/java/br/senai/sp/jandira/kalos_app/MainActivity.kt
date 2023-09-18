@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController =  navController,
-                        startDestination = "telaInicial" ){
+                        startDestination = "telaInformacoesDoCliente" ){
                         composable(route = "telaInicial"){
                             TelaInicial(navController)
                         }
@@ -54,12 +54,7 @@ class MainActivity : ComponentActivity() {
                         composable(route = "telaInformacoesDoCliente"){
                             TelasInformacoesdoCliente(navController, localStorage, lifecycleScope)
                         }
-                        composable(route = "saudeLimitacoes"){
-                            TelaSaudeLimitacoes(navController = navController,localStorage)
-                        }
-                        composable(route = "objetivo"){
-                            TelaObjetivo(navController = navController,localStorage)
-                        }
+
                         composable(route= "home"){
                             TelaHome()
                         }

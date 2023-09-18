@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -16,6 +17,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -25,20 +27,30 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CamporEmail(value: String, aoMudar: (String) -> Unit, placeholder: String) {
+fun CampoEmailCadastrar(value: String, aoMudar: (String) -> Unit, placeholder: String, isError: Boolean , keyboarActions: KeyboardActions, keyboardOptions: KeyboardOptions) {
+
+    val errorText = remember { mutableStateOf("") }
+
     OutlinedTextField(
-        value =  value,
-        onValueChange = {
-            aoMudar (it)
+        value = value,
+
+        keyboardActions = keyboarActions,
+
+        onValueChange = { newValue ->
+
+            val transformedValue = aoMudar(newValue)
+
+
+
+            errorText.value = ""
+
         },
         placeholder = {
             Text(text = placeholder, color = Color(0xFF606060))
         },
         modifier = Modifier
             .background(Color.Black)
-            .fillMaxWidth()
-
-        ,
+            .fillMaxWidth(),
         shape = RoundedCornerShape(25.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             textColor = GreenKalos,
@@ -46,11 +58,14 @@ fun CamporEmail(value: String, aoMudar: (String) -> Unit, placeholder: String) {
             unfocusedBorderColor = Color(0xFF393939),
             focusedBorderColor = GreenKalos,
             cursorColor = GreenKalos
-        )
+        ),
+        isError = isError,
+        keyboardOptions = keyboardOptions ,
+
+
+        singleLine = true
+
+
     )
-
-
-    }
-
-
+}
 
