@@ -41,7 +41,6 @@ fun TelaObjetivo(navController: NavController, localStorage: Storage) {
                   },
         placeholder = "",
         isError = objetivoStateError.isNotEmpty()
-
-        )
+    )
 
 }
