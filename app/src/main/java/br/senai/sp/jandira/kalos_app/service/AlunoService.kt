@@ -18,4 +18,7 @@ interface AlunoService {
 
     @POST("kalos/aluno/autenticar")
     suspend fun autenticarAluno(@Body body: JsonObject): Response<JsonObject>
+
+    @POST("kalos/aluno")
+    suspend fun cadastrarAluno(@Body body: JsonObject): Response<JsonObject>
 }

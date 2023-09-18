@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createButtonWithFunction
 import br.senai.sp.jandira.kalos_app.Storage
@@ -34,12 +35,18 @@ import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.screen.Info
 import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.screen.TelaObjetivo
 import br.senai.sp.jandira.kalos_app.screens.telaMetricas.screen.TelaMetricas
 import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.screen.TelaSaudeLimitacoes
+import br.senai.sp.jandira.kalos_app.service.AlunoService
+import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
+import com.google.gson.JsonObject
+import kotlinx.coroutines.launch
 
 
 @Composable
-fun BarraProgresso(navController: NavController, localStorage: Storage) {
+fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycleScope: LifecycleCoroutineScope) {
+    lateinit var alunoService: AlunoService
+    alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
 
     val context = LocalContext.current
     var progressCount = remember { mutableStateOf(0) }
@@ -195,21 +202,59 @@ fun BarraProgresso(navController: NavController, localStorage: Storage) {
                         corBotao = GreenKalos
 
                     ) {
-                        increment()
+//                        increment()
+//
+//                        Log.e("FOI?", localStorage.lerValor(context, "email").toString() )
+//                        Log.e("FOI?", localStorage.lerValor(context, "senha").toString() )
+//                        Log.e("FOI?", localStorage.lerValor(context, "nome").toString() )
+//                        Log.e("FOI?", localStorage.lerValor(context, "dataNascimento").toString() )
+//                        Log.e("FOI?", localStorage.lerValor(context, "cpf").toString() )
+//                        Log.e("FOI?", localStorage.lerValor(context, "telefone").toString() )
+//                        Log.e("FOI?", localStorage.lerValor(context, "genero").toString() )
+//                        Log.e("FOI?", localStorage.lerValor(context, "condicaoMedica").toString() )
+//                        Log.e("FOI?", localStorage.lerValor(context, "lesoes").toString() )
+//                        Log.e("FOI?", localStorage.lerValor(context, "medicamentos").toString() )
+//                        Log.e("FOI?", localStorage.lerValor(context, "peso").toString() )
+//                        Log.e("FOI?", localStorage.lerValor(context, "altura").toString() )
+//                        Log.e("FOI?", localStorage.lerValor(context, "objetivo").toString() )
 
-                        Log.e("FOI?", localStorage.lerValor(context, "email").toString() )
-                        Log.e("FOI?", localStorage.lerValor(context, "senha").toString() )
-                        Log.e("FOI?", localStorage.lerValor(context, "nome").toString() )
-                        Log.e("FOI?", localStorage.lerValor(context, "dataNascimento").toString() )
-                        Log.e("FOI?", localStorage.lerValor(context, "cpf").toString() )
-                        Log.e("FOI?", localStorage.lerValor(context, "telefone").toString() )
-                        Log.e("FOI?", localStorage.lerValor(context, "genero").toString() )
-                        Log.e("FOI?", localStorage.lerValor(context, "condicaoMedica").toString() )
-                        Log.e("FOI?", localStorage.lerValor(context, "lesoes").toString() )
-                        Log.e("FOI?", localStorage.lerValor(context, "medicamentos").toString() )
-                        Log.e("FOI?", localStorage.lerValor(context, "peso").toString() )
-                        Log.e("FOI?", localStorage.lerValor(context, "altura").toString() )
-                        Log.e("FOI?", localStorage.lerValor(context, "objetivo").toString() )
+                        lifecycleScope.launch {
+                            val body = JsonObject().apply{
+                                addProperty("email",localStorage.lerValor(context, "email").toString() )
+                                addProperty("senha",localStorage.lerValor(context, "senha").toString())
+                                addProperty("nome", localStorage.lerValor(context, "nome").toString() )
+                                addProperty("data_nascimento", localStorage.lerValor(context, "dataNascimento").toString() )
+                                addProperty("cpf", localStorage.lerValor(context, "cpf").toString() )
+                                addProperty("telefone", localStorage.lerValor(context, "telefone").toString() )
+                                addProperty("id_genero", 1 )
+                                addProperty("questao_condicao_medica", localStorage.lerValor(context, "condicaoMedica").toString() )
+                                addProperty("questao_lesoes", localStorage.lerValor(context, "lesoes").toString() )
+                                addProperty("questao_medicamento", localStorage.lerValor(context, "medicamentos").toString() )
+                                addProperty("peso", localStorage.lerValor(context, "peso").toString() )
+                                addProperty("altura", localStorage.lerValor(context, "altura").toString() )
+                                addProperty("objetivo", localStorage.lerValor(context, "objetivo").toString() )
+                            }
+
+                            val result = alunoService.cadastrarAluno(body)
+
+                            if(result.isSuccessful){
+                                Log.e("CREAT-DATA", "${result.body()}")
+                                val checagem = result.body()?.get("status")
+                                if(checagem.toString() == "401"){
+                                    Log.e("TAG", "Deu erro", )
+                                    Toast.makeText(context, "Erro ", Toast.LENGTH_SHORT).show()
+
+                                }else{
+                                    Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show()
+
+                                    navController.navigate("home")
+                                }
+
+
+                            }else{
+                                Log.e("CREAT-DATA", result.message())
+                            }
+                        }
 
                     }
                 }
