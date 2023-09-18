@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.getLogoKalos
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.CampoNome
 
 @Composable
 fun HeaderSaudeLimitacoes(navController: NavController) {
@@ -52,5 +53,8 @@ fun HeaderSaudeLimitacoes(navController: NavController) {
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
+
+
+
     }
 }

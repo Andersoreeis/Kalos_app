@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.Storage
+import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.CampoTextoObjetivos
 import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.components.HeaderObjetivo
-import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.components.TextoCampoSaudeLimitacoes
 
 @Composable
 fun TelaObjetivo(navController: NavController, localStorage: Storage) {
@@ -23,14 +23,25 @@ fun TelaObjetivo(navController: NavController, localStorage: Storage) {
     var objetivoState by remember {
         mutableStateOf("")
     }
+    var objetivoStateError by remember {
+        mutableStateOf("")
+    }
+
+    localStorage.salvarValor(context,objetivoState,"objetivo")
+
 
 //    HeaderObjetivo(navController = navController )
     Spacer(modifier = Modifier.height(50.dp))
-    TextoCampoSaudeLimitacoes(
-        texto = stringResource(R.string.texto_objetivo) ,
+    CampoTextoObjetivos(
+        value = objetivoState ,
+        texto = stringResource(R.string.texto_objetivo)  ,
         aoMudar = {
             objetivoState = it
-            localStorage.salvarValor(context,objetivoState,"objetivo")
+
                   },
-        value = objetivoState )
+        placeholder = "",
+        isError = objetivoStateError.isNotEmpty()
+
+        )
+
 }

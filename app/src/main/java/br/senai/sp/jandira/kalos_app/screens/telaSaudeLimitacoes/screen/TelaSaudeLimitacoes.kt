@@ -22,5 +22,5 @@ fun TelaSaudeLimitacoes(navController: NavController, localStorage: Storage) {
 //    HeaderSaudeLimitacoes(navController = navController)
     Spacer(modifier = Modifier.height(50.dp))
     FormSaudeLimitacoes(localStorage)
-  }
+}
 

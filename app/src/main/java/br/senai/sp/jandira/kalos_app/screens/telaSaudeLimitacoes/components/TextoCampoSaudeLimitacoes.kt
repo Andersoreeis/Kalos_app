@@ -13,21 +13,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.CampoTextoObjetivos
 
-@Composable
-fun TextoCampoSaudeLimitacoes(texto: String, aoMudar: (String) -> Unit, value: String) {
-    Column (
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(
-            text = texto,
-            fontSize = 15.sp,
-            color = Color(0xFFABABAB)
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-//        CamporEmail(
-//            value = value ,
-//            aoMudar = aoMudar,
-//            placeholder = "" )
-//    }
-    }}
+//@Composable
+////fun TextoCampoSaudeLimitacoes(texto: String, aoMudar: (String) -> Unit, value: String) {
+////    Column (
+////        modifier = Modifier.fillMaxWidth()
+////    ) {
+////        Text(
+////            text = texto,
+////            fontSize = 15.sp,
+////            color = Color(0xFFABABAB)
+////        )
+////        Spacer(modifier = Modifier.height(5.dp))
+////
+////
+////
+////
+////
+////    }}

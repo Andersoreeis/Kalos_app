@@ -271,7 +271,7 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
                                 }else{
                                     Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show()
 
-                                    navController.navigate("home")
+                                    //navController.navigate("home")
                                 }
 
 
