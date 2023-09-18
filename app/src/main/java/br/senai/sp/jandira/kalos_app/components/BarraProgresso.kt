@@ -217,6 +217,15 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
 //                        Log.e("FOI?", localStorage.lerValor(context, "peso").toString() )
 //                        Log.e("FOI?", localStorage.lerValor(context, "altura").toString() )
 //                        Log.e("FOI?", localStorage.lerValor(context, "objetivo").toString() )
+                        var generoText = localStorage.lerValor(context, "genero").toString()
+                        var genero: Int
+                        if(generoText == "Masculino")
+                                        genero = 1
+                        else if (generoText == "Feminino"){
+                            genero = 2
+                        }else{
+                            genero = 4
+                        }
 
                         lifecycleScope.launch {
                             val body = JsonObject().apply{
@@ -226,10 +235,10 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
                                 addProperty("data_nascimento", localStorage.lerValor(context, "dataNascimento").toString() )
                                 addProperty("cpf", localStorage.lerValor(context, "cpf").toString() )
                                 addProperty("telefone", localStorage.lerValor(context, "telefone").toString() )
-                                addProperty("id_genero", 1 )
+                                addProperty("id_genero", genero )
                                 addProperty("questao_condicao_medica", localStorage.lerValor(context, "condicaoMedica").toString() )
                                 addProperty("questao_lesoes", localStorage.lerValor(context, "lesoes").toString() )
-                                addProperty("questao_medicamento", localStorage.lerValor(context, "medicamentos").toString() )
+                                addProperty("questao_medicamento", localStorage.lerValor(context, "medicamento").toString() )
                                 addProperty("peso", localStorage.lerValor(context, "peso").toString() )
                                 addProperty("altura", localStorage.lerValor(context, "altura").toString() )
                                 addProperty("objetivo", localStorage.lerValor(context, "objetivo").toString() )
