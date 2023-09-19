@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CampoEmailCadastrar
 
 @Composable
-    fun TextoCampoAltura(texto: String, aoMudar: (String) -> Unit, value: String) {
+    fun TextoCampoAltura(texto: String) {
         Column (
             modifier = Modifier.fillMaxWidth()
         ) {

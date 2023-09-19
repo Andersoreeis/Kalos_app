@@ -16,11 +16,14 @@ import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.components.Form
 import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.components.HeaderSaudeLimitacoes
 
 @Composable
-fun TelaSaudeLimitacoes(navController: NavController, localStorage: Storage) {
+fun TelaSaudeLimitacoes(
+    navController: NavController, localStorage: Storage, condicaoMedicaState: String,  condicaoMedicaStateError: String, aoMudarCondicao: (String) -> Unit,
+                        lesoesState: String, lesoesStateError: String, aoMudarLesoes: () -> Unit,
+                        medicamentoState: String, medicamentoStateError: String, aoMudarMedicamento: () -> Unit) {
 
 
 //    HeaderSaudeLimitacoes(navController = navController)
     Spacer(modifier = Modifier.height(50.dp))
-    FormSaudeLimitacoes(localStorage)
+//    FormSaudeLimitacoes(localStorage, condicaoMedicaState, condicaoMedicaStateError, aoMudarCondicao(), lesoesState, lesoesStateError, aoMudarLesoes, medicamentoState, medicamentoStateError, aoMudarMedicamento )
 }
 

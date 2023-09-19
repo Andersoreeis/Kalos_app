@@ -18,8 +18,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -34,6 +36,7 @@ import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.screen.InformacoesPessoais
 import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.screen.TelaObjetivo
 import br.senai.sp.jandira.kalos_app.screens.telaMetricas.screen.TelaMetricas
+import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.components.FormSaudeLimitacoes
 import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.screen.TelaSaudeLimitacoes
 import br.senai.sp.jandira.kalos_app.service.AlunoService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
@@ -52,10 +55,31 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
     var progressCount = remember { mutableStateOf(0) }
     var progress = remember { mutableStateOf(0.3f) }
 
-   // LocalStorage.getFromSharedPreferences(context, "emailState")
+    var condicaoMedicaState by remember {
+        mutableStateOf("")
+    }
+    var condicaoMedicaStateError by remember {
+        mutableStateOf("")
+    }
+    var lesoesState by remember {
+        mutableStateOf("")
+    }
 
-    //Log.e("TAG",LocalStorage.getFromSharedPreferences(context, "email").toString())
-    //val minhaClasse : Storage = Storage()
+    var lesoesStateError by remember {
+        mutableStateOf("")
+    }
+    var medicamentoState by remember {
+        mutableStateOf("")
+    }
+    var medicamentoStateError by remember {
+        mutableStateOf("")
+    }
+    var objetivoState by remember {
+        mutableStateOf("")
+    }
+    var objetivoStateError by remember {
+        mutableStateOf("")
+    }
 
     when (progressCount.value) {
 
@@ -115,14 +139,69 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
             }
         }
 
-        if (progressCount.value == 0)
-         //   InformacoesPessoais(navController = navController, localStorage,)
-        else if (progressCount.value == 2)
-            TelaSaudeLimitacoes(navController = navController, localStorage)
-        else if (progressCount.value == 4)
-            TelaMetricas(navController = navController, localStorage)
-        else if (progressCount.value == 6)
-            TelaObjetivo(navController = navController, localStorage)
+        fun validarCamposQuestoes(condicaoMedica: String, lesoes: String, medicamentos: String) {
+
+            when(condicaoMedica){
+                "" ->  condicaoMedicaStateError = "Este campo não pode estar vazio"
+            }
+            when(lesoes){
+                "" ->  lesoesStateError = "Este campo não pode estar vazio"
+            }
+            when(medicamentos){
+                "" ->  medicamentoStateError = "Este campo não pode estar vazio"
+            }
+
+        }
+        fun validarCampoObjetivo(objetivo: String) {
+
+            when(objetivo){
+                "" ->  objetivoStateError = "Este campo não pode estar vazio"
+            }
+
+        }
+
+
+
+            if (progressCount.value == 0)
+                InformacoesPessoais(navController = navController, localStorage)
+            else if (progressCount.value == 2)
+
+                FormSaudeLimitacoes(
+                    localStorage = localStorage,
+                    condicaoMedicaState = condicaoMedicaState ,
+                    condicaoMedicaStateError = condicaoMedicaStateError,
+                    aoMudarCondicao = {
+                        condicaoMedicaState = it
+                        condicaoMedicaStateError = ""
+                    } ,
+                    lesoesState = lesoesState,
+                    lesoesStateError = lesoesStateError,
+                    aoMudarLesoes = {
+                        lesoesState = it
+                        lesoesStateError = ""
+                    },
+                    medicamentoState =  medicamentoState,
+                    medicamentoStateError =  medicamentoStateError
+                ) {
+                    medicamentoState = it
+                    medicamentoStateError = ""
+                }
+
+            else if (progressCount.value == 4)
+                TelaMetricas(navController = navController, localStorage)
+            else if (progressCount.value == 6)
+                TelaObjetivo(navController = navController,
+                    localStorage,
+                    objetivoState,
+                    objetivoStateError,
+                    {
+                    objetivoState = it
+                    objetivoStateError = ""
+                })
+
+
+
+
 
 
         Column(
@@ -168,6 +247,7 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
 
                     ) {
                         increment()
+
                     }
                 } else if (progressCount.value == 2) {
                     createButtonWithFunction(
@@ -175,7 +255,10 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
                         corBotao = GreenKalos
 
                     ) {
-                        increment()
+
+                        validarCamposQuestoes(condicaoMedicaState,lesoesState,medicamentoState)
+                        if(condicaoMedicaStateError == "" && lesoesStateError == "" && medicamentoStateError == "")
+                            increment()
                     }
                 } else if (progressCount.value == 4) {
                     Column(modifier = Modifier.fillMaxWidth()) {
@@ -202,22 +285,6 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
                         corBotao = GreenKalos
 
                     ) {
-//                        increment()
-//
-//                        Log.e("FOI?", localStorage.lerValor(context, "email").toString() )
-//                        Log.e("FOI?", localStorage.lerValor(context, "senha").toString() )
-//                        Log.e("FOI?", localStorage.lerValor(context, "nome").toString() )
-//                        Log.e("FOI?", localStorage.lerValor(context, "dataNascimento").toString() )
-//                        Log.e("FOI?", localStorage.lerValor(context, "cpf").toString() )
-//                        Log.e("FOI?", localStorage.lerValor(context, "telefone").toString() )
-//                        Log.e("FOI?", localStorage.lerValor(context, "genero").toString() )
-//                        Log.e("FOI?", localStorage.lerValor(context, "condicaoMedica").toString() )
-//                        Log.e("FOI?", localStorage.lerValor(context, "lesoes").toString() )
-//                        Log.e("FOI?", localStorage.lerValor(context, "medicamentos").toString() )
-//                        Log.e("FOI?", localStorage.lerValor(context, "peso").toString() )
-//                        Log.e("FOI?", localStorage.lerValor(context, "altura").toString() )
-//                        Log.e("FOI?", localStorage.lerValor(context, "objetivo").toString() )
-
 
                         val email = localStorage.lerValor(context, "email").toString()
                         val senha = localStorage.lerValor(context, "senha").toString()
@@ -225,60 +292,83 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
                         val dataNascimento = localStorage.lerValor(context, "dataNascimento").toString()
                         val cpf = localStorage.lerValor(context, "cpf").toString()
                         val telefone = localStorage.lerValor(context, "telefone").toString()
-                        val condicaoMedica = localStorage.lerValor(context, "condicaoMedica").toString()
-                        val lesoes = localStorage.lerValor(context, "lesoes").toString()
-                        val medicamentos = localStorage.lerValor(context, "medicamentos").toString()
                         val peso = localStorage.lerValor(context, "peso").toString()
                         val altura = localStorage.lerValor(context, "altura").toString()
-                        val objetivo = localStorage.lerValor(context, "objetivo").toString()
+
                         var generoText = localStorage.lerValor(context, "genero").toString()
                         var genero: Int
 
+                        fun formatarData(input: String): String {
+                            val digitsOnly = input.replace(Regex("[^\\d]"), "")
+
+                            if (digitsOnly.length < 8) {
+                                return digitsOnly
+                            }
+
+                            val day = digitsOnly.substring(0, 2)
+                            val month = digitsOnly.substring(2, 4)
+                            val year = digitsOnly.substring(4, 8)
+
+                            val formattedDate = "$year/$month/$day"
+
+                            return formattedDate
+                        }
+
+                        val dataFormatada = formatarData(dataNascimento)
+
                         if(generoText == "Masculino")
-                                        genero = 1
+                            genero = 1
                         else if (generoText == "Feminino"){
                             genero = 2
                         }else{
                             genero = 4
                         }
 
-                        lifecycleScope.launch {
-                            val body = JsonObject().apply{
-                                addProperty("email", email)
-                                addProperty("senha", senha)
-                                addProperty("nome", nome)
-                                addProperty("data_nascimento", dataNascimento)
-                                addProperty("cpf", cpf)
-                                addProperty("telefone", telefone)
-                                addProperty("id_genero", 1)
-                                addProperty("questao_condicao_medica", condicaoMedica)
-                                addProperty("questao_lesoes", lesoes)
-                                addProperty("questao_medicamento", medicamentos)
-                                addProperty("peso", peso)
-                                addProperty("altura", altura)
-                                addProperty("objetivo", objetivo)
-                            }
-
-                            val result = alunoService.cadastrarAluno(body)
-
-                            if(result.isSuccessful){
-                                Log.e("CREAT-DATA", "${result.body()}")
-                                val checagem = result.body()?.get("status")
-                                if(checagem.toString() == "401"){
-                                    Log.e("TAG", "Deu erro", )
-                                    Toast.makeText(context, "Erro ", Toast.LENGTH_SHORT).show()
-
-                                }else{
-                                    Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show()
-
-                                    //navController.navigate("home")
+                        validarCampoObjetivo(objetivoState)
+                        if(objetivoStateError == "") {
+                            lifecycleScope.launch {
+                                val body = JsonObject().apply {
+                                    addProperty("email", email)
+                                    addProperty("senha", senha)
+                                    addProperty("nome", nome)
+                                    addProperty("data_nascimento", dataFormatada)
+                                    addProperty("cpf", cpf)
+                                    addProperty("telefone", telefone)
+                                    addProperty("id_genero", genero)
+                                    addProperty("questao_condicao_medica", condicaoMedicaState)
+                                    addProperty("questao_lesoes", lesoesState)
+                                    addProperty("questao_medicamento", medicamentoState)
+                                    addProperty("peso", peso)
+                                    addProperty("altura", altura)
+                                    addProperty("objetivo", objetivoState)
                                 }
 
+                                val result = alunoService.cadastrarAluno(body)
 
-                            }else{
-                                Log.e("CREAT-DATA", result.message())
+                                if (result.isSuccessful) {
+                                    Log.e("CREAT-DATA", "${result.body()}")
+                                    val checagem = result.body()?.get("status")
+                                    if (checagem.toString() == "201") {
+                                        Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT)
+                                            .show()
+
+                                        navController.navigate("fazerLogin")
+
+
+                                    } else {
+                                        Log.e("TAG", "Deu erro",)
+                                        Toast.makeText(context, "Erro ", Toast.LENGTH_SHORT).show()
+                                    }
+
+
+                                } else {
+                                    Log.e("CREAT-DATA", result.message())
+                                }
                             }
+
+
                         }
+
 
                     }
                 }

@@ -28,28 +28,16 @@ import br.senai.sp.jandira.kalos_app.Storage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FormSaudeLimitacoes(localStorage: Storage) {
+fun FormSaudeLimitacoes(
+    localStorage: Storage,
+    condicaoMedicaState: String,  condicaoMedicaStateError: String, aoMudarCondicao: (String) -> Unit,
+    lesoesState: String, lesoesStateError: String, aoMudarLesoes: (String) -> Unit,
+    medicamentoState: String, medicamentoStateError: String, aoMudarMedicamento: (String) -> Unit
+
+    ) {
     val context = LocalContext.current
-    var condicaoMedicaState by remember {
-        mutableStateOf("")
-    }
-    var condicaoMedicaStateError by remember {
-        mutableStateOf("")
-    }
-    var lesoesState by remember {
-        mutableStateOf("")
-    }
 
-    var lesoesStateError by remember {
-        mutableStateOf("")
-    }
-    var medicamentoState by remember {
-        mutableStateOf("")
-    }
-   var medicamentoStateError by remember {
-        mutableStateOf("")
-    }
-
+    Spacer(modifier = Modifier.height(50.dp))
     Column(
         modifier = Modifier
             ,
@@ -58,12 +46,15 @@ fun FormSaudeLimitacoes(localStorage: Storage) {
         CampoTexto(
             texto = stringResource(R.string.condicao_medica),
             value = condicaoMedicaState,
-            aoMudar = { novoValor ->
-                condicaoMedicaState = novoValor
-                condicaoMedicaStateError = ""},
+            aoMudar = {
+                aoMudarCondicao(it)
+                      },
             placeholder = "" ,
             isError = condicaoMedicaStateError.isNotEmpty(),
         )
+        if (condicaoMedicaStateError != ""){
+            androidx.compose.material3.Text(text = condicaoMedicaStateError, color = Color.Red)
+            }
 
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -71,24 +62,31 @@ fun FormSaudeLimitacoes(localStorage: Storage) {
         CampoTexto(
             texto = stringResource(R.string.lesoes),
             value = lesoesState,
-            aoMudar = { novoValor ->
-                lesoesState = novoValor
-                lesoesStateError = ""},
+            aoMudar = {
+                aoMudarLesoes(it)
+
+                      },
             placeholder = "" ,
             isError = lesoesStateError.isNotEmpty(),
         )
+        if ( lesoesStateError != ""){
+            androidx.compose.material3.Text(text =  lesoesStateError, color = Color.Red)
+        }
 
         Spacer(modifier = Modifier.height(20.dp))
 
         CampoTexto(
             texto = stringResource(R.string.medicamentos),
             value = medicamentoState,
-            aoMudar = { novoValor ->
-                medicamentoState = novoValor
-                medicamentoStateError = ""},
+            aoMudar = {
+                aoMudarMedicamento(it)
+                      },
             placeholder = "" ,
             isError = medicamentoStateError.isNotEmpty(),
         )
+        if (medicamentoStateError != ""){
+            androidx.compose.material3.Text(text = medicamentoStateError, color = Color.Red)
+        }
 
 
     }
