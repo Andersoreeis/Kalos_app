@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 
-fun TextoCampoPeso(texto: String, aoMudar: (String) -> Unit, value: String) {
+fun TextoCampoPeso(texto: String) {
     Column (
         modifier = Modifier.fillMaxWidth()
     ) {
