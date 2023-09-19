@@ -17,7 +17,7 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CampoTelefone(value: String, aoMudar: (String) -> Unit, placeholder: String) {
+fun CampoTelefone(value: String, aoMudar: (String) -> Unit, placeholder: String, isError: Boolean) {
     OutlinedTextField(
         value =  value,
         onValueChange = {
@@ -32,6 +32,10 @@ fun CampoTelefone(value: String, aoMudar: (String) -> Unit, placeholder: String)
 
         ,
         shape = RoundedCornerShape(25.dp),
+        isError = isError,
+        singleLine = true,
+
+
         colors = TextFieldDefaults.outlinedTextFieldColors(
             textColor = GreenKalos,
             containerColor = Color(0xFF393939),

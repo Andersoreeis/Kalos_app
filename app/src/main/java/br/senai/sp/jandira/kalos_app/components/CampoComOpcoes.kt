@@ -36,7 +36,7 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 @Composable
-fun CampoGenero(localStorage: Storage) {
+fun CampoGenero(localStorage: Storage, isError: Boolean, categoria: String) {
     val context = LocalContext.current
     val categories = listOf(
         "Masculino",
@@ -45,7 +45,7 @@ fun CampoGenero(localStorage: Storage) {
     )
 
     var category by remember {
-        mutableStateOf("")
+        mutableStateOf(categoria)
     }
 
     var textFieldSize by remember {
@@ -81,7 +81,7 @@ fun CampoGenero(localStorage: Storage) {
                     expanded = true
 
                 },
-
+                isError = isError,
                 textStyle = TextStyle(fontSize = 16.sp),
 
                 modifier = Modifier

@@ -17,7 +17,7 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CampoNome(value: String, aoMudar: (String) -> Unit, placeholder: String) {
+fun CampoNome(value: String, aoMudar: (String) -> Unit, placeholder: String, isError: Boolean) {
     OutlinedTextField(
         value =  value,
         onValueChange = {
@@ -31,6 +31,8 @@ fun CampoNome(value: String, aoMudar: (String) -> Unit, placeholder: String) {
             .fillMaxWidth()
 
         ,
+        singleLine = true,
+        isError = isError,
         shape = RoundedCornerShape(25.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             textColor = GreenKalos,

@@ -16,20 +16,22 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CampoCpf(value: String, aoMudar: (String) -> Unit, placeholder: String) {
+fun CampoCpf(value: String, aoMudar: (String) -> Unit, placeholder: String, isError: Boolean) {
     OutlinedTextField(
-        value =  value,
+        value = value,
         onValueChange = {
-            aoMudar (it)
+            aoMudar(it)
         },
         placeholder = {
             Text(text = placeholder, color = Color(0xFF606060))
         },
         modifier = Modifier
             .background(Color.Black)
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        isError = isError,
+        singleLine = true,
 
-        ,
+
         shape = RoundedCornerShape(25.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             textColor = GreenKalos,

@@ -116,7 +116,7 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
         }
 
         if (progressCount.value == 0)
-            InformacoesPessoais(navController = navController, localStorage)
+         //   InformacoesPessoais(navController = navController, localStorage,)
         else if (progressCount.value == 2)
             TelaSaudeLimitacoes(navController = navController, localStorage)
         else if (progressCount.value == 4)

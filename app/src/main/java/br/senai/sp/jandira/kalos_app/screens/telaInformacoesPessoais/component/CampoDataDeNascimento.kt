@@ -24,16 +24,15 @@ import java.time.format.TextStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CampoDataNascimento(value: String, aoMudar: (String) -> Unit, placeholder: String) {
+fun CampoDataNascimento(value: String, aoMudar: (String) -> Unit, placeholder: String, IsError: Boolean) {
 
     OutlinedTextField(
         value = value,
         onValueChange = { newValue ->
-            if (newValue.length <= 10) {
 
-                aoMudar(formatarData(newValue))
-            }
+                        aoMudar(newValue)
         },
+        readOnly = true,
         placeholder = {
             Text(text = placeholder, color = Color(0xFF606060))
         },
@@ -48,6 +47,7 @@ fun CampoDataNascimento(value: String, aoMudar: (String) -> Unit, placeholder: S
             focusedBorderColor = GreenKalos,
             cursorColor = GreenKalos
         ),
+        isError = IsError,
         textStyle = androidx.compose.ui.text.TextStyle(fontSize = 16.sp, color = Color.White),
         modifier = Modifier
             .background(Color.Black)
@@ -55,18 +55,3 @@ fun CampoDataNascimento(value: String, aoMudar: (String) -> Unit, placeholder: S
     )
 }
 
-fun formatarData(input: String): String {
-    val digitsOnly = input.replace(Regex("[^\\d]"), "")
-
-    if (digitsOnly.length < 8) {
-        return digitsOnly
-    }
-
-    val day = digitsOnly.substring(0, 2)
-    val month = digitsOnly.substring(2, 4)
-    val year = digitsOnly.substring(4, 8)
-
-    val formattedDate = "$day/$month/$year"
-
-    return formattedDate
-}

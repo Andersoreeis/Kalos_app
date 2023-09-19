@@ -6,5 +6,5 @@ import br.senai.sp.jandira.kalos_app.components.CampoGenero
 
 @Composable
 fun CampoGeneroTelaInformacoesPessoais(localStorage: Storage) {
-    CampoGenero(localStorage)
+//    CampoGenero(localStorage)
 }
