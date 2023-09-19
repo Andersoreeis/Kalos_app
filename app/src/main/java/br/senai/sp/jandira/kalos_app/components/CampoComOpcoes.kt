@@ -36,7 +36,7 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 @Composable
-fun CampoGenero(localStorage: Storage, isError: Boolean, categoria: String) {
+fun CampoGenero(localStorage: Storage, isError: Boolean, categoria: MutableState<String>) {
     val context = LocalContext.current
     val categories = listOf(
         "Masculino",
@@ -75,9 +75,9 @@ fun CampoGenero(localStorage: Storage, isError: Boolean, categoria: String) {
 
         Column(modifier = Modifier.fillMaxWidth()) {
             OutlinedTextField(
-                value = category,
+                value = categoria.value,
                 onValueChange = {
-                    category = it
+                    categoria.value = it
                     expanded = true
 
                 },
@@ -127,14 +127,14 @@ fun CampoGenero(localStorage: Storage, isError: Boolean, categoria: String) {
                     ) {
                         items(
                             categories.filter {
-                                it.lowercase().contains(category.lowercase()) || it.lowercase()
+                                it.lowercase().contains(categoria.value.lowercase()) || it.lowercase()
                                     .contains("others")
                             }
                                 .sorted()
                         ) { title ->
                             CategoryItem(title = title) {
-                                category = title
-                                localStorage.salvarValor(context, category, "genero")
+                                categoria.value = title
+                                localStorage.salvarValor(context, categoria.value, "genero")
                                 expanded = false
                             }
                         }

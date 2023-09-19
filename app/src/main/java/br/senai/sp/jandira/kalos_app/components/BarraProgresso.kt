@@ -47,7 +47,11 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycleScope: LifecycleCoroutineScope) {
+fun BarraProgresso(
+    navController: NavController,
+    localStorage: Storage,
+    lifecycleScope: LifecycleCoroutineScope
+) {
     lateinit var alunoService: AlunoService
     alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
 
@@ -80,6 +84,107 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
     var objetivoStateError by remember {
         mutableStateOf("")
     }
+
+
+    // parte informacoesCliente
+    val estadoNome = remember {
+        mutableStateOf("")
+    }
+
+    val estadoNomeError = remember {
+        mutableStateOf("")
+    }
+
+
+    val estadoDataNascimento = remember {
+        mutableStateOf("")
+
+    }
+    val estadoDataNascimentoError = remember {
+        mutableStateOf("")
+    }
+
+    val estadoTelefone = remember {
+        mutableStateOf("")
+    }
+
+    val estadoTelefoneError = remember {
+        mutableStateOf("")
+    }
+
+
+    val estadoCpf = remember {
+        mutableStateOf("")
+    }
+
+    val estadoCpfError = remember {
+        mutableStateOf("")
+    }
+
+    var categoryGenero = remember {
+        mutableStateOf("")
+    }
+    var categoryGeneroError = remember {
+        mutableStateOf("")
+    }
+
+    fun validarNome(nome: String): String {
+        if (nome.isEmpty()) {
+            return "Nome é obrigatório."
+        } else if (nome.length < 2) {
+            return "Nome deve ter pelo menos 2 caracteres."
+        } else if (!nome.matches(Regex("^[A-Za-zÀ-ÖØ-öø-ÿ\\s]*\$"))) {
+            return "Nome contém caracteres inválidos."
+        } else {
+            return ""
+        }
+    }
+
+    fun validarDataNascimento(dataNascimento: String): String {
+        if (dataNascimento.isEmpty()) {
+            return "Data de nascimento é obrigatória."
+        } else {
+            // Adicione aqui a validação específica para data de nascimento (exemplo: formato correto)
+            // Se a validação falhar, retorne a mensagem de erro apropriada
+            // Caso contrário, retorne uma string vazia
+            return ""
+        }
+    }
+
+    fun validarTelefone(telefone: String): String {
+        if (telefone.isEmpty()) {
+            return "Telefone é obrigatório."
+        } else {
+            // Adicione aqui a validação específica para telefone (exemplo: formato correto)
+            // Se a validação falhar, retorne a mensagem de erro apropriada
+            // Caso contrário, retorne uma string vazia
+            return ""
+        }
+    }
+
+    fun validarCPF(cpf: String): String {
+        if (cpf.isEmpty()) {
+            return "CPF é obrigatório."
+        } else {
+            // Adicione aqui a validação específica para CPF (exemplo: formato correto)
+            // Se a validação falhar, retorne a mensagem de erro apropriada
+            // Caso contrário, retorne uma string vazia
+            return ""
+        }
+    }
+
+    fun validarGenero(genero: String): String {
+        if (genero.isEmpty()) {
+            return "Gênero é obrigatório."
+        } else {
+            // Adicione aqui a validação específica para gênero (exemplo: opções válidas)
+            // Se a validação falhar, retorne a mensagem de erro apropriada
+            // Caso contrário, retorne uma string vazia
+            return ""
+        }
+    }
+
+
 
     when (progressCount.value) {
 
@@ -125,76 +230,89 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
             .padding(20.dp)
     ) {
 
-        if(progressCount.value == 2){
-            HeaderTelaInformacoes(titulo = stringResource(id = R.string.saude_limitacoes) ) {
+        if (progressCount.value == 2) {
+            HeaderTelaInformacoes(titulo = stringResource(id = R.string.saude_limitacoes)) {
                 decrement()
             }
-        }else if(progressCount.value == 4){
-            HeaderTelaInformacoes(titulo =  "Suas Métricas" ) {
+        } else if (progressCount.value == 4) {
+            HeaderTelaInformacoes(titulo = "Suas Métricas") {
                 decrement()
             }
-        }else if( progressCount.value == 6) {
-            HeaderTelaInformacoes(titulo = stringResource(id = R.string.objetivo) ) {
+        } else if (progressCount.value == 6) {
+            HeaderTelaInformacoes(titulo = stringResource(id = R.string.objetivo)) {
                 decrement()
             }
         }
 
         fun validarCamposQuestoes(condicaoMedica: String, lesoes: String, medicamentos: String) {
 
-            when(condicaoMedica){
-                "" ->  condicaoMedicaStateError = "Este campo não pode estar vazio"
+            when (condicaoMedica) {
+                "" -> condicaoMedicaStateError = "Este campo não pode estar vazio"
             }
-            when(lesoes){
-                "" ->  lesoesStateError = "Este campo não pode estar vazio"
+            when (lesoes) {
+                "" -> lesoesStateError = "Este campo não pode estar vazio"
             }
-            when(medicamentos){
-                "" ->  medicamentoStateError = "Este campo não pode estar vazio"
+            when (medicamentos) {
+                "" -> medicamentoStateError = "Este campo não pode estar vazio"
             }
 
         }
+
         fun validarCampoObjetivo(objetivo: String) {
 
-            when(objetivo){
-                "" ->  objetivoStateError = "Este campo não pode estar vazio"
+            when (objetivo) {
+                "" -> objetivoStateError = "Este campo não pode estar vazio"
             }
 
         }
 
 
 
-            if (progressCount.value == 0)
-                InformacoesPessoais(navController = navController, localStorage)
-            else if (progressCount.value == 2)
+        if (progressCount.value == 0)
+            InformacoesPessoais(
+                navController = navController,
+                localStorage,
+                estadoNome = estadoNome,
+                estadoNomeError = estadoNomeError,
+                estadoDataNascimento = estadoDataNascimento,
+                estadoDataNascimentoError = estadoDataNascimentoError,
+                categoryGenero = categoryGenero,
+                categoryGeneroError = categoryGeneroError,
+                estadoTelefone = estadoTelefone,
+                estadoTelefoneError = estadoTelefoneError,
+                estadoCpf = estadoCpf,
+                estadoCpfError = estadoCpfError,
+            )
+        else if (progressCount.value == 2)
 
-                FormSaudeLimitacoes(
-                    localStorage = localStorage,
-                    condicaoMedicaState = condicaoMedicaState ,
-                    condicaoMedicaStateError = condicaoMedicaStateError,
-                    aoMudarCondicao = {
-                        condicaoMedicaState = it
-                        condicaoMedicaStateError = ""
-                    } ,
-                    lesoesState = lesoesState,
-                    lesoesStateError = lesoesStateError,
-                    aoMudarLesoes = {
-                        lesoesState = it
-                        lesoesStateError = ""
-                    },
-                    medicamentoState =  medicamentoState,
-                    medicamentoStateError =  medicamentoStateError
-                ) {
-                    medicamentoState = it
-                    medicamentoStateError = ""
-                }
-
-            else if (progressCount.value == 4)
-                TelaMetricas(navController = navController, localStorage)
-            else if (progressCount.value == 6)
-                TelaObjetivo(navController = navController,
-                    localStorage,
-                    objetivoState,
-                    objetivoStateError,
-                    {
+            FormSaudeLimitacoes(
+                localStorage = localStorage,
+                condicaoMedicaState = condicaoMedicaState,
+                condicaoMedicaStateError = condicaoMedicaStateError,
+                aoMudarCondicao = {
+                    condicaoMedicaState = it
+                    condicaoMedicaStateError = ""
+                },
+                lesoesState = lesoesState,
+                lesoesStateError = lesoesStateError,
+                aoMudarLesoes = {
+                    lesoesState = it
+                    lesoesStateError = ""
+                },
+                medicamentoState = medicamentoState,
+                medicamentoStateError = medicamentoStateError
+            ) {
+                medicamentoState = it
+                medicamentoStateError = ""
+            }
+        else if (progressCount.value == 4)
+            TelaMetricas(navController = navController, localStorage)
+        else if (progressCount.value == 6)
+            TelaObjetivo(navController = navController,
+                localStorage,
+                objetivoState,
+                objetivoStateError,
+                {
                     objetivoState = it
                     objetivoStateError = ""
                 })
@@ -239,14 +357,32 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
                     .padding(top = 30.dp),
             ) {
 
-
+//
                 if (progressCount.value == 0) {
                     createButtonWithFunction(
                         textButton = "Continue",
                         corBotao = GreenKalos
 
                     ) {
-                        increment()
+                        val nomeError = validarNome(estadoNome.value)
+                        val dataNascimentoError = validarDataNascimento(estadoDataNascimento.value)
+                        val telefoneError = validarTelefone(estadoTelefone.value)
+                        val cpfError = validarCPF(estadoCpf.value)
+                        val generoError = validarGenero(categoryGenero.value)
+
+                        // Verifique se há erros em algum dos campos
+                        if (nomeError == "" && dataNascimentoError == "" &&
+                            telefoneError == "" && cpfError == "" && generoError == ""
+                        ) {
+                            increment()
+                        } else {
+                            // Exiba as mensagens de erro
+                            estadoNomeError.value = nomeError
+                            estadoDataNascimentoError.value = dataNascimentoError
+                            estadoTelefoneError.value = telefoneError
+                            estadoCpfError.value = cpfError
+                            categoryGeneroError.value = generoError
+                        }
 
                     }
                 } else if (progressCount.value == 2) {
@@ -256,8 +392,8 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
 
                     ) {
 
-                        validarCamposQuestoes(condicaoMedicaState,lesoesState,medicamentoState)
-                        if(condicaoMedicaStateError == "" && lesoesStateError == "" && medicamentoStateError == "")
+                        validarCamposQuestoes(condicaoMedicaState, lesoesState, medicamentoState)
+                        if (condicaoMedicaStateError == "" && lesoesStateError == "" && medicamentoStateError == "")
                             increment()
                     }
                 } else if (progressCount.value == 4) {
@@ -289,7 +425,8 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
                         val email = localStorage.lerValor(context, "email").toString()
                         val senha = localStorage.lerValor(context, "senha").toString()
                         val nome = localStorage.lerValor(context, "nome").toString()
-                        val dataNascimento = localStorage.lerValor(context, "dataNascimento").toString()
+                        val dataNascimento =
+                            localStorage.lerValor(context, "dataNascimento").toString()
                         val cpf = localStorage.lerValor(context, "cpf").toString()
                         val telefone = localStorage.lerValor(context, "telefone").toString()
                         val peso = localStorage.lerValor(context, "peso").toString()
@@ -316,16 +453,16 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
 
                         val dataFormatada = formatarData(dataNascimento)
 
-                        if(generoText == "Masculino")
+                        if (generoText == "Masculino")
                             genero = 1
-                        else if (generoText == "Feminino"){
+                        else if (generoText == "Feminino") {
                             genero = 2
-                        }else{
+                        } else {
                             genero = 4
                         }
 
                         validarCampoObjetivo(objetivoState)
-                        if(objetivoStateError == "") {
+                        if (objetivoStateError == "") {
                             lifecycleScope.launch {
                                 val body = JsonObject().apply {
                                     addProperty("email", email)
@@ -356,7 +493,7 @@ fun BarraProgresso(navController: NavController, localStorage: Storage, lifecycl
 
 
                                     } else {
-                                        Log.e("TAG", "Deu erro",)
+                                        Log.e("TAG", "Deu erro")
                                         Toast.makeText(context, "Erro ", Toast.LENGTH_SHORT).show()
                                     }
 

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,60 +43,58 @@ import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.C
 fun InformacoesPessoais(
     navController: NavController,
     localStorage: Storage,
-    estadoNome: String,
-    estadoNomeError: String,
-    estadoDataNascimento: String,
-    estadoDataNascimentoError: String,
-    estadoTelefone: String,
-    estadoTelefoneError: String,
-    estadoCpf: String,
-    estadoCpfError: String,
-    categoryGenero: String,
-    categoryGeneroError: String
-
+    estadoNome: MutableState<String>,
+    estadoNomeError: MutableState<String>,
+    estadoDataNascimento: MutableState<String>,
+    estadoDataNascimentoError: MutableState<String>,
+    estadoTelefone: MutableState<String>,
+    estadoTelefoneError: MutableState<String>,
+    estadoCpf: MutableState<String>,
+    estadoCpfError: MutableState<String>,
+    categoryGenero: MutableState<String>,
+    categoryGeneroError: MutableState<String>
 ) {
-
     val context = LocalContext.current
-    val estadoNome = remember {
-        mutableStateOf(estadoNome)
-    }
-
-    val estadoNomeError = remember {
-        mutableStateOf(estadoNomeError)
-    }
-
-
-    val estadoDataNascimento = remember {
-        mutableStateOf(estadoDataNascimento)
-
-    }
-    val estadoDataNascimentoError = remember {
-        mutableStateOf(estadoDataNascimentoError)
-    }
-
-    val estadoTelefone = remember {
-        mutableStateOf(estadoTelefone)
-    }
-
-    val estadoTelefoneError = remember {
-        mutableStateOf(estadoTelefoneError)
-    }
+//    val estadoNome = remember {
+//        mutableStateOf(estadoNome)
+//    }
+//
+//    val estadoNomeError = remember {
+//        mutableStateOf(estadoNomeError)
+//    }
 
 
-    val estadoCpf = remember {
-        mutableStateOf(estadoCpf)
-    }
-
-    val estadoCpfError = remember {
-        mutableStateOf(estadoCpfError)
-    }
-
-    var categoryGenero = remember {
-        mutableStateOf(categoryGenero)
-    }
-    var categoryGeneroError = remember {
-        mutableStateOf(categoryGeneroError)
-    }
+//    val estadoDataNascimento = remember {
+//        mutableStateOf(estadoDataNascimento)
+//
+//    }
+//    val estadoDataNascimentoError = remember {
+//        mutableStateOf(estadoDataNascimentoError)
+//    }
+//
+//    val estadoTelefone = remember {
+//        mutableStateOf(estadoTelefone)
+//    }
+//
+//    val estadoTelefoneError = remember {
+//        mutableStateOf(estadoTelefoneError)
+//    }
+//
+//
+//    val estadoCpf = remember {
+//        mutableStateOf(estadoCpf)
+//    }
+//
+//    val estadoCpfError = remember {
+//        mutableStateOf(estadoCpfError)
+//    }
+//
+//    var categoryGenero = remember {
+//        mutableStateOf(categoryGenero)
+//    }
+//    var categoryGeneroError = remember {
+//        mutableStateOf(categoryGeneroError)
+//    }
 
 
     HeaderTelaInformacoes(titulo = "Informações Pessoais") {
@@ -175,7 +174,7 @@ fun InformacoesPessoais(
         CampoGenero(
             localStorage,
             isError = categoryGeneroError.value.isNotEmpty(),
-            categoria = categoryGenero.value
+            categoria = categoryGenero
         )
         Espacamento(tamanho = 20.dp)
 
