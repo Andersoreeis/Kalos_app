@@ -31,9 +31,6 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 fun CriarContaScreen(navController: NavController, lifecycleScope: LifecycleCoroutineScope, classe: Storage) {
 
 
-
-
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -45,7 +42,7 @@ fun CriarContaScreen(navController: NavController, lifecycleScope: LifecycleCoro
         HeaderCriarConta(navController)
 
         Spacer(modifier = Modifier.height(30.dp))
-        CamposCriarConta(navController, classe)
+        CamposCriarConta(navController, classe, lifecycleScope)
 
 
         Column (
