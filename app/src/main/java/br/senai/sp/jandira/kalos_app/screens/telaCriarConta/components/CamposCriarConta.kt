@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -78,7 +80,9 @@ fun CamposCriarConta(navController: NavController, localStorage: Storage, lifecy
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.Black)
-            .padding(20.dp),
+            .padding(20.dp)
+
+            ,
 
 
         ) {
@@ -87,7 +91,7 @@ fun CamposCriarConta(navController: NavController, localStorage: Storage, lifecy
                 content = emailStateError,
                 sizeText = 16,
                 colorText = Color.Red,
-                bold = 150,
+                bold = 500,
                 alinhamento = TextAlign.Left,
                 modifier = Modifier.padding(start = 10.dp)
 
@@ -114,7 +118,7 @@ fun CamposCriarConta(navController: NavController, localStorage: Storage, lifecy
                 content = senhaStateError,
                 sizeText = 16,
                 colorText = Color.Red,
-                bold = 150,
+                bold = 500,
                 alinhamento = TextAlign.Left,
                 modifier = Modifier.padding(start = 10.dp)
 
@@ -140,7 +144,7 @@ fun CamposCriarConta(navController: NavController, localStorage: Storage, lifecy
                 content = senhaRepetidaError,
                 sizeText = 16,
                 colorText = Color.Red,
-                bold = 150,
+                bold = 500,
                 alinhamento = TextAlign.Left,
                 modifier = Modifier.padding(start = 10.dp)
 

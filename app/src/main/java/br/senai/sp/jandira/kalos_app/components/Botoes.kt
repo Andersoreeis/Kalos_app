@@ -3,7 +3,9 @@ package br.senai.sp.jandira.app_kalos.components
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
@@ -55,23 +57,28 @@ fun createButtonWithError(
     funcao:  () -> Unit
 ) {
 
-    Button(
-        onClick = {
-           funcao()
+        Button(
+            onClick = {
+                funcao()
 
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .border(1.dp, corBotao, CircleShape),
-        colors = ButtonDefaults.buttonColors(Color.Transparent)
-    ) {
-        Text(
-            text = textButton,
-            color = corBotao,
-            fontSize = 20.sp,
-            fontWeight = FontWeight(400)
-        )
-    }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(1.dp, corBotao, CircleShape)
+
+            ,
+            colors = ButtonDefaults.buttonColors(Color.Transparent)
+        ) {
+            Text(
+                text = textButton,
+                color = corBotao,
+                fontSize = 20.sp,
+                fontWeight = FontWeight(400)
+            )
+        }
+
+
+
 }
 
 
