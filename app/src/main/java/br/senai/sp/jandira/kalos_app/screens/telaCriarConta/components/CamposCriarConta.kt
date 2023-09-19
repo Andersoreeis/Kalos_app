@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createButtonWithError
 import br.senai.sp.jandira.app_kalos.components.createTextKalos
@@ -32,10 +34,14 @@ import br.senai.sp.jandira.kalos_app.LocalStorage
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 import br.senai.sp.jandira.kalos_app.Storage
+import br.senai.sp.jandira.kalos_app.service.AlunoService
+import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
+import kotlinx.coroutines.launch
 
 @Composable
-fun CamposCriarConta(navController: NavController, localStorage: Storage) {
-
+fun CamposCriarConta(navController: NavController, localStorage: Storage, lifecycleScope: LifecycleCoroutineScope) {
+    lateinit var alunoService: AlunoService
+    alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
 
     val context = LocalContext.current
     var senhaState by remember {
@@ -177,10 +183,21 @@ fun CamposCriarConta(navController: NavController, localStorage: Storage) {
             senhaRepetidaError = validarSenha(senha, senhaRepetida).toString()
 
             if (erroEmail == "" && erroSenha == "") {
+                lifecycleScope.launch {
+                    Log.e("email", emailState )
+                    Log.e("api", alunoService.getAlunoByEmail(emailState).toString()  )
+                    val result = alunoService.getAlunoByEmail(emailState)
+                    if(result.isSuccessful){
+                        Log.e("CREAT-DATA", "${result.body()}")
+                            emailStateError = "Email ja existente"
+                    }else{
+                        navController.navigate("telaInformacoesDoCliente")
+                            localStorage.salvarValor(context, emailState, "email")
+                            localStorage.salvarValor(context, senhaState, "senha")
+                    }
+                }
 
-                navController.navigate("telaInformacoesDoCliente")
-                localStorage.salvarValor(context, emailState, "email")
-                localStorage.salvarValor(context, senhaState, "senha")
+
             } else {
                 Toast.makeText(context, "Erro tente denovo", Toast.LENGTH_SHORT).show()
 

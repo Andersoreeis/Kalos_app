@@ -5,6 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitHelper {
     private const val BASE_URL = "https://kaloscorp.cyclic.cloud/"
+    private const val BASE_URL2 = "http://10.107.144.6:8080/"
 
     fun getInstance(): Retrofit{
         return Retrofit.Builder()
