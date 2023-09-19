@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -19,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.kalos_app.R
@@ -26,48 +28,66 @@ import br.senai.sp.jandira.kalos_app.Storage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FormSaudeLimitacoes(localStorage: Storage) {
-    val context = LocalContext.current
-    var condicaoMedicaState by remember {
-        mutableStateOf("")
-    }
-    var lesoesState by remember {
-        mutableStateOf("")
-    }
-    var medicamentoState by remember {
-        mutableStateOf("")
-    }
+fun FormSaudeLimitacoes(
+    localStorage: Storage,
+    condicaoMedicaState: String,  condicaoMedicaStateError: String, aoMudarCondicao: (String) -> Unit,
+    lesoesState: String, lesoesStateError: String, aoMudarLesoes: (String) -> Unit,
+    medicamentoState: String, medicamentoStateError: String, aoMudarMedicamento: (String) -> Unit
 
+    ) {
+    val context = LocalContext.current
+
+    Spacer(modifier = Modifier.height(50.dp))
     Column(
         modifier = Modifier
             ,
         verticalArrangement = Arrangement.Center
     ) {
-        TextoCampoSaudeLimitacoes(
+        CampoTexto(
             texto = stringResource(R.string.condicao_medica),
+            value = condicaoMedicaState,
             aoMudar = {
-                condicaoMedicaState = it
-                localStorage.salvarValor(context, condicaoMedicaState, "condicaoMedica")
+                aoMudarCondicao(it)
                       },
-            value = condicaoMedicaState
+            placeholder = "" ,
+            isError = condicaoMedicaStateError.isNotEmpty(),
         )
+        if (condicaoMedicaStateError != ""){
+            androidx.compose.material3.Text(text = condicaoMedicaStateError, color = Color.Red)
+            }
+
+
         Spacer(modifier = Modifier.height(20.dp))
-        TextoCampoSaudeLimitacoes(
+
+        CampoTexto(
             texto = stringResource(R.string.lesoes),
+            value = lesoesState,
             aoMudar = {
-                lesoesState = it
-                localStorage.salvarValor(context, lesoesState, "lesoes")
+                aoMudarLesoes(it)
+
                       },
-            value = lesoesState
+            placeholder = "" ,
+            isError = lesoesStateError.isNotEmpty(),
         )
+        if ( lesoesStateError != ""){
+            androidx.compose.material3.Text(text =  lesoesStateError, color = Color.Red)
+        }
+
         Spacer(modifier = Modifier.height(20.dp))
-        TextoCampoSaudeLimitacoes(
+
+        CampoTexto(
             texto = stringResource(R.string.medicamentos),
+            value = medicamentoState,
             aoMudar = {
-                medicamentoState = it
-                localStorage.salvarValor(context, medicamentoState, "medicamento")
+                aoMudarMedicamento(it)
                       },
-            value = medicamentoState
+            placeholder = "" ,
+            isError = medicamentoStateError.isNotEmpty(),
         )
+        if (medicamentoStateError != ""){
+            androidx.compose.material3.Text(text = medicamentoStateError, color = Color.Red)
+        }
+
+
     }
 }
