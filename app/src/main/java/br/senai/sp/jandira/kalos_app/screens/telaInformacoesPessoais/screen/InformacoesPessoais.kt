@@ -114,7 +114,7 @@ fun InformacoesPessoais(
                 content = estadoNomeError.value,
                 sizeText = 16,
                 colorText = Color.Red,
-                bold = 150,
+                bold = 500,
                 alinhamento = TextAlign.Left,
                 modifier = Modifier.padding(start = 10.dp)
 
@@ -138,7 +138,7 @@ fun InformacoesPessoais(
                 content = estadoDataNascimentoError.value,
                 sizeText = 16,
                 colorText = Color.Red,
-                bold = 150,
+                bold = 500,
                 alinhamento = TextAlign.Left,
                 modifier = Modifier.padding(start = 10.dp)
 
@@ -164,7 +164,7 @@ fun InformacoesPessoais(
                 content = categoryGeneroError.value,
                 sizeText = 16,
                 colorText = Color.Red,
-                bold = 150,
+                bold = 500,
                 alinhamento = TextAlign.Left,
                 modifier = Modifier.padding(start = 10.dp)
 
@@ -183,7 +183,7 @@ fun InformacoesPessoais(
                 content = estadoTelefoneError.value,
                 sizeText = 16,
                 colorText = Color.Red,
-                bold = 150,
+                bold = 500,
                 alinhamento = TextAlign.Left,
                 modifier = Modifier.padding(start = 10.dp)
 
@@ -203,7 +203,7 @@ fun InformacoesPessoais(
                 content = estadoCpfError.value,
                 sizeText = 16,
                 colorText = Color.Red,
-                bold = 150,
+                bold = 500,
                 alinhamento = TextAlign.Left,
                 modifier = Modifier.padding(start = 10.dp)
 
