@@ -77,10 +77,7 @@ fun CampoTextoObjetivos(
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next
             ),
-
-
             singleLine = true
-
 
         )
     }

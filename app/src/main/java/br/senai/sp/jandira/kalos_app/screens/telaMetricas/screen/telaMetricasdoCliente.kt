@@ -49,30 +49,28 @@ fun TelaMetricas(navController: NavController, localStorage: Storage) {
 
 
     TextoCampoPeso(
-        texto = "Digite seu peso atualmente (em kg):",
-        aoMudar = {
-            estadoPeso.value = it
-            localStorage.salvarValor(context,estadoPeso.value, "peso")
-                  } ,
-        value = estadoPeso.value)
+        texto = "Digite seu peso atualmente (em kg):")
+
 
     CampoTextoMetricas(value = estadoPeso.value, aoMudar ={ novoValor ->
         estadoPeso.value = novoValor
-        estadoPesoError.value = ""}, placeholder = "", isError = estadoPesoError.value.isNotEmpty() )
+        estadoPesoError.value = ""
+        localStorage.salvarValor(context,estadoPeso.value, "peso")    },
+        placeholder = "",
+        isError = estadoPesoError.value.isNotEmpty() )
 
     Espacamento(tamanho = 20.dp)
 
     TextoCampoAltura(
-        texto = "Digite sua altura em cm:",
-        aoMudar = {
-            estadoAltura.value = it
-            localStorage.salvarValor(context,estadoAltura.value, "altura")
-                  } ,
-        value = estadoAltura.value)
+        texto = "Digite sua altura em cm:"
+    )
 
     CampoTextoMetricas(value = estadoAltura.value, aoMudar ={ novoValor ->
         estadoAltura.value = novoValor
-        estadoAlturaError.value = ""}, placeholder = "", isError = estadoAlturaError.value.isNotEmpty() )
+        estadoAlturaError.value = ""
+        localStorage.salvarValor(context,estadoAltura.value, "altura")  },
+        placeholder = "",
+        isError = estadoAlturaError.value.isNotEmpty() )
 
 
 }

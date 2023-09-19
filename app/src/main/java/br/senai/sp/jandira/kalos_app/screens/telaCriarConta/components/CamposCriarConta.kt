@@ -68,15 +68,6 @@ fun CamposCriarConta(navController: NavController, localStorage: Storage) {
 
 
 
-
-
-
-
-
-
-
-
-
     Column(
         modifier = Modifier
             .fillMaxWidth()

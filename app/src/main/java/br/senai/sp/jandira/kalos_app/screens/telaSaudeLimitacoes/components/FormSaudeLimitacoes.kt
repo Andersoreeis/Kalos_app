@@ -36,25 +36,7 @@ fun FormSaudeLimitacoes(
 
     ) {
     val context = LocalContext.current
-//    var condicaoMedicaState by remember {
-//        mutableStateOf("")
-//    }
-//    var condicaoMedicaStateError by remember {
-//        mutableStateOf("")
-//    }
-//    var lesoesState by remember {
-//        mutableStateOf("")
-//    }
-//
-//    var lesoesStateError by remember {
-//        mutableStateOf("")
-//    }
-//    var medicamentoState by remember {
-//        mutableStateOf("")
-//    }
-//   var medicamentoStateError by remember {
-//        mutableStateOf("")
-//    }
+
     Spacer(modifier = Modifier.height(50.dp))
     Column(
         modifier = Modifier
