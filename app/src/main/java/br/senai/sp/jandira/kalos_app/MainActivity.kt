@@ -46,10 +46,13 @@ class MainActivity : ComponentActivity() {
                     val localStorage: Storage = Storage()
                     val navController = rememberNavController()
                     NavHost(
+
+                
                         navController = navController,
                         startDestination = "telaInicial"
                     ) {
                         composable(route = "telaInicial") {
+
                             TelaInicial(navController)
                         }
                         composable(route = "fazerLogin") {
@@ -66,6 +69,7 @@ class MainActivity : ComponentActivity() {
                         composable(route = "home") {
                             TelaHome()
                         }
+
 
                     }
 
