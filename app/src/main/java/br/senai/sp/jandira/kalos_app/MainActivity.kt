@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.senai.sp.jandira.kalos_app.screens.InformacoesCliente.screen.TelasInformacoesdoCliente
 import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.screen.CriarContaScreen
+import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.LoginScreeViewModel
 
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.screen.LoginScreen
 import br.senai.sp.jandira.kalos_app.screens.telaHome.screen.TelaHome
@@ -20,11 +21,17 @@ import br.senai.sp.jandira.kalos_app.screens.telaInicial.screen.TelaInicial
 import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.screen.TelaObjetivo
 import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.screen.TelaSaudeLimitacoes
 import br.senai.sp.jandira.kalos_app.ui.theme.Kalos_appTheme
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
 
 
         setContent {
@@ -39,29 +46,32 @@ class MainActivity : ComponentActivity() {
                     val localStorage: Storage = Storage()
                     val navController = rememberNavController()
                     NavHost(
-                        navController =  navController,
-                        startDestination = "home" ){
-                        composable(route = "telaInicial"){
+
+                
+                        navController = navController,
+                        startDestination = "telaInicial"
+                    ) {
+                        composable(route = "telaInicial") {
+
                             TelaInicial(navController)
                         }
-                        composable(route = "fazerLogin"){
-                            LoginScreen(navController, lifecycleScope)
+                        composable(route = "fazerLogin") {
+                            LoginScreen(navController, lifecycleScope, viewModel = LoginScreeViewModel())
                         }
-                        composable(route = "criarConta"){
+                        composable(route = "criarConta") {
 
-                            CriarContaScreen(navController, lifecycleScope, localStorage)
+                            CriarContaScreen(navController, lifecycleScope, localStorage, viewModel =  LoginScreeViewModel())
                         }
-                        composable(route = "telaInformacoesDoCliente"){
+                        composable(route = "telaInformacoesDoCliente") {
                             TelasInformacoesdoCliente(navController, localStorage, lifecycleScope)
                         }
 
-                        composable(route= "home"){
+                        composable(route = "home") {
                             TelaHome()
                         }
 
 
                     }
-
 
 
                 }
@@ -70,8 +80,8 @@ class MainActivity : ComponentActivity() {
         }
 
 
-            }
-        }
+    }
+}
 
 
 

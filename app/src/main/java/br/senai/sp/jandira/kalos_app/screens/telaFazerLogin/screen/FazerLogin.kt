@@ -40,6 +40,7 @@ import br.senai.sp.jandira.app_kalos.components.createTitleKalos
 import br.senai.sp.jandira.app_kalos.components.getLogoKalos
 import br.senai.sp.jandira.kalos_app.components.ContinueCom
 import br.senai.sp.jandira.kalos_app.components.Espacamento
+import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.LoginScreeViewModel
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.CampoEmailLogin
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.CampoSenhaLogin
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.component.IrparaCadastro
@@ -54,7 +55,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 
-fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutineScope) {
+fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutineScope, viewModel: LoginScreeViewModel) {
     val estadoEmail = remember { mutableStateOf("") }
     val estadoSenha = remember { mutableStateOf("") }
     val estadoErroEmail = remember { mutableStateOf("") }
@@ -236,7 +237,7 @@ fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutine
 
         }
 
-        ContinueCom()
+        ContinueCom(navController = navController, viewModel = viewModel)
 
         Espacamento(tamanho = 30.dp)
 
