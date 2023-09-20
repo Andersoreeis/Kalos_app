@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController =  navController,
-                        startDestination = "telaInicial" ){
+                        startDestination = "home" ){
                         composable(route = "telaInicial"){
                             TelaInicial(navController)
                         }
@@ -58,6 +58,7 @@ class MainActivity : ComponentActivity() {
                         composable(route= "home"){
                             TelaHome()
                         }
+
 
                     }
 
