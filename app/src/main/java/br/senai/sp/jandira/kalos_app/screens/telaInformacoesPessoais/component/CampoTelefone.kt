@@ -1,41 +1,47 @@
 package br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component
-
-
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CampoTelefone(value: String, aoMudar: (String) -> Unit, placeholder: String, isError: Boolean) {
+    var formattedValue by remember(value) {
+        mutableStateOf(formatTelefone(value))
+    }
+
     OutlinedTextField(
-        value =  value,
-        onValueChange = {
-            aoMudar (it)
+        value = formattedValue,
+        onValueChange = { newText ->
+            if (newText.length <= 14) { // Limita o usuário a 14 caracteres
+                val unformattedText = newText.replace(Regex("[^\\d]"), "")
+                aoMudar(unformattedText)
+                formattedValue = formatTelefone(unformattedText)
+            }
         },
         placeholder = {
             Text(text = placeholder, color = Color(0xFF606060))
         },
         modifier = Modifier
             .background(Color.Black)
-            .fillMaxWidth()
-
-        ,
-        shape = RoundedCornerShape(25.dp),
+            .fillMaxWidth(),
         isError = isError,
         singleLine = true,
-
-
+        keyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = KeyboardType.Number
+        ),
+        shape = RoundedCornerShape(25.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             textColor = GreenKalos,
             containerColor = Color(0xFF393939),
@@ -44,5 +50,17 @@ fun CampoTelefone(value: String, aoMudar: (String) -> Unit, placeholder: String,
             cursorColor = GreenKalos
         )
     )
+}
 
+private fun formatTelefone(value: String): String {
+    val formattedValue = StringBuilder()
+    for (i in value.indices) {
+        when (i) {
+            0 -> formattedValue.append("(")
+            2 -> formattedValue.append(") ")
+            7 -> formattedValue.append("-")
+        }
+        formattedValue.append(value[i])
+    }
+    return formattedValue.toString()
 }

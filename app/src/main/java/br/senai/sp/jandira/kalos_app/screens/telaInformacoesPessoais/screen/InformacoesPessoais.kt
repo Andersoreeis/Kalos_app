@@ -154,7 +154,7 @@ fun InformacoesPessoais(
                 localStorage.salvarValor(context, estadoDataNascimento.value, "dataNascimento")
             },
             placeholder = "Digite a data de nascimento",
-            IsError = estadoDataNascimentoError.value.isNotEmpty()
+            isError = estadoDataNascimentoError.value.isNotEmpty()
         )
 
         Espacamento(tamanho = 20.dp)

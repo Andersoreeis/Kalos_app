@@ -145,10 +145,7 @@ fun BarraProgresso(
     fun validarDataNascimento(dataNascimento: String): String {
         if (dataNascimento.isEmpty()) {
             return "Data de nascimento é obrigatória."
-        } else {
-            // Adicione aqui a validação específica para data de nascimento (exemplo: formato correto)
-            // Se a validação falhar, retorne a mensagem de erro apropriada
-            // Caso contrário, retorne uma string vazia
+        }else{
             return ""
         }
     }
@@ -156,11 +153,9 @@ fun BarraProgresso(
     fun validarTelefone(telefone: String): String {
         if (telefone.isEmpty()) {
             return "Telefone é obrigatório."
-        } else {
-            // Adicione aqui a validação específica para telefone (exemplo: formato correto)
-            // Se a validação falhar, retorne a mensagem de erro apropriada
-            // Caso contrário, retorne uma string vazia
+        }  else {
             return ""
+
         }
     }
 
@@ -168,10 +163,8 @@ fun BarraProgresso(
         if (cpf.isEmpty()) {
             return "CPF é obrigatório."
         } else {
-            // Adicione aqui a validação específica para CPF (exemplo: formato correto)
-            // Se a validação falhar, retorne a mensagem de erro apropriada
-            // Caso contrário, retorne uma string vazia
             return ""
+
         }
     }
 
