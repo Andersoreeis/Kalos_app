@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -93,11 +94,19 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.1")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
-
-
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.0")
-
     // para usar o calendario
+
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.0")
+
+    //Google Services
+    implementation ("com.google.android.gms:play-services-auth:20.4.1")
+
+
+    // Firebase Service
+
+    implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
 
 
 

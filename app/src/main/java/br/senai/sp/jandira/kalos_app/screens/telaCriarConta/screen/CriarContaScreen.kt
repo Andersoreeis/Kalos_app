@@ -21,16 +21,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.components.ContinueCom
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamposCriarConta
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.HeaderCriarConta
+import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.LoginScreeViewModel
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @Composable
-fun CriarContaScreen(navController: NavController, lifecycleScope: LifecycleCoroutineScope, classe: Storage) {
+fun CriarContaScreen(navController: NavController, lifecycleScope: LifecycleCoroutineScope, classe: Storage, viewModel: LoginScreeViewModel) {
 
 
     Column(
@@ -51,7 +53,7 @@ fun CriarContaScreen(navController: NavController, lifecycleScope: LifecycleCoro
         Column (
             modifier = Modifier.padding(horizontal = 30.dp)
         ){
-            ContinueCom()
+            ContinueCom(navController = navController, viewModel = viewModel)
         }
 
         Row (

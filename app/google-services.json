@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "470985893904",
+    "project_id": "kalos-app-b403c",
+    "storage_bucket": "kalos-app-b403c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:470985893904:android:ea5624601776fa8d56c295",
+        "android_client_info": {
+          "package_name": "br.senai.sp.jandira.kalos_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "470985893904-teff3jrjb2pnpf85lifhdg1h0mcpmgfh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.senai.sp.jandira.kalos_app",
+            "certificate_hash": "725ec1d1313ef66ad87b0d2c60cfa54c3ae20ade"
+          }
+        },
+        {
+          "client_id": "470985893904-bh5urla6jiaglnbs4p38j5p7k8ehsi6k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBT6NEDCsGJi3pafHh2BrRwEtLeT9bT988"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "470985893904-bh5urla6jiaglnbs4p38j5p7k8ehsi6k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
