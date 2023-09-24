@@ -106,8 +106,8 @@ dependencies {
 
     // Firebase Service
 
-    implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
 
+    implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
 
 
 }

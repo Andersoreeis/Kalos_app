@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.app_kalos.components.getLogoKalos
+import br.senai.sp.jandira.kalos_app.model.AlunoResponse
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -27,7 +28,7 @@ import java.util.Calendar
 import java.util.Locale
 
 @Composable
-fun HeaderHome() {
+fun HeaderHome(aluno: AlunoResponse) {
     val calendario = Calendar.getInstance()
 
     fun obterSemana(): String {
@@ -102,7 +103,7 @@ fun HeaderHome() {
                         fontSize = 40.sp
                     )
                     Text(
-                        text = "User!",
+                        text = "${aluno.nome} !",
                         color = Color.White,
                         fontSize = 40.sp,
                         fontWeight = FontWeight.Bold
@@ -116,8 +117,8 @@ fun HeaderHome() {
     }
 }
 
-@Preview
-@Composable
-fun HomeHeaderPreview() {
-    HeaderHome()
-}
+//@Preview
+//@Composable
+//fun HomeHeaderPreview() {
+//    HeaderHome()
+//}
