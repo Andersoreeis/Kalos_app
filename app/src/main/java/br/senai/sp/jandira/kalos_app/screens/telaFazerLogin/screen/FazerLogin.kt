@@ -38,6 +38,7 @@ import br.senai.sp.jandira.app_kalos.components.createButtonWithError
 import br.senai.sp.jandira.app_kalos.components.createTextKalos
 import br.senai.sp.jandira.app_kalos.components.createTitleKalos
 import br.senai.sp.jandira.app_kalos.components.getLogoKalos
+import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.components.ContinueCom
 import br.senai.sp.jandira.kalos_app.components.Espacamento
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.LoginScreeViewModel
@@ -55,7 +56,10 @@ import kotlinx.coroutines.launch
 
 @Composable
 
-fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutineScope, viewModel: LoginScreeViewModel) {
+fun LoginScreen(navController: NavController,
+                lifecycleScope: LifecycleCoroutineScope,
+                viewModel: LoginScreeViewModel,
+                localStorage:Storage) {
     val estadoEmail = remember { mutableStateOf("") }
     val estadoSenha = remember { mutableStateOf("") }
     val estadoErroEmail = remember { mutableStateOf("") }
@@ -205,11 +209,12 @@ fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutine
                     Log.e("teste", body.toString())
                     val result = alunoService.autenticarAluno(body)
 
-
-
                     if (result.isSuccessful) {
                         Log.e("CREAT-DATA", "${result.body()}")
                         val checagem = result.body()?.get("status")
+                        val idAluno = result.body()?.get("id")
+                        Log.e("id", idAluno.toString())
+
                         if (checagem.toString() == "401") {
                             Log.e("TAG", "Deu erro")
                             Toast.makeText(
@@ -220,8 +225,8 @@ fun LoginScreen(navController: NavController, lifecycleScope: LifecycleCoroutine
 
                         } else {
                             Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show()
-
-                            navController.navigate("telaInformacoesDoCliente")
+                            localStorage.salvarValor(context, idAluno.toString(), "idAluno")
+                            navController.navigate("home")
                         }
 
 
