@@ -14,7 +14,7 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 @Composable
 fun BarraRetaHome() {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp).height(2.dp)
+        modifier = Modifier.fillMaxWidth().height(2.dp)
     ) {
         Box(modifier = Modifier
             .height(2.dp)
