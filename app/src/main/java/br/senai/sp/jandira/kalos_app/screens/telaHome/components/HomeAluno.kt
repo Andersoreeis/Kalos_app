@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,7 +30,8 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalosEscuro
 fun HomeAluno(aluno: AlunoResponse) {
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(horizontal = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(50.dp))
@@ -38,10 +40,13 @@ fun HomeAluno(aluno: AlunoResponse) {
         BarraRetaHome()
         Spacer(modifier = Modifier.height(17.dp))
         Text(
-            text = stringResource(R.string.treinos_de_hoje),
+            text = stringResource(R.string.suas_matriculas),
             color = Color.White,
             fontWeight = FontWeight.Bold,
-            fontSize = 24.sp
+            fontSize = 24.sp,
+            textAlign = TextAlign.Start,
+            modifier = Modifier
+                .fillMaxWidth()
         )
 
 
