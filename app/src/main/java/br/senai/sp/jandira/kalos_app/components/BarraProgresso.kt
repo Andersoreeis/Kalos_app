@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -323,9 +324,9 @@ fun BarraProgresso(
                     objetivoStateError = ""
                 })
 
+        
 
-
-
+        Spacer(modifier = Modifier.height(20.dp))
 
 
         Column(
@@ -457,7 +458,7 @@ fun BarraProgresso(
                             return formattedDate
                         }
 
-                        val dataFormatada = formatarData(dataNascimento)
+                        val dataFormatada = formatarData(estadoDataNascimento.value)
 
                         if (generoText == "Masculino")
                             genero = 1
@@ -466,6 +467,9 @@ fun BarraProgresso(
                         } else {
                             genero = 4
                         }
+
+
+
 
                         validarCampoObjetivo(objetivoState)
                         if (objetivoStateError == "") {
