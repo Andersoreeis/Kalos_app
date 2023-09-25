@@ -102,6 +102,9 @@ fun BarraProgresso(
         mutableStateOf("")
 
     }
+    val estadoDia = remember { mutableStateOf("") }
+    val estadoMes = remember { mutableStateOf("") }
+    val estadoAno = remember { mutableStateOf("") }
     val estadoDataNascimentoError = remember {
         mutableStateOf("")
     }
@@ -130,6 +133,8 @@ fun BarraProgresso(
         mutableStateOf("")
     }
 
+    estadoDataNascimento.value = "${estadoDia.value +estadoMes.value + estadoAno.value}"
+
     fun validarNome(nome: String): String {
         if (nome.isEmpty()) {
             return "Nome é obrigatório."
@@ -143,8 +148,10 @@ fun BarraProgresso(
     }
 
     fun validarDataNascimento(dataNascimento: String): String {
-        if (dataNascimento.isEmpty()) {
+        if (dataNascimento.isEmpty() || dataNascimento == "") {
             return "Data de nascimento é obrigatória."
+        }else if(dataNascimento.length > 8 || dataNascimento.length < 8){
+            return "Data de nascimento está incorreto"
         }else{
             return ""
         }
@@ -271,6 +278,9 @@ fun BarraProgresso(
                 estadoNome = estadoNome,
                 estadoNomeError = estadoNomeError,
                 estadoDataNascimento = estadoDataNascimento,
+                estadoDia = estadoDia,
+                estadoMes = estadoMes,
+                estadoAno = estadoAno,
                 estadoDataNascimentoError = estadoDataNascimentoError,
                 categoryGenero = categoryGenero,
                 categoryGeneroError = categoryGeneroError,

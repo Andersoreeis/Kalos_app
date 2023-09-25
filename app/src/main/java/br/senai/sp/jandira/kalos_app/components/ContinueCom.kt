@@ -87,7 +87,7 @@ fun ContinueCom(navController: NavController, viewModel: LoginScreeViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Spacer(
@@ -148,15 +148,7 @@ fun ContinueCom(navController: NavController, viewModel: LoginScreeViewModel) {
                 )
             }
 
-            IconButton(
-                onClick = { /* Implementar ação para a Apple */ }
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.apple),
-                    contentDescription = "Imagem da Apple",
-                    modifier = Modifier.size(30.dp)
-                )
-            }
+
         }
     }
 }

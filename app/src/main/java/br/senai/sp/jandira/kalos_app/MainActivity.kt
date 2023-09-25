@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
 
                 
                         navController = navController,
-                        startDestination = "telaInicial"
+                        startDestination = "telaInformacoesDoCliente"
                     ) {
                         composable(route = "telaInicial") {
 

@@ -45,7 +45,10 @@ fun InformacoesPessoais(
     localStorage: Storage,
     estadoNome: MutableState<String>,
     estadoNomeError: MutableState<String>,
-    estadoDataNascimento: MutableState<String>,
+    estadoDia: MutableState<String>,
+    estadoMes: MutableState<String>,
+    estadoAno: MutableState<String>,
+    estadoDataNascimento : MutableState<String>,
     estadoDataNascimentoError: MutableState<String>,
     estadoTelefone: MutableState<String>,
     estadoTelefoneError: MutableState<String>,
@@ -55,6 +58,8 @@ fun InformacoesPessoais(
     categoryGeneroError: MutableState<String>
 ) {
     val context = LocalContext.current
+
+
 //    val estadoNome = remember {
 //        mutableStateOf(estadoNome)
 //    }
@@ -145,17 +150,30 @@ fun InformacoesPessoais(
             )
         }
 
-        CampoDataNascimento(
-            value = estadoDataNascimento.value.toString(),
-            aoMudar = {
-                estadoDataNascimento.value = it
-                estadoDataNascimentoError.value = ""
 
-                localStorage.salvarValor(context, estadoDataNascimento.value, "dataNascimento")
-            },
-            placeholder = "Digite a data de nascimento",
-            isError = estadoDataNascimentoError.value.isNotEmpty()
-        )
+            CampoDataNascimento(
+                dia = estadoDia.value,
+                mes = estadoMes.value,
+                ano = estadoAno.value,
+                aoMudarDia = {
+                    estadoDia.value = it
+                    estadoDataNascimentoError.value = ""
+                    localStorage.salvarValor(context, it, "diaNascimento")
+                },
+                aoMudarMes = {
+                    estadoMes.value = it
+                    estadoDataNascimentoError.value = ""
+                    localStorage.salvarValor(context, it, "mesNascimento")
+                },
+                aoMudarAno = {
+                    estadoAno.value = it
+                    estadoDataNascimentoError.value = ""
+                    localStorage.salvarValor(context, it, "anoNascimento")
+                },
+                isErrorDia = estadoDataNascimentoError.value.isNotEmpty(),
+                isErrorMes = estadoDataNascimentoError.value.isNotEmpty(),
+                isErrorAno = estadoDataNascimentoError.value.isNotEmpty()
+            )
 
         Espacamento(tamanho = 20.dp)
 

@@ -1,7 +1,9 @@
 package br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
@@ -10,24 +12,26 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CampoCpf(value: String, aoMudar: (String) -> Unit, placeholder: String, isError: Boolean) {
-    var formattedValue by remember(value) {
-        mutableStateOf(formatCpf(value))
+    var cpf by remember(value) {
+        mutableStateOf(value)
     }
 
     OutlinedTextField(
-        value = formattedValue,
+        value = cpf,
         onValueChange = { newText ->
             if (newText.length <= 11) { // Limita o usuário a 11 caracteres
                 val unformattedText = newText.replace(Regex("[^\\d]"), "")
                 aoMudar(unformattedText)
-                formattedValue = formatCpf(unformattedText)
+                cpf = unformattedText
             }
         },
         placeholder = {
@@ -39,7 +43,8 @@ fun CampoCpf(value: String, aoMudar: (String) -> Unit, placeholder: String, isEr
         isError = isError,
         singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(
-            keyboardType = KeyboardType.Number
+            keyboardType = KeyboardType.Number,
+            imeAction = ImeAction.Done
         ),
         shape = RoundedCornerShape(25.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -48,18 +53,7 @@ fun CampoCpf(value: String, aoMudar: (String) -> Unit, placeholder: String, isEr
             unfocusedBorderColor = Color(0xFF393939),
             focusedBorderColor = GreenKalos,
             cursorColor = GreenKalos
-        )
+        ),
+        visualTransformation = VisualTransformation.None
     )
-}
-
-private fun formatCpf(value: String): String {
-    val formattedValue = StringBuilder()
-    for (i in value.indices) {
-        when (i) {
-            3, 6 -> formattedValue.append('.')
-            9 -> formattedValue.append('-')
-        }
-        formattedValue.append(value[i])
-    }
-    return formattedValue.toString()
 }
