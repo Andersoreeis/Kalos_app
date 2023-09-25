@@ -53,6 +53,7 @@ import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.model.AlunoResponse
 import br.senai.sp.jandira.kalos_app.model.BottomNavigationItem
+import br.senai.sp.jandira.kalos_app.screens.telaBuscarAcademias.screens.BuscarAcademias
 import br.senai.sp.jandira.kalos_app.screens.telaHome.components.HomeAluno
 import br.senai.sp.jandira.kalos_app.screens.telaPerfil.screen.TelaPerfil
 import br.senai.sp.jandira.kalos_app.service.AlunoService
@@ -181,7 +182,7 @@ fun TelaHome(navController: NavController, lifecycleScope: LifecycleCoroutineSco
                 } else if (selectedItemIndex == 2) {
                     TelaPerfil(aluno)
                 } else {
-
+                    BuscarAcademias(lifecycleScope)
                 }
             }
         }else{

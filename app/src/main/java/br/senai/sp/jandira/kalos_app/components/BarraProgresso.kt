@@ -496,7 +496,7 @@ fun BarraProgresso(
                                     Log.e("CREAT-DATA", "${result.body()}")
                                     val checagem = result.body()?.get("status")
                                     if (checagem.toString() == "201") {
-                                        Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT)
+                                        Toast.makeText(context, "Conta criada com sucesso", Toast.LENGTH_SHORT)
                                             .show()
 
                                         navController.navigate("fazerLogin")
