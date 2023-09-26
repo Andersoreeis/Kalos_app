@@ -26,7 +26,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.model.AlunoResponse
+import br.senai.sp.jandira.kalos_app.screens.telaHome.components.BarraRetaHome
 import br.senai.sp.jandira.kalos_app.screens.telaPerfil.components.HeaderPerfil
+import br.senai.sp.jandira.kalos_app.screens.telaPerfil.components.MedidasPerfil
 import br.senai.sp.jandira.kalos_app.screens.telaPerfil.components.NomeCodigoPerfil
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
@@ -41,9 +43,12 @@ fun TelaPerfil(aluno: AlunoResponse) {
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-       HeaderPerfil(aluno = aluno )
+        HeaderPerfil(aluno = aluno)
         Spacer(modifier = Modifier.height(10.dp))
         NomeCodigoPerfil(aluno = aluno)
+        Spacer(modifier = Modifier.height(16.dp))
+        MedidasPerfil(aluno = aluno)
+
     }
 }
 
