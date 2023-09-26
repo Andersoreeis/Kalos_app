@@ -63,7 +63,6 @@ fun CampoEmailCadastrar(value: String, aoMudar: (String) -> Unit, placeholder: S
         keyboardOptions = keyboardOptions ,
 
 
-        singleLine = true
 
 
     )

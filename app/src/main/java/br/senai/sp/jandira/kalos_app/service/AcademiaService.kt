@@ -19,4 +19,11 @@ interface AcademiaService {
     @GET("kalos/academia/nome/{nomes}")
     suspend fun getAlunoByNome(@Path("nomes") id: String): Response<BaseResponseAcademia<AcademiaResponse>>
 
+    @GET("kalos/academia/")
+    suspend fun getAcademia(): Response<BaseResponseAcademia<AcademiaResponse>>
+
+
+
+
+
 }
