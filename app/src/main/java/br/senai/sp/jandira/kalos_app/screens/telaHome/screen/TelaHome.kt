@@ -55,6 +55,7 @@ import br.senai.sp.jandira.kalos_app.model.AlunoResponse
 import br.senai.sp.jandira.kalos_app.model.BottomNavigationItem
 import br.senai.sp.jandira.kalos_app.screens.telaBuscarAcademias.screens.BuscarAcademias
 import br.senai.sp.jandira.kalos_app.screens.telaHome.components.HomeAluno
+import br.senai.sp.jandira.kalos_app.screens.telaPerfil.screen.TelaPerfil
 import br.senai.sp.jandira.kalos_app.service.AlunoService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
@@ -179,7 +180,7 @@ fun TelaHome(navController: NavController, lifecycleScope: LifecycleCoroutineSco
                 if (selectedItemIndex == 1) {
                     HomeAluno(aluno)
                 } else if (selectedItemIndex == 2) {
-                    Text(text = "Perfil", color = Color.White)
+                    TelaPerfil(aluno)
                 } else {
                     BuscarAcademias(lifecycleScope)
                 }

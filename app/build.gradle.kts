@@ -80,10 +80,6 @@ dependencies {
 
 
 
-
-
-
-
     //Mais icones
     implementation ("androidx.compose.material:material-icons-extended:1.2.0")
 
@@ -106,10 +102,11 @@ dependencies {
 
     // Firebase Service
 
-
-
     implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
     implementation ("androidx.compose.material3:material3:x.y.z")
+
+    //coil
+    implementation ("io.coil-kt:coil-compose:2.3.0")
 
 
 }
