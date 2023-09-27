@@ -2,6 +2,8 @@ package br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.components
 
 import android.net.Uri
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -42,9 +45,17 @@ import coil.compose.AsyncImage
 
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 @Composable
 fun EditarFoto(aluno: AlunoResponse) {
+    //Referencia para acesso e manipulação do cloud Storage e firestore
+     lateinit var storageRef: StorageReference
+     lateinit var fibaseFirestore: FirebaseFirestore
+    storageRef = FirebaseStorage.getInstance().reference.child("images")
+    fibaseFirestore = FirebaseFirestore.getInstance()
     var fotoUri by remember {
         mutableStateOf<Uri?>(null)
     }
@@ -105,9 +116,50 @@ fun EditarFoto(aluno: AlunoResponse) {
             fontSize = 20.sp,
             modifier = Modifier .clickable {
                 launcher.launch("image/*")
-                Log.e("TAG", "EditarFoto: ${painter} " )
+                Log.e("TAG", "EditarFoto: ${painter.toString()} " )
             }
         )
+
+
+//        Button(
+//            onClick = {
+//                storageRef = storageRef.child(System.currentTimeMillis().toString())
+//                fotoUri?.let {
+//                    storageRef.putFile(it).addOnCompleteListener { task->
+//
+//                        if (task.isSuccessful) {
+//
+//                            storageRef.downloadUrl.addOnSuccessListener { uri ->
+//
+//                                val map = HashMap<String, Any>()
+//                                map["pic"] = uri.toString()
+//                                Log.e("link", map.toString() )
+//
+//                                fibaseFirestore.collection("images").add(map).addOnCompleteListener { firestoreTask ->
+//
+//                                    if (firestoreTask.isSuccessful){
+//                                        Toast.makeText(context, "Uploaded realizado com sucesso", Toast.LENGTH_SHORT).show()
+//
+//                                    }else{
+//                                        Toast.makeText(context, "ERRO ao tentar fazer upload", Toast.LENGTH_SHORT).show()
+//
+//                                    }
+//
+//
+//                                }
+//                            }
+//
+//                        }else{
+//
+//                            Toast.makeText(context,  task.exception?.message, Toast.LENGTH_SHORT).show()
+//
+//                        }
+//
+//                    }
+//                }
+//        }) {}
+
+
     }
 
 
