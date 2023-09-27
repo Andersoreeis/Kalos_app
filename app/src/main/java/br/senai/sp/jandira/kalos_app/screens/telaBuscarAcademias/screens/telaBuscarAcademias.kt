@@ -12,13 +12,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialogDefaults.shape
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -37,63 +42,70 @@ import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.components.Espacamento
 import br.senai.sp.jandira.kalos_app.model.AcademiaResponse
 import br.senai.sp.jandira.kalos_app.model.BaseResponseAcademia
+import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalosEscuroCard
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 import kotlinx.coroutines.launch
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BuscarAcademias(lifecycleScope: LifecycleCoroutineScope) {
 
     val academiaService = RetrofitHelper.getInstance().create(AcademiaService::class.java)
-    val pesquisarPorAcademias = remember {
-        mutableStateOf("")
+    val estadoAcademia = remember { mutableStateOf("") }
+    val estadoTodasAcademias = remember { mutableStateOf(emptyList<AcademiaResponse>()) }
+
+    // Função para buscar academias e atualizar o estado
+
+    // Função para buscar academias por nome
+    suspend fun buscarAcademiasPorNome(nome: String): List<AcademiaResponse> {
+        val result = academiaService.getAlunoByNome(nome)
+        if (result.isSuccessful) {
+            val response = result.body()
+            if (response != null) {
+                val academias: List<AcademiaResponse>? = response.data
+                if (academias != null) {
+                    return academias
+                }
+            }
+        } else {
+            Log.e("GETTING-DATA", "Erro ao buscar academias: ${result.message()}")
+        }
+
+        return emptyList()
     }
 
-    val academiaList = remember { mutableStateOf(emptyList<AcademiaResponse>()) }
-
-    fun buscarAcademiasPorNome(nome: String) {
-
-        lifecycleScope.launch {
-            val result = academiaService.getAlunoByNome(nome)
-            if (result.isSuccessful) {
-                val response = result.body()
-                if (response != null) {
-                    val academias: List<AcademiaResponse>? = response.data
-                    if (academias != null) {
-                        for (academia in academias) {
-                            Log.i("GETTING-DATA", "Teste: ${academia}")
-
-                        }
-                    }
+    // Função para buscar todas as academias
+    suspend fun buscarTodasAcademias(): List<AcademiaResponse> {
+        val result = academiaService.getAcademia()
+        if (result.isSuccessful) {
+            val response = result.body()
+            if (response != null) {
+                val academias: List<AcademiaResponse>? = response.data
+                if (academias != null) {
+                    return academias
                 }
             } else {
                 Log.e("GETTING-DATA", "Erro ao buscar academias: ${result.message()}")
             }
         }
+
+        return emptyList()
     }
 
 
-    fun buscarTodasAcademias() {
-        lifecycleScope.launch {
-            val result = academiaService.getAcademia()
-            if (result.isSuccessful) {
-                val response = result.body()
-                if (response != null) {
-                    val academias: List<AcademiaResponse>? = response.data
-                    if (academias != null) {
-                        for (academia in academias) {
-                            Log.i("GETTING-DATA", "Teste: ${academia}")
+    suspend fun buscarAcademias() {
+        val nome = estadoAcademia.value
+        val academias: List<AcademiaResponse> = if (nome.isNotEmpty()) {
+            buscarAcademiasPorNome(nome)
+        } else {
+            buscarTodasAcademias()
 
-                        }
-                    }
-                } else {
-                    Log.e("GETTING-DATA", "Erro ao buscar academias: ${result.message()}")
-
-                }
-            }
         }
+        estadoTodasAcademias.value = academias
     }
 
+    LaunchedEffect(key1 = true) {
+        buscarAcademias()
+    }
 
     Column(
         verticalArrangement = Arrangement.Center,
@@ -108,24 +120,23 @@ fun BuscarAcademias(lifecycleScope: LifecycleCoroutineScope) {
                 .background(Color.Gray)
         )
 
-
         Espacamento(tamanho = 20.dp)
-
 
         Column(modifier = Modifier.fillMaxWidth()) {
             OutlinedTextField(
-                value = pesquisarPorAcademias.value,
-                onValueChange = { pesquisarPorAcademias.value = it },
+                value = estadoAcademia.value,
+                onValueChange = { estadoAcademia.value = it },
                 trailingIcon = {
                     Icon(
                         imageVector = ImageVector.vectorResource(R.drawable.baseline_search_24),
                         contentDescription = "Icon de Phone",
                         tint = Color.White,
                         modifier = Modifier.clickable {
+                            lifecycleScope.launch {
+                                buscarAcademias()
+                            }
                         }
-
                     )
-
                 },
                 placeholder = {
                     Text(text = "Buscar Academias", color = Color(0xFF606060))
@@ -141,7 +152,6 @@ fun BuscarAcademias(lifecycleScope: LifecycleCoroutineScope) {
                     focusedBorderColor = Color.Transparent
                 ),
                 singleLine = true
-
             )
 
             Espacamento(tamanho = 50.dp)
@@ -150,37 +160,55 @@ fun BuscarAcademias(lifecycleScope: LifecycleCoroutineScope) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color(210, 210, 210))
                         .padding(20.dp)
-
-
                 ) {
-
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-
                         Spacer(modifier = Modifier.height(20.dp))
-                        if (pesquisarPorAcademias.value != null && academiaList.value.isEmpty()) {
+                        if (estadoAcademia.value != estadoAcademia.value) {
                             Text(
-                                text = "Nenhum curso encontrado",
+                                text = "Academia não encontrada",
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(vertical = 16.dp),
                                 textAlign = TextAlign.Center,
                                 fontSize = 18.sp,
-                                color = Color.Gray
+                                color = Color.White
                             )
-                        } else {
 
+
+
+                        }else if (estadoAcademia.value != null){
+                            Text(
+                                text = "Procure por alguma academia",
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 16.dp),
+                                textAlign = TextAlign.Center,
+                                fontSize = 18.sp,
+                                color = Color.White
+                            )
+                        }
+                        else {
+                            LazyColumn {
+                                items(estadoTodasAcademias.value) { academia ->
+                                    Card(modifier = Modifier.fillMaxWidth().height(150.dp).background(
+                                        GrayKalosEscuroCard
+                                    )) {
+                                        Text(
+                                            text = academia.nome.toString(),
+                                            fontSize = 64.sp,
+                                            color = Color.White
+                                        )
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-
             }
         }
     }
 }
-
-
