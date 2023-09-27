@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.model.AlunoResponse
 import br.senai.sp.jandira.kalos_app.screens.telaHome.components.BarraRetaHome
@@ -38,12 +39,12 @@ import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 
 @Composable
-fun TelaPerfil(aluno: AlunoResponse) {
+fun TelaPerfil(aluno: AlunoResponse, navController: NavController) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HeaderPerfil(aluno = aluno)
+        HeaderPerfil(aluno = aluno, navController)
         Spacer(modifier = Modifier.height(10.dp))
         NomeCodigoPerfil(aluno = aluno)
         Spacer(modifier = Modifier.height(16.dp))

@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,7 +37,7 @@ fun HeaderTelaInformacoes(titulo: String, funcao: () -> Unit) {
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_chevron_left_24),
-                    contentDescription = "Botão para voltar para tela anterior",
+                    contentDescription = stringResource(R.string.botao_para_voltar_para_tela_anterior),
                     tint = Color.White,
                     modifier = Modifier.size(40.dp)
                 )

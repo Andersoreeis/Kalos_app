@@ -178,9 +178,9 @@ fun TelaHome(navController: NavController, lifecycleScope: LifecycleCoroutineSco
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if (selectedItemIndex == 1) {
-                    HomeAluno(aluno)
+                    HomeAluno(aluno, navController)
                 } else if (selectedItemIndex == 2) {
-                    TelaPerfil(aluno)
+                    TelaPerfil(aluno, navController)
                 } else {
                     BuscarAcademias(lifecycleScope)
                 }
