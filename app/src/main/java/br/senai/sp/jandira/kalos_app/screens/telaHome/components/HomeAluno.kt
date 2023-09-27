@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,13 +22,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.model.AlunoResponse
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalosEscuro
 
 @Composable
-fun HomeAluno(aluno: AlunoResponse) {
+fun HomeAluno(aluno: AlunoResponse, navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -48,6 +50,7 @@ fun HomeAluno(aluno: AlunoResponse) {
             modifier = Modifier
                 .fillMaxWidth()
         )
+
 
 
 
