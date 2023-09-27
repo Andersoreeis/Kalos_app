@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -38,8 +39,10 @@ import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.model.AlunoResponse
 import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.components.EditarFoto
+import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.CampoNome
 import br.senai.sp.jandira.kalos_app.service.AlunoService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
+import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import kotlinx.coroutines.launch
 
 @Composable
@@ -52,6 +55,14 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
             "","","")
         )
     }
+
+    var estadoNomeError = remember {
+        mutableStateOf("")
+    }
+
+
+
+
 
     lateinit var alunoService: AlunoService
     alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
@@ -74,6 +85,9 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
     }
 
     if(status){
+        var estadoNome = remember {
+            mutableStateOf(aluno.nome.toString())
+        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -106,6 +120,21 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
             }
             Spacer(modifier = Modifier.height(36.dp))
             EditarFoto(aluno)
+            Spacer(modifier = Modifier.height(36.dp))
+
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Text(
+                    text = stringResource(R.string.nome),
+                    color = GrayKalos,
+                    fontSize = 14.sp
+                )
+
+                CampoNome(value = estadoNome.value, aoMudar ={ estadoNome.value = it} , placeholder ="" , isError =estadoNomeError.value.isNotEmpty() )
+
+            }
 
         }
     }else{
