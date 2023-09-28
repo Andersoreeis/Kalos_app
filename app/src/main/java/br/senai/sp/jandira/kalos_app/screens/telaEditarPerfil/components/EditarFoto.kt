@@ -67,6 +67,7 @@ fun EditarFoto(aluno: AlunoResponse) {
     ){
         fotoUri = it
     }
+    Log.e("foto", "EditarFoto: ${fotoUri}", )
 
     var painter = rememberAsyncImagePainter(
         ImageRequest.Builder(LocalContext.current).data(fotoUri).build()
