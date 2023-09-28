@@ -1,5 +1,7 @@
 package br.senai.sp.jandira.kalos_app.screens.telaPerfil.screen
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -38,6 +40,7 @@ import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TelaPerfil(aluno: AlunoResponse, navController: NavController) {
     Column(
