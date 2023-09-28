@@ -14,5 +14,5 @@ val GreenKalos = Color(0xFF00FE90)
 val GrayKalos = Color(0xFF606060)
 
 val GrayKalosEscuro = Color(0xFF1E1E1E)
-val GrayKalosEscuroCard = Color(0xFF353535)
+val GrayKalosEscuroCard = Color(0xFF292929)
 

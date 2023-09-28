@@ -1,7 +1,10 @@
 package br.senai.sp.jandira.kalos_app.screens.telaBuscarAcademias.screens
 
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,58 +16,67 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material3.AlertDialogDefaults.shape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
-import androidx.compose.material3.CardDefaults
+
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
+
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.platform.LocalContext
+
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.kalos_app.service.AcademiaService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import androidx.lifecycle.LifecycleCoroutineScope
-import br.senai.sp.jandira.app_kalos.components.createTextKalos
+
 import br.senai.sp.jandira.app_kalos.components.getLogoKalos
-import br.senai.sp.jandira.kalos_app.R
+
 import br.senai.sp.jandira.kalos_app.components.Espacamento
 import br.senai.sp.jandira.kalos_app.model.AcademiaResponse
-import br.senai.sp.jandira.kalos_app.model.BaseResponseAcademia
-import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalosEscuroCard
-import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
-import coil.compose.AsyncImage
+import br.senai.sp.jandira.kalos_app.screens.telaBuscarAcademias.components.AcademiaCard
+import br.senai.sp.jandira.kalos_app.screens.telaBuscarAcademias.components.CampoPesquisa
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
+
 import kotlinx.coroutines.launch
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BuscarAcademias(lifecycleScope: LifecycleCoroutineScope) {
 
+    val context = LocalContext.current
+    val fusedLocationClient = FusedLocationProviderClient(context)
+    val locationRequest = LocationRequest.create()
+        .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+        .setInterval(10000)
+
+
+
+
     val academiaService = RetrofitHelper.getInstance().create(AcademiaService::class.java)
     val estadoAcademia = remember { mutableStateOf("") }
     val estadoTodasAcademias = remember { mutableStateOf(emptyList<AcademiaResponse>()) }
     val academiaEncontrada = remember { mutableStateOf(true) }
+    val buscandoAcademias = remember { mutableStateOf(false) }
 
     // Função para buscar academias e atualizar o estado
+
+
+
+
 
     // Função para buscar academias por nome
     suspend fun buscarAcademiasPorNome(nome: String): List<AcademiaResponse> {
@@ -86,6 +98,7 @@ fun BuscarAcademias(lifecycleScope: LifecycleCoroutineScope) {
             academiaEncontrada.value = false
 
         }
+
 
         return emptyList()
     }
@@ -110,6 +123,8 @@ fun BuscarAcademias(lifecycleScope: LifecycleCoroutineScope) {
 
 
     suspend fun buscarAcademias() {
+        buscandoAcademias.value = true
+
         val nome = estadoAcademia.value
         val academias: List<AcademiaResponse> = if (nome.isNotEmpty()) {
             // academiaEncontrada.value = true
@@ -121,6 +136,7 @@ fun BuscarAcademias(lifecycleScope: LifecycleCoroutineScope) {
             buscarTodasAcademias()
 
         }
+        buscandoAcademias.value = false
         estadoTodasAcademias.value = academias
     }
 
@@ -145,47 +161,18 @@ fun BuscarAcademias(lifecycleScope: LifecycleCoroutineScope) {
         Espacamento(tamanho = 20.dp)
 
         Column(modifier = Modifier.fillMaxWidth()) {
-            OutlinedTextField(
-                value = estadoAcademia.value,
-                onValueChange = { estadoAcademia.value = it },
-                trailingIcon = {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.baseline_search_24),
-                        contentDescription = "Icon de Phone",
-                        tint = Color.White,
-                        modifier = Modifier.clickable {
-                            lifecycleScope.launch {
-                                buscarAcademias()
-                            }
-
-                        }
-                    )
-                },
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        lifecycleScope.launch {
-                            buscarAcademias()
-                        }
+            CampoPesquisa(
+                estadoValue = estadoAcademia.value,
+                aoMudar = { estadoAcademia.value = it },
+                funcao = {
+                    lifecycleScope.launch {
+                        buscarAcademias()
                     }
-                ),
-                placeholder = {
-                    Text(text = "Buscar Academias", color = Color(0xFF606060))
                 },
-                modifier = Modifier
-                    .background(Color.Black)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(25.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    textColor = Color.White,
-                    containerColor = Color(0xFF393939),
-                    cursorColor = Color.White,
-                    focusedBorderColor = Color.Transparent
-                ),
-                singleLine = true
+                lifecycleScope = lifecycleScope
             )
 
-
-            Espacamento(tamanho = 50.dp)
+            Espacamento(tamanho = 40.dp)
 
             Box(modifier = Modifier.fillMaxSize()) {
                 Column(
@@ -198,7 +185,17 @@ fun BuscarAcademias(lifecycleScope: LifecycleCoroutineScope) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Spacer(modifier = Modifier.height(20.dp))
-                        if (!academiaEncontrada.value) {
+                        if (buscandoAcademias.value) {
+                            Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(60.dp),
+                                    color = Color.White,
+                                    strokeWidth = 5.dp
+                                )
+                            }
+
+                        } else if (!academiaEncontrada.value) {
+
                             Text(
                                 text = "Academia não encontrada",
                                 modifier = Modifier
@@ -208,105 +205,18 @@ fun BuscarAcademias(lifecycleScope: LifecycleCoroutineScope) {
                                 fontSize = 18.sp,
                                 color = Color.White
                             )
-
-
                         } else {
                             LazyColumn(
                                 modifier = Modifier
                                     .fillMaxWidth()
+                                    .fillMaxHeight()
                                     .background(Color.Black)
                             ) {
                                 items(estadoTodasAcademias.value) { academia ->
-
-                                    Card(
-                                        modifier = Modifier
-                                            .clip(shape = RoundedCornerShape(20.dp))
-                                            .fillMaxWidth()
-                                            .height(150.dp)
-                                            .background(
-                                                GrayKalosEscuroCard
-                                            ),
-
-
-                                        ) {
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .fillMaxHeight()
-                                                .background(
-                                                    GrayKalosEscuroCard
-                                                ),
-
-                                            ) {
-                                            Row(
-                                                modifier = Modifier
-                                                    .fillMaxSize()
-                                                    .padding(10.dp),
-                                                horizontalArrangement = Arrangement.SpaceBetween,
-                                                verticalAlignment = Alignment.CenterVertically
-                                            ) {
-                                                AsyncImage(
-                                                    model = academia.foto,
-                                                    contentDescription = "foto academia",
-                                                    modifier = Modifier
-                                                        .width(120.dp)
-                                                        .height(120.dp)
-                                                        .clip(CircleShape) // Aplica a forma redonda
-                                                )
-
-
-                                                Column {
-                                                    createTextKalos(
-                                                        content = academia.nome.toString(),
-                                                        sizeText = 24,
-                                                        colorText = Color.White,
-                                                        bold = 700,
-                                                        alinhamento = TextAlign.Start
-                                                    )
-                                                    Espacamento(tamanho = 5.dp)
-
-                                                    createTextKalos(
-                                                        content = "Academia",
-                                                        sizeText = 14,
-                                                        colorText = Color.White,
-                                                        bold = 400,
-                                                        alinhamento = TextAlign.Start
-                                                    )
-                                                    Espacamento(tamanho = 15.dp)
-
-                                                    createTextKalos(
-                                                        content = academia.numero_endereco.toString(),
-                                                        sizeText = 10,
-                                                        colorText = Color.White,
-                                                        bold = 400,
-                                                        alinhamento = TextAlign.Start
-                                                    )
-
-                                                    Espacamento(tamanho = 2.dp)
-
-                                                    createTextKalos(
-                                                        content = academia.telefone.toString(),
-                                                        sizeText = 5,
-                                                        colorText = Color.White,
-                                                        bold = 400,
-                                                        alinhamento = TextAlign.Start
-                                                    )
-                                                }
-
-                                                Row {
-                                                    var teste1 = 1
-                                                    var teste2 = 2
-                                                    var teste3 = 3
-
-
-
-
-                                                }
-                                            }
-                                        }
-
-
-                                    }
+                                    AcademiaCard(
+                                        academia = academia,
+                                        onClick = { }
+                                    )
                                     Espacamento(tamanho = 20.dp)
                                 }
                             }
