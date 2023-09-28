@@ -13,8 +13,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.AlertDialogDefaults.shape
@@ -32,6 +34,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -41,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.kalos_app.service.AcademiaService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import androidx.lifecycle.LifecycleCoroutineScope
+import br.senai.sp.jandira.app_kalos.components.createTextKalos
 import br.senai.sp.jandira.app_kalos.components.getLogoKalos
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.components.Espacamento
@@ -48,6 +52,7 @@ import br.senai.sp.jandira.kalos_app.model.AcademiaResponse
 import br.senai.sp.jandira.kalos_app.model.BaseResponseAcademia
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalosEscuroCard
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
+import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -206,13 +211,16 @@ fun BuscarAcademias(lifecycleScope: LifecycleCoroutineScope) {
 
 
                         } else {
-                            LazyColumn(modifier = Modifier
-                                .fillMaxWidth()
-                                .background(Color.Black)) {
+                            LazyColumn(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Black)
+                            ) {
                                 items(estadoTodasAcademias.value) { academia ->
 
                                     Card(
                                         modifier = Modifier
+                                            .clip(shape = RoundedCornerShape(20.dp))
                                             .fillMaxWidth()
                                             .height(150.dp)
                                             .background(
@@ -220,20 +228,86 @@ fun BuscarAcademias(lifecycleScope: LifecycleCoroutineScope) {
                                             ),
 
 
-                                    ) {
+                                        ) {
                                         Box(
                                             modifier = Modifier
                                                 .fillMaxWidth()
                                                 .fillMaxHeight()
                                                 .background(
                                                     GrayKalosEscuroCard
+                                                ),
+
+                                            ) {
+                                            Row(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .padding(10.dp),
+                                                horizontalArrangement = Arrangement.SpaceBetween,
+                                                verticalAlignment = Alignment.CenterVertically
+                                            ) {
+                                                AsyncImage(
+                                                    model = academia.foto,
+                                                    contentDescription = "foto academia",
+                                                    modifier = Modifier
+                                                        .width(120.dp)
+                                                        .height(120.dp)
+                                                        .clip(CircleShape) // Aplica a forma redonda
                                                 )
-                                        ){
-                                            Text(text = academia.nome.toString())
+
+
+                                                Column {
+                                                    createTextKalos(
+                                                        content = academia.nome.toString(),
+                                                        sizeText = 24,
+                                                        colorText = Color.White,
+                                                        bold = 700,
+                                                        alinhamento = TextAlign.Start
+                                                    )
+                                                    Espacamento(tamanho = 5.dp)
+
+                                                    createTextKalos(
+                                                        content = "Academia",
+                                                        sizeText = 14,
+                                                        colorText = Color.White,
+                                                        bold = 400,
+                                                        alinhamento = TextAlign.Start
+                                                    )
+                                                    Espacamento(tamanho = 15.dp)
+
+                                                    createTextKalos(
+                                                        content = academia.numero_endereco.toString(),
+                                                        sizeText = 10,
+                                                        colorText = Color.White,
+                                                        bold = 400,
+                                                        alinhamento = TextAlign.Start
+                                                    )
+
+                                                    Espacamento(tamanho = 2.dp)
+
+                                                    createTextKalos(
+                                                        content = academia.telefone.toString(),
+                                                        sizeText = 5,
+                                                        colorText = Color.White,
+                                                        bold = 400,
+                                                        alinhamento = TextAlign.Start
+                                                    )
+                                                }
+
+                                                Row {
+                                                    var teste1 = 1
+                                                    var teste2 = 2
+                                                    var teste3 = 3
+
+
+
+
+                                                }
+                                            }
                                         }
+
+
                                     }
                                     Espacamento(tamanho = 20.dp)
-
                                 }
                             }
                         }
