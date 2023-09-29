@@ -22,6 +22,9 @@
     <string name="editar_foto">Editar foto</string>
     <string name="nome">Nome</string>
 
+
+
+
     <string name="telefone">Telefone</string>
     <string name="genero">Gênero</string>
     <string name="data_de_nascimento">Data de nascimento</string>
@@ -29,4 +32,8 @@
     <string name="peso_em_kg">Peso (em kg)</string>
     <string name="altura_em_cm">Altura (em cm)</string>
     <string name="salvar">Salvar</string>
+
+
+
+
 </resources>

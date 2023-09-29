@@ -44,12 +44,23 @@ import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.model.AlunoResponse
 import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.components.EditarFoto
+
 import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.components.FormularioPerfil
+
+import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.components.FormularioPerfil
+
+
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.CampoNome
 import br.senai.sp.jandira.kalos_app.service.AlunoService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
+
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
+
+
+import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
+
+
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -67,8 +78,6 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
     var estadoNomeError = remember {
         mutableStateOf("")
     }
-
-
 
 
 
@@ -93,6 +102,10 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
     }
 
     if(status){
+
+
+
+
         var estadoNome = remember {
             mutableStateOf(aluno.nome.toString())
         }
@@ -128,6 +141,7 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
                 )
             }
             Spacer(modifier = Modifier.height(36.dp))
+
             EditarFoto(aluno)
             Spacer(modifier = Modifier.height(36.dp))
 
@@ -146,6 +160,11 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
             }
 
             FormularioPerfil(aluno)
+
+
+            FormularioPerfil(aluno, lifecycleScope, navController)
+
+
 
         }
     }else{

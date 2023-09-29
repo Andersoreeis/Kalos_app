@@ -24,6 +24,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -50,29 +51,28 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
 @Composable
-fun EditarFoto(aluno: AlunoResponse) {
+fun EditarFoto(aluno: AlunoResponse, fotoUri: MutableState<Uri?>) {
     //Referencia para acesso e manipulação do cloud Storage e firestore
      lateinit var storageRef: StorageReference
      lateinit var fibaseFirestore: FirebaseFirestore
     storageRef = FirebaseStorage.getInstance().reference.child("images")
     fibaseFirestore = FirebaseFirestore.getInstance()
-    var fotoUri by remember {
-        mutableStateOf<Uri?>(null)
-    }
+//    var fotoUri by remember {
+//        mutableStateOf<Uri?>(null)
+//    }
     var context = LocalContext.current
 
     //Criar o objeto que  abrirá a galeria e retornará a Uri da imagem selecionada
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ){
-        fotoUri = it
+        fotoUri.value = it
     }
     Log.e("foto", "EditarFoto: ${fotoUri}", )
 
     var painter = rememberAsyncImagePainter(
-        ImageRequest.Builder(LocalContext.current).data(fotoUri).build()
+        ImageRequest.Builder(LocalContext.current).data(fotoUri.value).build()
     )
-    var foto: String
 
 
     Column(
@@ -122,43 +122,6 @@ fun EditarFoto(aluno: AlunoResponse) {
         )
 
 
-//        Button(
-//            onClick = {
-//                storageRef = storageRef.child(System.currentTimeMillis().toString())
-//                fotoUri?.let {
-//                    storageRef.putFile(it).addOnCompleteListener { task->
-//
-//                        if (task.isSuccessful) {
-//
-//                            storageRef.downloadUrl.addOnSuccessListener { uri ->
-//
-//                                val map = HashMap<String, Any>()
-//                                map["pic"] = uri.toString()
-//                                Log.e("link", map.toString() )
-//
-//                                fibaseFirestore.collection("images").add(map).addOnCompleteListener { firestoreTask ->
-//
-//                                    if (firestoreTask.isSuccessful){
-//                                        Toast.makeText(context, "Uploaded realizado com sucesso", Toast.LENGTH_SHORT).show()
-//
-//                                    }else{
-//                                        Toast.makeText(context, "ERRO ao tentar fazer upload", Toast.LENGTH_SHORT).show()
-//
-//                                    }
-//
-//
-//                                }
-//                            }
-//
-//                        }else{
-//
-//                            Toast.makeText(context,  task.exception?.message, Toast.LENGTH_SHORT).show()
-//
-//                        }
-//
-//                    }
-//                }
-//        }) {}
 
 
     }
