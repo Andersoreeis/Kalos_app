@@ -21,8 +21,6 @@
     <string name="botao_para_voltar_para_tela_anterior">Botão para voltar para tela anterior</string>
     <string name="editar_foto">Editar foto</string>
     <string name="nome">Nome</string>
-<<<<<<< HEAD
-=======
     <string name="telefone">Telefone</string>
     <string name="genero">Gênero</string>
     <string name="data_de_nascimento">Data de nascimento</string>
@@ -30,5 +28,5 @@
     <string name="peso_em_kg">Peso (em kg)</string>
     <string name="altura_em_cm">Altura (em cm)</string>
     <string name="salvar">Salvar</string>
->>>>>>> 9e47c973768bd93313b80b313be88a3acd6ee206
+
 </resources>

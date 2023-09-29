@@ -10,6 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface AlunoService {
@@ -29,4 +30,10 @@ interface AlunoService {
     @Headers("Content-Type: application/json")
     @POST("kalos/aluno")
     suspend fun cadastrarAluno(@Body body: JsonObject): Response<JsonObject>
+
+    @Headers("Content-Type: application/json")
+    @PUT("kalos/aluno/id/{id}")
+    suspend fun AtualizarAluno(@Body body: JsonObject, @Path("id") id:String): Response<JsonObject>
+
+
 }
