@@ -188,7 +188,7 @@ fun TelaHome(navController: NavController, lifecycleScope: LifecycleCoroutineSco
                 } else if (selectedItemIndex == 2) {
                     TelaPerfil(aluno, navController)
                 } else {
-                    BuscarAcademias(lifecycleScope)
+                    BuscarAcademias(lifecycleScope, navController, localStorage)
                 }
             }
         }else{

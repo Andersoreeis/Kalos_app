@@ -47,12 +47,19 @@ import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.components.EditarF
 
 import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.components.FormularioPerfil
 
+import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.components.FormularioPerfil
+
+
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.CampoNome
 import br.senai.sp.jandira.kalos_app.service.AlunoService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
+
+
+import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
+
 
 import kotlinx.coroutines.launch
 
@@ -96,6 +103,9 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
 
     if(status){
 
+
+
+
         var estadoNome = remember {
             mutableStateOf(aluno.nome.toString())
         }
@@ -132,7 +142,28 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
             }
             Spacer(modifier = Modifier.height(36.dp))
 
+            EditarFoto(aluno)
+            Spacer(modifier = Modifier.height(36.dp))
+
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Text(
+                    text = stringResource(R.string.nome),
+                    color = GrayKalos,
+                    fontSize = 14.sp
+                )
+
+                CampoNome(value = estadoNome.value, aoMudar ={ estadoNome.value = it} , placeholder ="" , isError =estadoNomeError.value.isNotEmpty() )
+
+            }
+
+            FormularioPerfil(aluno)
+
+
             FormularioPerfil(aluno, lifecycleScope, navController)
+
 
 
         }
