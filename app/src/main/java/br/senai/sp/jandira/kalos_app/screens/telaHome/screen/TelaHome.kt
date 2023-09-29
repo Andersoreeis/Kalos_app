@@ -80,7 +80,7 @@ fun TelaHome(navController: NavController, lifecycleScope: LifecycleCoroutineSco
         BottomNavigationItem(
             title = "procurar",
             selectedIcon = Icons.Filled.Search,
-            unselectedIcon = Icons.Outlined.Search,
+            unselectedIcon = Icons.Filled.Search,
 
             ),
         BottomNavigationItem(

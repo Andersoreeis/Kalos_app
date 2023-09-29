@@ -44,18 +44,12 @@ import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.model.AlunoResponse
 import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.components.EditarFoto
-<<<<<<< HEAD
-=======
 import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.components.FormularioPerfil
->>>>>>> 9e47c973768bd93313b80b313be88a3acd6ee206
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.CampoNome
 import br.senai.sp.jandira.kalos_app.service.AlunoService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
-<<<<<<< HEAD
-=======
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
->>>>>>> 9e47c973768bd93313b80b313be88a3acd6ee206
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -87,7 +81,7 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
         mutableStateOf(false)
     }
 
-    lifecycleScope.launch {
+    lifecycleScope.launch{
         val result = alunoService.getAlunoByID(idALuno.toString())
 
         if (result.isSuccessful) {
@@ -99,13 +93,10 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
     }
 
     if(status){
-<<<<<<< HEAD
         var estadoNome = remember {
             mutableStateOf(aluno.nome.toString())
         }
-=======
 
->>>>>>> 9e47c973768bd93313b80b313be88a3acd6ee206
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -137,7 +128,6 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
                 )
             }
             Spacer(modifier = Modifier.height(36.dp))
-<<<<<<< HEAD
             EditarFoto(aluno)
             Spacer(modifier = Modifier.height(36.dp))
 
@@ -154,10 +144,8 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
                 CampoNome(value = estadoNome.value, aoMudar ={ estadoNome.value = it} , placeholder ="" , isError =estadoNomeError.value.isNotEmpty() )
 
             }
-=======
 
             FormularioPerfil(aluno)
->>>>>>> 9e47c973768bd93313b80b313be88a3acd6ee206
 
         }
     }else{
