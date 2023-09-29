@@ -3,6 +3,7 @@ package br.senai.sp.jandira.kalos_app.screens.telaBuscarAcademias.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,7 +51,7 @@ fun AcademiaCard(
                 width = 2.dp, // Espessura da borda
                 color = Color(80, 80, 80), // Cor da borda
                 shape = RoundedCornerShape(20.dp) // Forma da borda, correspondente à forma do Card
-            )
+            ).clickable { onClick() }
 
 
     ) {
