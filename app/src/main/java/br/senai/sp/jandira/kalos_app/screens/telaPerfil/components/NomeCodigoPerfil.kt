@@ -18,7 +18,7 @@ fun NomeCodigoPerfil(aluno: AlunoResponse) {
     ) {
         aluno.nome?.let {
             Text(
-                text = it,
+                text = primeiroESegundoNome(it.toString()),
                 fontSize = 32.sp,
                 color = Color.White
             )
@@ -30,5 +30,14 @@ fun NomeCodigoPerfil(aluno: AlunoResponse) {
             fontSize = 20.sp,
             color = Color.Gray
         )
+    }
+}
+
+fun primeiroESegundoNome(frase: String): String {
+    val palavras = frase.split(" ")
+    if (palavras.isNotEmpty()) {
+        return palavras[0] + " " + palavras[1]
+    } else {
+        return ""
     }
 }
