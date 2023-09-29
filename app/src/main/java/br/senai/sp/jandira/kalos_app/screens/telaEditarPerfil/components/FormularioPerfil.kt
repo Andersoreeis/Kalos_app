@@ -2,6 +2,8 @@ package br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.components
 
 import android.net.Uri
 import android.os.Build
+import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,10 +18,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.navigation.NavController
+import br.senai.sp.jandira.app_kalos.components.createButtonWithError2
 import br.senai.sp.jandira.app_kalos.components.createButtonWithFunction
 import br.senai.sp.jandira.app_kalos.components.createTextKalos
 import br.senai.sp.jandira.kalos_app.R
@@ -32,15 +38,28 @@ import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.C
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.CampoTelefone
 import br.senai.sp.jandira.kalos_app.screens.telaMetricas.component.CampoTextoMetricas
 import br.senai.sp.jandira.kalos_app.screens.telaPerfil.components.convertIso8601ToDate
+import br.senai.sp.jandira.kalos_app.service.AlunoService
+import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.gson.JsonObject
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun FormularioPerfil(aluno: AlunoResponse) {
+fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCoroutineScope, navController:NavController) {
+    lateinit var storageRef: StorageReference
+    lateinit var fibaseFirestore: FirebaseFirestore
+    storageRef = FirebaseStorage.getInstance().reference.child("images")
+    fibaseFirestore = FirebaseFirestore.getInstance()
+
+    var context = LocalContext.current
     var estadoNome = remember {
         mutableStateOf(aluno.nome.toString())
     }
@@ -95,6 +114,12 @@ fun FormularioPerfil(aluno: AlunoResponse) {
         mutableStateOf("")
     }
 
+    var valorFoto by remember {
+        mutableStateOf("")
+    }
+    var statusCarregando by remember {
+        mutableStateOf(false)
+    }
     fun convertIso8601ToDate(iso8601String: String): Date {
         val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         return format.parse(iso8601String)
@@ -150,13 +175,16 @@ fun FormularioPerfil(aluno: AlunoResponse) {
             return ""
         }
     }
+    var fotoUri =  remember {
+        mutableStateOf<Uri?>(null)
+    }
 
 
     estadoDataNascimento.value = "${estadoDia.value + estadoMes.value + estadoAno.value}"
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        EditarFoto(aluno)
+        EditarFoto(aluno, fotoUri)
         Spacer(modifier = Modifier.height(36.dp))
         Text(
             text = stringResource(R.string.nome),
@@ -332,9 +360,10 @@ fun FormularioPerfil(aluno: AlunoResponse) {
             isError = estadoAlturaError.value.isNotEmpty() )
 
         Spacer(modifier = Modifier.height(60.dp))
-        createButtonWithFunction(
+        createButtonWithError2(
             textButton = stringResource(R.string.salvar),
-            corBotao = GreenKalos
+            corBotao = GreenKalos,
+            teste = statusCarregando
         ) {
             val nomeError = validarNome(estadoNome.value)
             val dataNascimentoError = validarDataNascimento(estadoDataNascimento.value)
@@ -368,9 +397,123 @@ fun FormularioPerfil(aluno: AlunoResponse) {
                 genero = 4
             }
 
+
             if (nomeError == "" && dataNascimentoError == "" &&
                 telefoneError == "" && cpfError == "" && generoError == ""
             ) {
+                statusCarregando = true
+
+                lateinit var alunoService: AlunoService
+                alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
+
+
+
+                if(fotoUri.value == null){
+                    lifecycleCoroutineScope.launch {
+                        val body = JsonObject().apply {
+                                addProperty("email", aluno.email.toString())
+                                addProperty("senha", "12345678")
+                                addProperty("nome", estadoNome.value)
+                                addProperty("data_nascimento", dataFormatada)
+                                addProperty("cpf", estadoCpf.value)
+                                addProperty("telefone", estadoTelefone.value)
+                                addProperty("id_genero", genero)
+                                addProperty("questao_condicao_medica", aluno.questao_condicao_medica)
+                                addProperty("questao_lesoes", aluno.questao_lesoes)
+                                addProperty("questao_medicamento", aluno.questao_medicamento)
+                                addProperty("peso", estadoPeso.value)
+                                addProperty("altura", estadoAltura.value)
+                                addProperty("objetivo", aluno.objetivo)
+                                addProperty("foto", aluno.foto)
+                        }
+
+                        val result = alunoService.AtualizarAluno(body, aluno.id.toString())
+                        if (result.isSuccessful) {
+                            Log.e("CREAT-DATA", "${result.body()}")
+                            val checagem = result.body()?.get("status")
+                            if (checagem.toString() == "200") {
+
+                                navController.navigate("home")
+
+
+                            } else {
+                                Log.e("TAG", "Deu erro")
+                            }
+                        } else {
+                            Log.e("CREAT-DATA", result.message())
+                        }
+
+                    }
+                }else{
+                    storageRef = storageRef.child(System.currentTimeMillis().toString())
+                    fotoUri.let {
+                        it.value?.let { it1 ->
+                            storageRef.putFile(it1).addOnCompleteListener { task ->
+
+
+                                    if (task.isSuccessful) {
+
+                                            storageRef.downloadUrl.addOnSuccessListener { uri ->
+
+                                                val map = HashMap<String, Any>()
+                                                map["pic"] = uri.toString()
+                                                valorFoto = map.toString()
+                                                fibaseFirestore.collection("images").add(map)
+                                                lifecycleCoroutineScope.launch {
+                                                    val body = JsonObject().apply {
+                                                        addProperty("email", aluno.email.toString())
+                                                        addProperty("senha", "12345678")
+                                                        addProperty("nome", estadoNome.value)
+                                                        addProperty("data_nascimento", dataFormatada)
+                                                        addProperty("cpf", estadoCpf.value)
+                                                        addProperty("telefone", estadoTelefone.value)
+                                                        addProperty("id_genero", genero)
+                                                        addProperty("questao_condicao_medica", aluno.questao_condicao_medica)
+                                                        addProperty("questao_lesoes", aluno.questao_lesoes)
+                                                        addProperty("questao_medicamento", aluno.questao_medicamento)
+                                                        addProperty("peso", estadoPeso.value)
+                                                        addProperty("altura", estadoAltura.value)
+                                                        addProperty("objetivo", aluno.objetivo)
+                                                        addProperty("foto", uri.toString())
+                                                    }
+
+                                                    val result = alunoService.AtualizarAluno(body, aluno.id.toString())
+                                                    if (result.isSuccessful) {
+                                                        Log.e("CREAT-DATA", "${result.body()}")
+                                                        val checagem = result.body()?.get("status")
+                                                        if (checagem.toString() == "200") {
+
+                                                            navController.navigate("home")
+
+
+                                                        } else {
+                                                            Log.e("TAG", "Deu erro")
+                                                        }
+                                                    } else {
+                                                        Log.e("CREAT-DATA", result.message())
+                                                    }
+
+                                                }
+
+
+                                            }
+
+                                    } else {
+                                        Toast.makeText(
+                                            context,
+                                            task.exception?.message,
+                                            Toast.LENGTH_SHORT
+                                        )
+                                            .show()
+                                    }
+
+                            }
+
+                        }
+                    }
+                }
+
+
 
             } else {
                 // Exiba as mensagens de erro
@@ -397,3 +540,4 @@ fun dateToLocalDate(date: Date): LocalDate {
     val instant = date.toInstant()
     return instant.atZone(java.time.ZoneId.systemDefault()).toLocalDate()
 }
+

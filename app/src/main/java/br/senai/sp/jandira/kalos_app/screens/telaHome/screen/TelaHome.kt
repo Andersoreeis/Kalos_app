@@ -2,7 +2,9 @@ package br.senai.sp.jandira.kalos_app.screens.telaHome.screen
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.Icon
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -66,6 +68,7 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalosEscuro
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
