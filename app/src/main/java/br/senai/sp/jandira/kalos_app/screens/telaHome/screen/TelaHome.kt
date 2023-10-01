@@ -184,7 +184,7 @@ fun TelaHome(navController: NavController, lifecycleScope: LifecycleCoroutineSco
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if (selectedItemIndex == 1) {
-                    HomeAluno(aluno, navController, lifecycleScope)
+                    HomeAluno(aluno, navController, lifecycleScope, localStorage)
                 } else if (selectedItemIndex == 2) {
                     TelaPerfil(aluno, navController)
                 } else {
