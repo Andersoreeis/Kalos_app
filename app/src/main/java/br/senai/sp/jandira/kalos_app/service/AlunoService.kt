@@ -1,8 +1,10 @@
 package br.senai.sp.jandira.kalos_app.service
 
+import br.senai.sp.jandira.kalos_app.model.AcademiaResponse
 import br.senai.sp.jandira.kalos_app.model.AlunoResponse
 import br.senai.sp.jandira.kalos_app.model.BaseResponse
 import br.senai.sp.jandira.kalos_app.model.BaseResponse2
+import br.senai.sp.jandira.kalos_app.model.BaseResponseAcademia
 import com.google.gson.JsonObject
 import retrofit2.Response
 import retrofit2.http.Body
@@ -23,6 +25,9 @@ interface AlunoService {
     @GET("kalos/aluno")
     suspend fun getAlunos(): Response<BaseResponse<AlunoResponse>>
 
+    @GET("kalos/alunoAcademia/idAluno/{id}")
+    suspend fun getAlunoAcademias(@Path("id") id:String): Response<BaseResponseAcademia<AcademiaResponse>>
+
     @Headers("Content-Type: application/json")
     @POST("kalos/aluno/autenticar")
     suspend fun autenticarAluno(@Body body: JsonObject): Response<JsonObject>
@@ -41,3 +46,4 @@ interface AlunoService {
 
 
 }
+
