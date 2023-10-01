@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.model.AlunoResponse
@@ -29,7 +30,7 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalosEscuro
 
 @Composable
-fun HomeAluno(aluno: AlunoResponse, navController: NavController) {
+fun HomeAluno(aluno: AlunoResponse, navController: NavController, lifecycleCoroutineScope: LifecycleCoroutineScope) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -50,6 +51,7 @@ fun HomeAluno(aluno: AlunoResponse, navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
         )
+
 
 
 

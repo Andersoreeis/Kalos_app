@@ -35,5 +35,9 @@ interface AlunoService {
     @PUT("kalos/aluno/id/{id}")
     suspend fun AtualizarAluno(@Body body: JsonObject, @Path("id") id:String): Response<JsonObject>
 
+    @Headers("Content-Type: application/json")
+    @PUT("kalos/aluno/redefinir_senha")
+    suspend fun atualizarSenhaAluno(@Body body: JsonObject): Response<JsonObject>
+
 
 }
