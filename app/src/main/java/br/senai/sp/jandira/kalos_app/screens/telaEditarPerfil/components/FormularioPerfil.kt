@@ -5,20 +5,27 @@ import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,6 +36,7 @@ import br.senai.sp.jandira.app_kalos.components.createButtonWithError2
 import br.senai.sp.jandira.app_kalos.components.createButtonWithFunction
 import br.senai.sp.jandira.app_kalos.components.createTextKalos
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.components.CampoGenero2
 import br.senai.sp.jandira.kalos_app.components.Espacamento
 import br.senai.sp.jandira.kalos_app.model.AlunoResponse
@@ -53,7 +61,8 @@ import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCoroutineScope, navController:NavController) {
+fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCoroutineScope,
+                     navController:NavController, localStorage: Storage) {
     lateinit var storageRef: StorageReference
     lateinit var fibaseFirestore: FirebaseFirestore
     storageRef = FirebaseStorage.getInstance().reference.child("images")
@@ -359,7 +368,30 @@ fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCor
             placeholder = "",
             isError = estadoAlturaError.value.isNotEmpty() )
 
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(30.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    localStorage.salvarValor(context, aluno.senha.toString(), "senhaAlunoAlt")
+                    localStorage.salvarValor(context, aluno.email.toString(), "emailAluno")
+
+                           navController.navigate("alterarSenha")
+                },
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(R.string.alterar_senha),
+                color = Color.White,
+                fontSize = 15.sp
+            )
+            Icon(painter = painterResource(id = R.drawable.baseline_arrow_right_alt_24) ,
+                contentDescription = stringResource(R.string.ir_para_alterar_senha),
+                tint = Color.White,
+                modifier = Modifier.size(13.dp))
+        }
+        Spacer(modifier = Modifier.height(30.dp))
         createButtonWithError2(
             textButton = stringResource(R.string.salvar),
             corBotao = GreenKalos,
@@ -412,7 +444,7 @@ fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCor
                     lifecycleCoroutineScope.launch {
                         val body = JsonObject().apply {
                                 addProperty("email", aluno.email.toString())
-                                addProperty("senha", "12345678")
+                                addProperty("senha", aluno.senha)
                                 addProperty("nome", estadoNome.value)
                                 addProperty("data_nascimento", dataFormatada)
                                 addProperty("cpf", estadoCpf.value)
@@ -462,7 +494,7 @@ fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCor
                                                 lifecycleCoroutineScope.launch {
                                                     val body = JsonObject().apply {
                                                         addProperty("email", aluno.email.toString())
-                                                        addProperty("senha", "12345678")
+                                                        addProperty("senha", aluno.senha)
                                                         addProperty("nome", estadoNome.value)
                                                         addProperty("data_nascimento", dataFormatada)
                                                         addProperty("cpf", estadoCpf.value)

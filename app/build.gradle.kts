@@ -109,7 +109,6 @@ dependencies {
 
     //coil
     implementation ("io.coil-kt:coil-compose:2.3.0")
-
     implementation ("androidx.activity:activity-compose:1.3.1")
     implementation ("com.google.android.gms:play-services-location:18.0.0")
 

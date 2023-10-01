@@ -7,7 +7,7 @@ data class AlunoResponse(
     var telefone: String? = "",
     var email: String? = "",
     var foto: String? = "",
-//    var senha: String? = "",
+    var senha: String? = "",
     var cpf: String? = "",
     var questao_condicao_medica: String? = "",
     var questao_lesoes: String? = "",
