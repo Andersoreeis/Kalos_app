@@ -12,8 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -81,7 +83,8 @@ fun TelaAlterarSenha(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(20.dp),
+            .padding(20.dp)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.Start
     ) {
 
@@ -109,17 +112,7 @@ fun TelaAlterarSenha(
         }
         Spacer(modifier = Modifier.height(80.dp))
 
-        if (senhaAtualStateError.isNotEmpty()) {
-            createTextKalos(
-                content = senhaAtualStateError,
-                sizeText = 16,
-                colorText = Color.Red,
-                bold = 500,
-                alinhamento = TextAlign.Left,
-                modifier = Modifier.padding(start = 10.dp)
 
-            )
-        }
 
         Text(
             text = "Digite sua senha atual",
@@ -140,11 +133,9 @@ fun TelaAlterarSenha(
             placeholder = "",
             isError = senhaAtualStateError.isNotEmpty()
         )
-        Spacer(modifier = Modifier.height(30.dp))
-
-        if (senhaNovaStateError.isNotEmpty()) {
+        if (senhaAtualStateError.isNotEmpty()) {
             createTextKalos(
-                content = senhaNovaStateError,
+                content = senhaAtualStateError,
                 sizeText = 16,
                 colorText = Color.Red,
                 bold = 500,
@@ -153,6 +144,9 @@ fun TelaAlterarSenha(
 
             )
         }
+        Spacer(modifier = Modifier.height(30.dp))
+
+
         Text(
             text = "Digite a nova senha",
             color = GrayKalos,
@@ -172,9 +166,6 @@ fun TelaAlterarSenha(
             placeholder = "",
             isError = senhaNovaStateError.isNotEmpty()
         )
-        Spacer(modifier = Modifier.height(30.dp))
-
-
         if (senhaNovaStateError.isNotEmpty()) {
             createTextKalos(
                 content = senhaNovaStateError,
@@ -186,6 +177,10 @@ fun TelaAlterarSenha(
 
             )
         }
+        Spacer(modifier = Modifier.height(30.dp))
+
+
+
         Text(
             text = "Confirme nova senha",
             color = GrayKalos,
@@ -205,6 +200,17 @@ fun TelaAlterarSenha(
             placeholder = "",
             isError = confirmarStateError.isNotEmpty()
         )
+        if (senhaNovaStateError.isNotEmpty()) {
+            createTextKalos(
+                content = senhaNovaStateError,
+                sizeText = 16,
+                colorText = Color.Red,
+                bold = 500,
+                alinhamento = TextAlign.Left,
+                modifier = Modifier.padding(start = 10.dp)
+
+            )
+        }
         Spacer(modifier = Modifier.height(200.dp))
 
         createButtonWithError2(
@@ -228,22 +234,26 @@ fun TelaAlterarSenha(
             lateinit var alunoService: AlunoService
             alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
 
-            lifecycleCoroutineScope.launch {
-                val body = JsonObject().apply {
-                    addProperty("email", email)
-                    addProperty("senha", senhaNovaState)
-                }
+            if(senhaNovaStateError == "" && senhaAtualStateError == "" && confirmarStateError == ""){
+                lifecycleCoroutineScope.launch {
+                    val body = JsonObject().apply {
+                        addProperty("email", email)
+                        addProperty("senha", senhaNovaState)
+                    }
 
-                val result = alunoService.atualizarSenhaAluno(body)
+                    val result = alunoService.atualizarSenhaAluno(body)
 
-                if(result.isSuccessful){
-                    Toast.makeText(context, "Senha atualizada", Toast.LENGTH_SHORT).show()
-                    navController.navigate("editarPerfil")
-                }else{
-                    Toast.makeText(context, "ERRO", Toast.LENGTH_SHORT).show()
-                    Log.e("CREAT-DATA", "${result.body()}")
+                    if(result.isSuccessful){
+                        Toast.makeText(context, "Senha atualizada", Toast.LENGTH_SHORT).show()
+                        navController.navigate("editarPerfil")
+                    }else{
+                        Toast.makeText(context, "ERRO", Toast.LENGTH_SHORT).show()
+                        Log.e("CREAT-DATA", "${result.body()}")
+                    }
                 }
             }
+
+
         }
         Spacer(modifier = Modifier.height(15.dp))
 
