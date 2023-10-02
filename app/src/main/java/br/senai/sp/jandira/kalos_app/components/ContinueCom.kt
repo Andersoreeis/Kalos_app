@@ -130,23 +130,12 @@ fun ContinueCom(navController: NavController, viewModel: LoginScreeViewModel) {
                 }
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.facebook),
-                    contentDescription = "Imagem do Facebook",
-                    modifier = Modifier.size(30.dp)
-                )
-            }
-
-            IconButton(
-                onClick = {
-
-                }
-            ) {
-                Image(
                     painter = painterResource(id = R.drawable.google),
                     contentDescription = "Imagem do Google",
                     modifier = Modifier.size(30.dp)
                 )
             }
+
 
 
         }

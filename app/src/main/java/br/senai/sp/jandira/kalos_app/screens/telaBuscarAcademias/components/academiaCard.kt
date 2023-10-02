@@ -48,9 +48,9 @@ fun AcademiaCard(
             .background(
                 GrayKalosEscuroCard
             ).border(
-                width = 2.dp, // Espessura da borda
-                color = Color(80, 80, 80), // Cor da borda
-                shape = RoundedCornerShape(20.dp) // Forma da borda, correspondente à forma do Card
+                width = 2.dp,
+                color = Color(80, 80, 80),
+                shape = RoundedCornerShape(20.dp)
             ).clickable { onClick() }
 
 

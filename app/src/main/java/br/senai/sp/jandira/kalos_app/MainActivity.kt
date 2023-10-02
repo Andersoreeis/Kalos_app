@@ -24,6 +24,7 @@ import br.senai.sp.jandira.kalos_app.screens.telaHome.screen.TelaHome
 import br.senai.sp.jandira.kalos_app.screens.telaInicial.screen.TelaInicial
 import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.screen.TelaObjetivo
 import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.screen.TelaSaudeLimitacoes
+import br.senai.sp.jandira.kalos_app.telaP.telaPerfilAcademia.screen.TelaPerfilAcademia
 import br.senai.sp.jandira.kalos_app.ui.theme.Kalos_appTheme
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -79,6 +80,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "alterarSenha"){
                             TelaAlterarSenha(navController = navController, lifecycleCoroutineScope = lifecycleScope, localStorage)
+                        }
+                        composable(route = "perfilAcademia"){
+                            TelaPerfilAcademia(navController = navController,  localStorage)
                         }
 
 

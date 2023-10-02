@@ -52,8 +52,7 @@ import br.senai.sp.jandira.kalos_app.model.AcademiaResponse
 //import br.senai.sp.jandira.kalos_app.model.Tag
 import br.senai.sp.jandira.kalos_app.screens.telaBuscarAcademias.components.AcademiaCard
 import br.senai.sp.jandira.kalos_app.screens.telaBuscarAcademias.components.CampoPesquisa
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationRequest
+
 
 import kotlinx.coroutines.launch
 
@@ -237,68 +236,51 @@ fun BuscarAcademias(
 
                                     AcademiaCard(
                                         academia = academia,
-                                        onClick = {  //navController.navigate("telaHome")
-                                            localStorage.salvarValor(
-                                                context,
-                                                "${academia.nome}",
-                                                "nomeAcademia"
-                                            )
-                                            localStorage.salvarValor(
-                                                context,
-                                                "${academia.telefone}",
-                                                "telefoneAcademia"
-                                            )
-                                            localStorage.salvarValor(
-                                                context,
-                                                "${academia.email}",
-                                                "emailAcademia"
-                                            )
-                                            localStorage.salvarValor(
-                                                context,
-                                                "${academia.instagram}",
-                                                "instagramAcademia"
-                                            )
-                                            localStorage.salvarValor(
-                                                context,
-                                                "${academia.facebook}",
-                                                "facebookAcademia"
-                                            )
-                                            localStorage.salvarValor(
-                                                context,
-                                                "${academia.whatsapp}",
-                                                "whatsappAcademia"
-                                            )
-                                            localStorage.salvarValor(
-                                                context,
-                                                "${academia.foto}",
-                                                "fotoAcademia"
-                                            )
-                                            localStorage.salvarValor(
-                                                context,
-                                                "${academia.descricao}",
-                                                "descricaoAcademia"
-                                            )
-                                            localStorage.salvarValor(
-                                                context,
-                                                "${academia.cor_primaria}",
-                                                "corPrimariaAcademia"
-                                            )
-                                            localStorage.salvarValor(
-                                                context,
-                                                "${academia.cor_secundaria}",
-                                                "corSegundariaAcademia"
-                                            )
-                                            localStorage.salvarValor(
-                                                context,
-                                                "${academia.foto}",
-                                                "fotoAcademia"
-                                            )
-                                            localStorage.salvarValor(
-                                                context,
-                                                pegarNomeTags(academia).toString(),
-                                                "tagsAcademia"
-                                            )
-                                            Log.e("tags", pegarNomeTags(academia).toString())
+                                        onClick = {
+                                            navController.navigate("perfilAcademia");
+
+                                            localStorage.salvarValor(context, "${academia.nome}", "nomeAcademia");
+                                            Log.e("Valor nomeAcademia", "${academia.nome}");
+
+                                            localStorage.salvarValor(context, "${academia.telefone}", "telefoneAcademia");
+                                            Log.e("Valor telefoneAcademia", "${academia.telefone}");
+
+                                            localStorage.salvarValor(context, "${academia.email}", "emailAcademia");
+                                            Log.e("Valor emailAcademia", "${academia.email}");
+
+                                            localStorage.salvarValor(context, "${academia.instagram}", "instagramAcademia");
+                                            Log.e("Valor instagramAcademia", "${academia.instagram}");
+
+                                            localStorage.salvarValor(context, "${academia.facebook}", "facebookAcademia");
+                                            Log.e("Valor facebookAcademia", "${academia.facebook}");
+
+                                            localStorage.salvarValor(context, "${academia.whatsapp}", "whatsappAcademia");
+                                            Log.e("Valor whatsappAcademia", "${academia.whatsapp}");
+
+                                            localStorage.salvarValor(context, "${academia.foto}", "fotoAcademia");
+                                            Log.e("Valor fotoAcademia", "${academia.foto}");
+
+                                            localStorage.salvarValor(context, "${academia.descricao}", "descricaoAcademia");
+                                            Log.e("Valor descricaoAcademia", "${academia.descricao}");
+
+                                            localStorage.salvarValor(context, "${academia.cor_primaria}", "corPrimariaAcademia");
+                                            Log.e("Valor corPrimariaAcademia", "${academia.cor_primaria}");
+
+                                            localStorage.salvarValor(context, "${academia.cor_secundaria}", "corSegundariaAcademia");
+                                            Log.e("Valor corSegundariaAcademia", "${academia.cor_secundaria}");
+
+                                            localStorage.salvarValor(context, "${academia.foto}", "fotoAcademia");
+                                            Log.e("Valor fotoAcademia (repetido)", "${academia.foto}");
+
+                                            localStorage.salvarValor(context, "${academia.logradouro}", "logradouroAcademia");
+                                            Log.e("Valor logradouro", "${academia.logradouro}");
+
+                                            localStorage.salvarValor(context, "${academia.numero_endereco}", "numeroAcademia");
+                                            Log.e("Valor numero endereço", "${academia.numero_endereco}");
+
+                                            localStorage.salvarValor(context, pegarNomeTags(academia).toString(), "tagsAcademia");
+                                            Log.e("Valor tagsAcademia", pegarNomeTags(academia).toString());
+
 
                                         }
                                     )
