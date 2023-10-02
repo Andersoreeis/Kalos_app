@@ -47,11 +47,13 @@ fun AcademiaCard(
             .height(150.dp)
             .background(
                 GrayKalosEscuroCard
-            ).border(
+            )
+            .border(
                 width = 2.dp,
                 color = Color(80, 80, 80),
                 shape = RoundedCornerShape(20.dp)
-            ).clickable { onClick() }
+            )
+            .clickable { onClick() }
 
 
     ) {
@@ -73,14 +75,27 @@ fun AcademiaCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(modifier = Modifier.padding(10.dp)) {
-                    AsyncImage(
-                        model = academia.foto,
-                        contentDescription = "foto academia",
-                        modifier = Modifier
-                            .width(110.dp)
-                            .height(110.dp)
-                            .clip(CircleShape)
-                    )
+                    if (academia.foto!!.isNotEmpty()) {
+                        AsyncImage(
+                            model = academia.foto,
+                            contentDescription = "foto academia",
+                            modifier = Modifier
+                                .width(110.dp)
+                                .height(110.dp)
+                                .clip(CircleShape)
+                        )
+                    } else {
+                        Image(
+                            painter = painterResource(id = R.drawable.baseline_business_24),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(110.dp)
+                                .clip(
+                                    CircleShape
+                                )
+                        )
+                    }
+
                 }
 
 
@@ -105,7 +120,7 @@ fun AcademiaCard(
                     Espacamento(tamanho = 15.dp)
 
                     createTextKalos(
-                        content = academia.numero_endereco.toString(),
+                        content = academia.logradouro.toString(),
                         sizeText = 10,
                         colorText = Color.White,
                         bold = 400,

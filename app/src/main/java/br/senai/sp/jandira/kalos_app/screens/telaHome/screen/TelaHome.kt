@@ -171,6 +171,7 @@ fun TelaHome(navController: NavController, lifecycleScope: LifecycleCoroutineSco
 
             if (result.isSuccessful) {
 
+
                 aluno = result.body()?.data!!
                 Log.e("aluno", "TelaHome: ${aluno}")
                 status = true

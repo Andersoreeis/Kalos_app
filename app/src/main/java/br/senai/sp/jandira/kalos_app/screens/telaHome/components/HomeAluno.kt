@@ -48,6 +48,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun HomeAluno(aluno: AlunoResponse, navController: NavController,
+
               lifecycleCoroutineScope: LifecycleCoroutineScope, localStorage: Storage) {
     lateinit var alunoService: AlunoService
     alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
@@ -55,6 +56,9 @@ fun HomeAluno(aluno: AlunoResponse, navController: NavController,
         mutableStateOf(emptyList<AcademiaResponse>())
     }
     val context = LocalContext.current
+    var statuAtivo = remember {
+        mutableStateOf(false)
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -124,7 +128,10 @@ fun HomeAluno(aluno: AlunoResponse, navController: NavController,
 
                         AcademiaCard(
                             academia = academia,
-                            onClick = {  //navController.navigate("telaHome")
+                            onClick = { navController.navigate("perfilAcademia")
+                                statuAtivo.value = true
+                                localStorage.salvarValor(context, "${statuAtivo.value}", "alunoAtivo")
+                                localStorage.salvarValor(context, "${aluno.nome}", "aluno")
                                 localStorage.salvarValor(
                                     context,
                                     "${academia.nome}",
