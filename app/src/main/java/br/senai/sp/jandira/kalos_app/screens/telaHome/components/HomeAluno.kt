@@ -129,7 +129,10 @@ fun HomeAluno(aluno: AlunoResponse, navController: NavController,
 
                         AcademiaCard(
                             academia = academia,
-                            onClick = { navController.navigate("perfilAcademia")
+
+                            onClick = { navController.navigate("homeAcademia")
+                                statuAtivo.value = true
+
                                 localStorage.salvarValor(context, "${statuAtivo.value}", "alunoAtivo")
                                 Log.e("LocalStorage", "alunoAtivo: ${statuAtivo.value}")
 
