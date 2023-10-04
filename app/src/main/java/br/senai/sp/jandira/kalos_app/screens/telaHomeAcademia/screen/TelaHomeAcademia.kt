@@ -98,8 +98,17 @@ fun TelaHomeAcademia(
     val corPrimaria = Color(android.graphics.Color.parseColor(corPrimariaAcademia ?: "#353535"))
 
     val corSegundariaAcademia = localStorage.lerValor(context, "corSegundariaAcademia")
-    val corSegundaria = Color(android.graphics.Color.parseColor(corSegundariaAcademia ?: "#353535"))
+
     val tagsAcademia = localStorage.lerValor(context, "tagsAcademia")
+    val corSegundaria = if (corSegundariaAcademia == corPrimariaAcademia) {
+        if (corSegundariaAcademia == "#FFFFFF") {
+            Color.Black
+        } else {
+            Color.White
+        }
+    } else {
+        Color(android.graphics.Color.parseColor(corSegundariaAcademia ?: "#353535"))
+    }
 
     var selectedItemIndex by rememberSaveable {
         mutableStateOf(0)
@@ -142,7 +151,7 @@ fun TelaHomeAcademia(
             Icon(
                 painter = painterResource(id = resourceId),
                 contentDescription = contentDescription,
-                tint = androidx.compose.ui.graphics.Color.White,
+                tint = corSegundaria,
                 modifier = Modifier.size(24.dp)
             )
         }
@@ -150,11 +159,11 @@ fun TelaHomeAcademia(
         Spacer(modifier = Modifier.width(8.dp))
     }
 
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(androidx.compose.ui.graphics.Color.Black)
-            .verticalScroll(rememberScrollState())
+            .background(Color.Black)
     ) {
 
         Box(
@@ -186,7 +195,7 @@ fun TelaHomeAcademia(
                         .size(200.dp),
                     color = GrayKalos
                 ) {
-                    if (fotoAcademia!!.isNotEmpty()) {
+                    if (fotoAcademia!!.isNotEmpty() || fotoAcademia.isNotBlank()) {
                         AsyncImage(
                             model = fotoAcademia,
                             contentDescription = "foto academia",
@@ -234,34 +243,38 @@ fun TelaHomeAcademia(
             )
 
             Espacamento(tamanho = 5.dp)
-
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(androidx.compose.ui.graphics.Color.Gray)
-            )
-
-            Espacamento(tamanho = 5.dp)
-
             val tagsList = tagsAcademia?.split(", ") ?: emptyList()
 
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                items(tagsList) { tag ->
-                    TagItem(text = tag)
-                }
-            }
+            if (tagsList.isNotEmpty() && tagsList.any { it.isNotBlank() }) {
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(Color.Gray)
+                )
 
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(androidx.compose.ui.graphics.Color.Gray)
-            )
+                Espacamento(tamanho = 5.dp)
+
+
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    items(tagsList) { tag ->
+                        TagItem(text = tag)
+                    }
+                }
+
+
+
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(Color.Gray)
+                )
+            }
 
             Espacamento(tamanho = 5.dp)
 
@@ -310,11 +323,11 @@ fun TelaHomeAcademia(
                     .padding(horizontal = 8.dp, vertical = 4.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Row {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_location_on_24),
                         contentDescription = null,
-                        tint = androidx.compose.ui.graphics.Color.White
+                        tint = corSegundaria
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
@@ -335,11 +348,11 @@ fun TelaHomeAcademia(
                     .padding(horizontal = 8.dp, vertical = 4.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Row {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_local_phone_24),
                         contentDescription = null,
-                        tint = androidx.compose.ui.graphics.Color.White
+                        tint = corSegundaria
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(

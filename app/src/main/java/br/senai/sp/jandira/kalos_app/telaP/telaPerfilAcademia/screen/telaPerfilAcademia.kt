@@ -84,6 +84,7 @@ fun TelaPerfilAcademia(
     }
 
 
+
     @Composable
     fun TagItem(text: String) {
         Box(
