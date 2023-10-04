@@ -55,7 +55,7 @@ fun TelaPerfilAcademia(
 ) {
 
     val context = LocalContext.current
-    var alunoAtivo: String?  = localStorage.lerValor(context, "alunoAtivoNaAcademia")
+    var alunoAtivo: String? = localStorage.lerValor(context, "alunoAtivoNaAcademia")
     var nomeAcademia = localStorage.lerValor(context, "nomeAcademia")
     var telefoneAcademia = localStorage.lerValor(context, "telefoneAcademia")
     var emailAcademia = localStorage.lerValor(context, "emailAcademia")
@@ -71,8 +71,18 @@ fun TelaPerfilAcademia(
     val corPrimaria = Color(android.graphics.Color.parseColor(corPrimariaAcademia ?: "#353535"))
 
     val corSegundariaAcademia = localStorage.lerValor(context, "corSegundariaAcademia")
-    val corSegundaria = Color(android.graphics.Color.parseColor(corSegundariaAcademia ?: "#353535"))
     val tagsAcademia = localStorage.lerValor(context, "tagsAcademia")
+
+    val corSegundaria = if (corSegundariaAcademia == corPrimariaAcademia) {
+        if (corSegundariaAcademia == "#FFFFFF") {
+            Color.Black
+        } else {
+            Color.White
+        }
+    } else {
+        Color(android.graphics.Color.parseColor(corSegundariaAcademia ?: "#353535"))
+    }
+
 
     @Composable
     fun TagItem(text: String) {
@@ -111,13 +121,14 @@ fun TelaPerfilAcademia(
             Icon(
                 painter = painterResource(id = resourceId),
                 contentDescription = contentDescription,
-                tint = Color.White,
+                tint = corSegundaria,
                 modifier = Modifier.size(24.dp)
             )
         }
 
         Spacer(modifier = Modifier.width(8.dp))
     }
+
 
     Column(
         modifier = Modifier
@@ -138,7 +149,7 @@ fun TelaPerfilAcademia(
                 color = corPrimaria,
             ) {
 
-                    SetaParaVoltar(navController = navController, navName = "home")
+                SetaParaVoltar(navController = navController, navName = "home")
 
 
             }
@@ -154,7 +165,7 @@ fun TelaPerfilAcademia(
                         .size(200.dp),
                     color = GrayKalos
                 ) {
-                    if (fotoAcademia!!.isNotEmpty()) {
+                    if (fotoAcademia!!.isNotEmpty() || fotoAcademia.isNotBlank()) {
                         AsyncImage(
                             model = fotoAcademia,
                             contentDescription = "foto academia",
@@ -202,34 +213,38 @@ fun TelaPerfilAcademia(
             )
 
             Espacamento(tamanho = 5.dp)
-
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(Color.Gray)
-            )
-
-            Espacamento(tamanho = 5.dp)
-
             val tagsList = tagsAcademia?.split(", ") ?: emptyList()
 
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                items(tagsList) { tag ->
-                    TagItem(text = tag)
-                }
-            }
+            if (tagsList.isNotEmpty() && tagsList.any { it.isNotBlank() }) {
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(Color.Gray)
+                )
 
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(Color.Gray)
-            )
+                Espacamento(tamanho = 5.dp)
+
+
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    items(tagsList) { tag ->
+                        TagItem(text = tag)
+                    }
+                }
+
+
+
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(Color.Gray)
+                )
+            }
 
             Espacamento(tamanho = 5.dp)
 
@@ -278,11 +293,11 @@ fun TelaPerfilAcademia(
                     .padding(horizontal = 8.dp, vertical = 4.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Row {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_location_on_24),
                         contentDescription = null,
-                        tint = Color.White
+                        tint = corSegundaria
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
@@ -303,11 +318,11 @@ fun TelaPerfilAcademia(
                     .padding(horizontal = 8.dp, vertical = 4.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Row {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_local_phone_24),
                         contentDescription = null,
-                        tint = Color.White
+                        tint = corSegundaria
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
@@ -319,22 +334,22 @@ fun TelaPerfilAcademia(
                 }
             }
 
-    Column(
-        modifier = Modifier
-            .height(300.dp)
-            .background(Color.Black)
-            .padding(20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Bottom
-    ) {
-        createTextKalos(
-            content = "Entre em contato com a academia para se matricular nessa academia e ter acesso completo!",
-            sizeText = 12,
-            colorText = Color.White,
-            bold = 400,
-            alinhamento = TextAlign.Center
-        )
-    }
+            Column(
+                modifier = Modifier
+                    .height(300.dp)
+                    .background(Color.Black)
+                    .padding(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Bottom
+            ) {
+                createTextKalos(
+                    content = "Entre em contato com a academia para se matricular nessa academia e ter acesso completo!",
+                    sizeText = 12,
+                    colorText = Color.White,
+                    bold = 400,
+                    alinhamento = TextAlign.Center
+                )
+            }
 
 
         }
