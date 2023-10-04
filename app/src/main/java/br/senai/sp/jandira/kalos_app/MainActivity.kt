@@ -21,6 +21,7 @@ import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.LoginScreeViewModel
 
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.screen.LoginScreen
 import br.senai.sp.jandira.kalos_app.screens.telaHome.screen.TelaHome
+import br.senai.sp.jandira.kalos_app.screens.telaHomeAcademia.screen.TelaHomeAcademia
 import br.senai.sp.jandira.kalos_app.screens.telaInicial.screen.TelaInicial
 import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.screen.TelaObjetivo
 import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.screen.TelaSaudeLimitacoes
@@ -84,6 +85,10 @@ class MainActivity : ComponentActivity() {
                         composable(route = "perfilAcademia"){
                             TelaPerfilAcademia(navController = navController,  localStorage)
                         }
+                        composable(route = "homeAcademia"){
+                            TelaHomeAcademia(navController, lifecycleScope, localStorage)
+                        }
+
 
 
                     }

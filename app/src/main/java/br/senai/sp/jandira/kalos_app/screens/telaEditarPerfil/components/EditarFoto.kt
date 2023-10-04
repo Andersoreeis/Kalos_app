@@ -117,7 +117,7 @@ fun EditarFoto(aluno: AlunoResponse, fotoUri: MutableState<Uri?>) {
             fontSize = 20.sp,
             modifier = Modifier .clickable {
                 launcher.launch("image/*")
-                Log.e("TAG", "EditarFoto: ${painter.toString()} " )
+
             }
         )
 
