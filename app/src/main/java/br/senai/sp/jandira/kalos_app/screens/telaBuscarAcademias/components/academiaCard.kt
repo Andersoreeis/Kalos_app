@@ -120,7 +120,7 @@ fun AcademiaCard(
                     Espacamento(tamanho = 15.dp)
 
                     createTextKalos(
-                        content = academia.logradouro.toString(),
+                        content = academia.numero_endereco.toString(),
                         sizeText = 10,
                         colorText = Color.White,
                         bold = 400,
