@@ -82,11 +82,12 @@ fun AcademiaCard(
                             modifier = Modifier
                                 .width(110.dp)
                                 .height(110.dp)
-                                .clip(CircleShape)
+                                .clip(CircleShape),
+                            error = painterResource(id = R.drawable.ginasio)
                         )
                     } else {
                         Image(
-                            painter = painterResource(id = R.drawable.baseline_business_24),
+                            painter = painterResource(id = R.drawable.ginasio),
                             contentDescription = null,
                             modifier = Modifier
                                 .size(110.dp)
@@ -144,43 +145,11 @@ fun AcademiaCard(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    var teste1 = 1
-                    var teste2 = 2
-                    var teste3 = 3
 
-                    if (teste1 == 1) {
-                        Image(
-                            painter = painterResource(id = R.drawable.brainle_icone),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .size(30.dp)
-                                .padding(3.dp)
-                        )
-
-                    }
-                    if (teste2 == 2) {
-                        Image(
-                            painter = painterResource(id = R.drawable.cadeirante_icone),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .size(30.dp)
-                                .padding(3.dp)
-                        )
-
-
-                    }
-                    if (teste3 == 3) {
-                        Image(
-                            painter = painterResource(id = R.drawable.libras_icone),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .size(30.dp)
-                                .padding(3.dp)
-                        )
                     }
                 }
             }
         }
     }
-}
+
 
