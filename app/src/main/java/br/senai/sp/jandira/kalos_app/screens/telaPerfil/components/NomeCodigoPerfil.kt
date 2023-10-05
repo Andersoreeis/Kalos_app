@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.kalos_app.screens.telaPerfil.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
@@ -35,9 +36,12 @@ fun NomeCodigoPerfil(aluno: AlunoResponse) {
 
 fun primeiroESegundoNome(frase: String): String {
     val palavras = frase.split(" ")
-    if (palavras.isNotEmpty()) {
+    Log.e("Tamanho", "primeiroESegundoNome: ${palavras.size} " )
+    if (palavras.isNotEmpty() && palavras.size > 1) {
         return palavras[0] + " " + palavras[1]
-    } else {
-        return ""
+    } else if(palavras.isNotEmpty() && palavras.size <= 1) {
+        return palavras[0]
+    }else{
+        return  ""
     }
 }
