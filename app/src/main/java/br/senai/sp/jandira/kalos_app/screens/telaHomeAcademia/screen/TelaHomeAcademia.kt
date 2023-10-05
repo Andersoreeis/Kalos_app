@@ -1,6 +1,7 @@
 package br.senai.sp.jandira.kalos_app.screens.telaHomeAcademia.screen
 
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -68,12 +69,14 @@ import br.senai.sp.jandira.kalos_app.components.SetaParaVoltar
 import br.senai.sp.jandira.kalos_app.model.BottomNavigationItem
 import br.senai.sp.jandira.kalos_app.screens.telaBuscarAcademias.screens.BuscarAcademias
 import br.senai.sp.jandira.kalos_app.screens.telaHome.components.HomeAluno
+import br.senai.sp.jandira.kalos_app.screens.telaHomeAcademia.components.TelaTreinos
 import br.senai.sp.jandira.kalos_app.screens.telaPerfil.screen.TelaPerfil
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalosEscuro
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 import coil.compose.AsyncImage
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun TelaHomeAcademia(
     navController: NavController,
@@ -164,6 +167,8 @@ fun TelaHomeAcademia(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 20.dp)
     ) {
 
         Box(
@@ -250,7 +255,7 @@ fun TelaHomeAcademia(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(1.dp)
-                        .background(Color.Gray)
+                        .background(Color(0xFF393939))
                 )
 
                 Espacamento(tamanho = 5.dp)
@@ -272,11 +277,11 @@ fun TelaHomeAcademia(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(1.dp)
-                        .background(Color.Gray)
+                        .background(Color(0xFF393939))
                 )
             }
 
-            Espacamento(tamanho = 5.dp)
+            Espacamento(tamanho = 15.dp)
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -385,7 +390,8 @@ fun TelaHomeAcademia(
                                 .height(1.dp)
                                 .zIndex(10.0f)
                                 .offset(y = 1.dp)
-                                .background(androidx.compose.ui.graphics.Color.Gray)
+                                .background(Color(0xFF393939))
+                                .padding(bottom = 5.dp)
                         )
 
                         Row(
@@ -406,9 +412,19 @@ fun TelaHomeAcademia(
                                         Text(text = item)
                                     },
                                     modifier = if(selectedItemIndex==index){
-                                        Modifier.background(Color.Black).border(2.dp, Color.Gray, shape = RoundedCornerShape(20.dp)).height(40.dp).zIndex(11.0f)
+                                        Modifier
+                                            .background(Color.Black)
+//                                            .border(
+//                                                2.dp,
+//                                                Color.Gray,
+//                                                shape = RoundedCornerShape(20.dp)
+//                                            )
+                                            .height(40.dp)
+                                            .zIndex(11.0f)
                                     } else{
-                                        Modifier.background(Color.Black).height(40.dp)     },
+                                        Modifier
+                                            .background(Color.Black)
+                                            .height(40.dp)     },
 
 
                                     colors = NavigationBarItemDefaults.colors(
@@ -426,13 +442,13 @@ fun TelaHomeAcademia(
                 }
             Column(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if (selectedItemIndex == 1) {
                    Text(text = "produtos", color = Color.White)
                 } else if (selectedItemIndex == 2) {
-                    Text(text = "treinos", color = Color.White)
+                    TelaTreinos()
                 } else if(selectedItemIndex == 3) {
                     Text(text = "informaçoes", color = Color.White)
                 }else{
