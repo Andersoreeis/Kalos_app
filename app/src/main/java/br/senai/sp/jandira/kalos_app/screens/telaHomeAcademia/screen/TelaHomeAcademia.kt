@@ -384,7 +384,7 @@ fun TelaHomeAcademia(
                                 .fillMaxWidth()
                                 .height(1.dp)
                                 .zIndex(10.0f)
-                                .offset(y = 2.dp)
+                                .offset(y = 1.dp)
                                 .background(androidx.compose.ui.graphics.Color.Gray)
                         )
 
@@ -406,7 +406,7 @@ fun TelaHomeAcademia(
                                         Text(text = item)
                                     },
                                     modifier = if(selectedItemIndex==index){
-                                        Modifier.background(Color.Black).border(4.dp, Color.Gray).height(40.dp).zIndex(11.0f)
+                                        Modifier.background(Color.Black).border(2.dp, Color.Gray, shape = RoundedCornerShape(20.dp)).height(40.dp).zIndex(11.0f)
                                     } else{
                                         Modifier.background(Color.Black).height(40.dp)     },
 
