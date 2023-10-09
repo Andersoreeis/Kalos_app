@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -59,10 +60,10 @@ fun CardExercicio(numero: String, imagem: String, nome: String, series: String, 
             AsyncImage(
                 model = imagem,
                 contentDescription = null,
-                placeholder = painterResource(id = R.drawable.cadeirante_icone),
                 modifier = Modifier
                     .size(50.dp)
-                    .shadow(2.dp, RoundedCornerShape(5.dp))
+                    .shadow(2.dp, RoundedCornerShape(5.dp)),
+                contentScale = ContentScale.Crop
             )
 
         }

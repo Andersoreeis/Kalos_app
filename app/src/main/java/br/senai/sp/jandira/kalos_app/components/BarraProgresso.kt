@@ -448,7 +448,7 @@ fun BarraProgresso(
                         Log.e("userEmailFirebase", "${userEmailFirebase}")
                         Log.e("Email", "${email}")
                         Log.e("senha", "${senha}")
-                        Log.e("valorEstado", "${emailFirebaseOuNormal}")8
+                        Log.e("valorEstado", "${emailFirebaseOuNormal}")
 
 
                         if (email == "" && senha == ""){
