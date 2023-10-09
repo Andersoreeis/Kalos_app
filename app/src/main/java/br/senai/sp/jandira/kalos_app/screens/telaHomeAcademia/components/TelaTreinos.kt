@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.kalos_app.screens.telaHomeAcademia.components
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -23,64 +24,110 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleCoroutineScope
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.model.TreinosResponse
 import br.senai.sp.jandira.kalos_app.screens.telaPerfil.components.convertIso8601ToDate
+import br.senai.sp.jandira.kalos_app.service.AlunoService
+import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
+import br.senai.sp.jandira.kalos_app.service.TreinoService
 import coil.compose.AsyncImage
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.Date
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun TelaTreinos() {
+fun TelaTreinos(lifecycleCoroutineScope: LifecycleCoroutineScope, localStorage: Storage) {
+    var treinos by remember {
+        mutableStateOf(listOf(TreinosResponse()))
+    }
+    var status by remember {
+        mutableStateOf(false)
+    }
+    val context = LocalContext.current
 
-    val testes = listOf(
-        TreinosResponse(
-            nome = "Treino de perna",
-            foto = "https://firebasestorage.googleapis.com/v0/b/kalos-app-b403c.appspot.com/o/" +
-                    "images%2Ffotoacademia.png?alt=media&token=699de6e9-2d5f-4843-8c4f-c600cfa1ae" +
-                    "df&_gl=1*k4mb0j*_ga*NDQ2MTg1MTA2LjE2OTE2OTMzMDY.*_ga_CW55HF8NVT*MTY5NjUyNTUxMy4" +
-                    "xOS4xLjE2OTY1MjU3MjMuMzguMC4w",
-            nome_categoria_treino = "Musculação",
-            data_criacao = "2004-04-10T00:00:00.000Z"
-        ),
-        TreinosResponse(
-            nome = "Treino de Costas",
-            foto = "https://firebasestorage.googleapis.com/v0/b/kalos-app-b403c.appspot.com/o/" +
-                    "images%2Ffotoacademia.png?alt=media&token=699de6e9-2d5f-4843-8c4f-c600cfa1ae" +
-                    "df&_gl=1*k4mb0j*_ga*NDQ2MTg1MTA2LjE2OTE2OTMzMDY.*_ga_CW55HF8NVT*MTY5NjUyNTUxMy4" +
-                    "xOS4xLjE2OTY1MjU3MjMuMzguMC4w",
-            nome_categoria_treino = "Musculação",
-            data_criacao = "2004-04-10T00:00:00.000Z"
-        ),
-        TreinosResponse(
-            nome = "Treino de Peito",
-            foto = "https://firebasestorage.googleapis.com/v0/b/kalos-app-b403c.appspot.com/o/" +
-                    "images%2Ffotoacademia.png?alt=media&token=699de6e9-2d5f-4843-8c4f-c600cfa1ae" +
-                    "df&_gl=1*k4mb0j*_ga*NDQ2MTg1MTA2LjE2OTE2OTMzMDY.*_ga_CW55HF8NVT*MTY5NjUyNTUxMy4" +
-                    "xOS4xLjE2OTY1MjU3MjMuMzguMC4w",
-            nome_categoria_treino = "Musculação",
-            data_criacao = "2004-04-10T00:00:00.000Z"
-        )
-    )
+//    val testes = listOf(
+//        TreinosResponse(
+//            nome = "Treino de perna",
+//            foto = "https://firebasestorage.googleapis.com/v0/b/kalos-app-b403c.appspot.com/o/" +
+//                    "images%2Ffotoacademia.png?alt=media&token=699de6e9-2d5f-4843-8c4f-c600cfa1ae" +
+//                    "df&_gl=1*k4mb0j*_ga*NDQ2MTg1MTA2LjE2OTE2OTMzMDY.*_ga_CW55HF8NVT*MTY5NjUyNTUxMy4" +
+//                    "xOS4xLjE2OTY1MjU3MjMuMzguMC4w",
+//            nome_categoria_treino = "Musculação",
+//            data_criacao = "2004-04-10T00:00:00.000Z"
+//        ),
+//        TreinosResponse(
+//            nome = "Treino de Costas",
+//            foto = "https://firebasestorage.googleapis.com/v0/b/kalos-app-b403c.appspot.com/o/" +
+//                    "images%2Ffotoacademia.png?alt=media&token=699de6e9-2d5f-4843-8c4f-c600cfa1ae" +
+//                    "df&_gl=1*k4mb0j*_ga*NDQ2MTg1MTA2LjE2OTE2OTMzMDY.*_ga_CW55HF8NVT*MTY5NjUyNTUxMy4" +
+//                    "xOS4xLjE2OTY1MjU3MjMuMzguMC4w",
+//            nome_categoria_treino = "Musculação",
+//            data_criacao = "2004-04-10T00:00:00.000Z"
+//        ),
+//        TreinosResponse(
+//            nome = "Treino de Peito",
+//            foto = "https://firebasestorage.googleapis.com/v0/b/kalos-app-b403c.appspot.com/o/" +
+//                    "images%2Ffotoacademia.png?alt=media&token=699de6e9-2d5f-4843-8c4f-c600cfa1ae" +
+//                    "df&_gl=1*k4mb0j*_ga*NDQ2MTg1MTA2LjE2OTE2OTMzMDY.*_ga_CW55HF8NVT*MTY5NjUyNTUxMy4" +
+//                    "xOS4xLjE2OTY1MjU3MjMuMzguMC4w",
+//            nome_categoria_treino = "Musculação",
+//            data_criacao = "2004-04-10T00:00:00.000Z"
+//        )
+//    )
+    lateinit var treinoService: TreinoService
+    treinoService = RetrofitHelper.getInstance().create(TreinoService::class.java)
+
+
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .height(350.dp)
     ) {
+
+        val idAcademia = localStorage.lerValor(context, "idAcademia")
+        val idAluno = localStorage.lerValor(context, "idAluno")
+        Log.e("ids", "TelaTreinos: ${idAcademia} ", )
+        Log.e("ids", "TelaTreinos: ${idAluno} ", )
+
+        lifecycleCoroutineScope.launch {
+            val result = treinoService.getTreinosAcademiaAluno(idAcademia.toString(), idAluno.toString())
+            Log.e("respostas", "TelaTreinos: ${result.body()}", )
+            if (result.isSuccessful) {
+                val response = result.body()
+                if (response != null) {
+                    Log.e("respostas", "TelaTreinos: ${response.data}", )
+                    treinos = response.data!!
+                    status = true
+                } else {
+                    status = false
+                }
+            }
+            
+        }
+        if(status){
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(testes) {
+            items(treinos) {
                 Box(
                     modifier = Modifier
                         .height(227.dp)
@@ -89,10 +136,11 @@ fun TelaTreinos() {
                     AsyncImage(
                         model = it.foto,
                         contentDescription = "foto do treino",
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
+                        error = painterResource(id = R.drawable.treinoerro)
                     )
                     Column(
-                        modifier = Modifier.padding(top = 140.dp, start = 20.dp)
+                        modifier = Modifier.padding(top = 100.dp, start = 20.dp)
                     ) {
                         Text(text = it.nome.toString(), color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
                         Text(
@@ -109,8 +157,7 @@ fun TelaTreinos() {
                             shape = RoundedCornerShape(10.dp)
 
                         ) {
-                            val date =
-                                dateToLocalDate(convertIso8601ToDate(it.data_criacao.toString())).toString()
+
                             Row(
                                 modifier = Modifier.fillMaxSize(),
                                 verticalAlignment = Alignment.CenterVertically,
@@ -122,7 +169,7 @@ fun TelaTreinos() {
                                     tint = Color.White
                                 )
                                 Text(
-                                    text = formatarData2(date),
+                                    text = it.data_criacao.toString(),
                                     color = Color.White,
                                     fontSize = 12.sp
                                 )
@@ -135,30 +182,14 @@ fun TelaTreinos() {
                 }
                 Spacer(modifier = Modifier.height(15.dp))
             }
+        }}else{
+            Text(text = "Você não possui treinos nessa academia", color = Color.White,fontSize = 20.sp )
         }
 
     }
 }
 
-fun formatarData2(input: String): String {
-    val digitsOnly = input.replace(Regex("[^\\d]"), "")
 
-    if (digitsOnly.length < 8) {
-        Log.e("digi", "formatarData: ${digitsOnly}")
-        return digitsOnly
-    }
 
-    val day = digitsOnly.substring(6, 8)
-    val month = digitsOnly.substring(4, 6)
-    val year = digitsOnly.substring(0, 4)
 
-    val formattedDate = "$day/$month/$year"
 
-    return formattedDate
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-fun dateToLocalDate(date: Date): LocalDate {
-    val instant = date.toInstant()
-    return instant.atZone(java.time.ZoneId.systemDefault()).toLocalDate()
-}
