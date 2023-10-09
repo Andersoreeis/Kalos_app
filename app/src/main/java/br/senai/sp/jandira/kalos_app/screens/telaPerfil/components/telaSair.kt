@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -34,13 +35,18 @@ fun ConfirmacaoDeslogarDialog(
     onClose: () -> Unit,
     onConfirm: () -> Unit
 ) {
+    Column(modifier = Modifier.fillMaxSize().zIndex(10.0f)) {
+
+    }
     if (exibirDialog) {
         Column(
             modifier = Modifier
                 .width(400.dp)
                 .height(180.dp)
                 .background(Color(23, 23, 23))
-                .padding(20.dp).offset(y = 80.dp).zIndex(10.0f)
+                .padding(20.dp)
+                .offset(y = 80.dp)
+                .zIndex(10.0f)
                 .border(2.dp, Color.White, RoundedCornerShape(20.dp))
                 .clip(RoundedCornerShape(20.dp)),
             horizontalAlignment = Alignment.CenterHorizontally,

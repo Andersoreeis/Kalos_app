@@ -34,7 +34,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import br.senai.sp.jandira.kalos_app.LocalStorage
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.LoginScreeViewModel
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -51,7 +53,7 @@ private val auth: FirebaseAuth = Firebase.auth
 private val loading = MutableLiveData(false)
 
 @Composable
-fun ContinueCom(navController: NavController, viewModel: LoginScreeViewModel) {
+fun ContinueCom(navController: NavController, viewModel: LoginScreeViewModel, localstorage: Storage) {
     val degradeLeft = Brush.horizontalGradient(
         colors = listOf(Color(0xFF000000), Color(0xFF00FE90))
     )
@@ -125,6 +127,11 @@ fun ContinueCom(navController: NavController, viewModel: LoginScreeViewModel) {
                 onClick = {
                     val opcoes = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestIdToken(token).requestEmail().build()
+                    val user = Firebase.auth.currentUser
+                    val userEmail = user?.email
+                    localstorage.salvarValor(context, user.toString(), "userFirebase")
+                    localstorage.salvarValor(context, userEmail.toString(), "userEmailFirebase")
+
                     val googleSingInCliente = GoogleSignIn.getClient(context, opcoes)
                     launcher.launch(googleSingInCliente.signInIntent)
                 }

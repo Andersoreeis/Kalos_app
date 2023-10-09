@@ -77,17 +77,13 @@ fun HeaderPerfil(aluno: AlunoResponse, navController: NavController) {
             }
         }
 
-
         ConfirmacaoDeslogarDialog(
             exibirDialog = exibirDialog.value,
             onClose = {
                 exibirDialog.value = false
             },
             onConfirm = {
-                // Lida com a ação de deslogar aqui
-                // Por exemplo, você pode fazer a navegação para a tela de login
-                // e limpar os dados de autenticação
-                exibirDialog.value = false // Fecha o diálogo após a ação de deslogar
+                exibirDialog.value = false
             }
         )
         Row(

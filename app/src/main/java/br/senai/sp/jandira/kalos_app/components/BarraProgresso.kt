@@ -180,9 +180,6 @@ fun BarraProgresso(
         if (genero.isEmpty()) {
             return "Gênero é obrigatório."
         } else {
-            // Adicione aqui a validação específica para gênero (exemplo: opções válidas)
-            // Se a validação falhar, retorne a mensagem de erro apropriada
-            // Caso contrário, retorne uma string vazia
             return ""
         }
     }
@@ -377,13 +374,11 @@ fun BarraProgresso(
                         val cpfError = validarCPF(estadoCpf.value)
                         val generoError = validarGenero(categoryGenero.value)
 
-                        // Verifique se há erros em algum dos campos
                         if (nomeError == "" && dataNascimentoError == "" &&
                             telefoneError == "" && cpfError == "" && generoError == ""
                         ) {
                             increment()
                         } else {
-                            // Exiba as mensagens de erro
                             estadoNomeError.value = nomeError
                             estadoDataNascimentoError.value = dataNascimentoError
                             estadoTelefoneError.value = telefoneError
@@ -428,11 +423,12 @@ fun BarraProgresso(
                         corBotao = GreenKalos
 
                     ) {
+                        val userFirebase = localStorage.lerValor(context, "userFirebase")
+                        val userEmailFirebase = localStorage.lerValor(context, "userEmailFirebase")
 
-                        val email = localStorage.lerValor(context, "email").toString()
-                        val senha = localStorage.lerValor(context, "senha").toString()
+                        var email = localStorage.lerValor(context, "email").toString()
+                        var senha = localStorage.lerValor(context, "senha").toString()
                         val nome = localStorage.lerValor(context, "nome").toString()
-                        val dataNascimento =
                             localStorage.lerValor(context, "dataNascimento").toString()
                         val cpf = localStorage.lerValor(context, "cpf").toString()
                         val telefone = localStorage.lerValor(context, "telefone").toString()
@@ -441,6 +437,14 @@ fun BarraProgresso(
 
                         var generoText = localStorage.lerValor(context, "genero").toString()
                         var genero: Int
+
+                        if (email.isEmpty() && senha.isEmpty()){
+                            if (userEmailFirebase.toString().isNotEmpty()){
+                                email = userEmailFirebase.toString()
+                                senha = "loginViaFirebase"
+
+                            }
+                        }
 
                         fun formatarData(input: String): String {
                             val digitsOnly = input.replace(Regex("[^\\d]"), "")
@@ -467,6 +471,7 @@ fun BarraProgresso(
                         } else {
                             genero = 4
                         }
+
 
 
 

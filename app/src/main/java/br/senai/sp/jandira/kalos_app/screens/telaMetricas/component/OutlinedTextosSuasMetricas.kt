@@ -14,33 +14,27 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+
 fun CampoTextoMetricas(
     value: String,
     aoMudar: (String) -> Unit,
     placeholder: String,
     isError: Boolean,
-
-    ) {
-
+) {
     val errorText = remember { mutableStateOf("") }
 
     OutlinedTextField(
         value = value,
-
-
         onValueChange = { newValue ->
-
-            val transformedValue = aoMudar(newValue)
-
-
-
+            val numericValue = newValue.filter { it.isDigit() }
+            aoMudar(numericValue)
             errorText.value = ""
-
         },
         placeholder = {
             Text(text = placeholder, color = Color(0xFF606060))
@@ -57,13 +51,10 @@ fun CampoTextoMetricas(
             cursorColor = GreenKalos
         ),
         isError = isError,
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Next
+        keyboardOptions = KeyboardOptions.Default.copy(
+            imeAction = ImeAction.Next,
+            keyboardType = KeyboardType.Number
         ),
-
-
         singleLine = true
-
-
     )
 }

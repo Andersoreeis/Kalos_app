@@ -53,7 +53,7 @@ fun CriarContaScreen(navController: NavController, lifecycleScope: LifecycleCoro
         Column (
             modifier = Modifier.padding(horizontal = 30.dp)
         ){
-            ContinueCom(navController = navController, viewModel = viewModel)
+            ContinueCom(navController = navController, viewModel = viewModel, localstorage = classe)
         }
 
         Row (
