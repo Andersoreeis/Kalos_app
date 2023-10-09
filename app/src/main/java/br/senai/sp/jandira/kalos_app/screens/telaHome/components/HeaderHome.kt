@@ -103,7 +103,7 @@ fun HeaderHome(aluno: AlunoResponse) {
                         fontSize = 40.sp
                     )
                     Text(
-                        text = "${aluno.nome} !",
+                        text = "${primeiroNome(aluno.nome.toString())} !",
                         color = Color.White,
                         fontSize = 40.sp,
                         fontWeight = FontWeight.Bold
@@ -116,6 +116,17 @@ fun HeaderHome(aluno: AlunoResponse) {
 
     }
 }
+
+fun primeiroNome(frase: String): String {
+    val palavras = frase.split(" ")
+    if (palavras.isNotEmpty()) {
+        return palavras[0]
+    } else {
+        return ""
+    }
+}
+
+
 
 //@Preview
 //@Composable

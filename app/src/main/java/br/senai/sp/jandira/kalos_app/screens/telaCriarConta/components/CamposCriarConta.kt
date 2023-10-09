@@ -217,7 +217,9 @@ fun CamposCriarConta(navController: NavController, localStorage: Storage, lifecy
 fun validarEmail(email: String): String? {
     if (email.isEmpty()) {
         return "O campo de email não pode estar vazio"
-    } else if (email.length < 5) {
+    } else if (email.contains(" ")){
+        return "O email não pode conter espaços"
+    }else if (email.length < 5) {
         return "O email deve conter pelo menos 5 caracteres"
     } else if (email.length > 255) {
         return "O email excedeu o limite de 255 caracteres"
@@ -235,7 +237,9 @@ fun validarEmail(email: String): String? {
 fun validarSenha(senha: String, senhaRepetida: String): String? {
     if (senha.isEmpty() || senhaRepetida.isEmpty()) {
         return "Os campos de senha não podem estar vazios"
-    } else if (senha.length < 8) {
+    } else if (senha.contains(" ") || senhaRepetida.contains(" ")){
+        return "O email não pode conter espaços"
+    }else if (senha.length < 8) {
         return "A senha deve conter pelo menos 8 caracteres"
     } else if (senha.length > 12) {
         return "A senha excedeu o limite de 30 caracteres"

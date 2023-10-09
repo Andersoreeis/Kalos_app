@@ -3,6 +3,7 @@ package br.senai.sp.jandira.app_kalos.components
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -56,29 +57,26 @@ fun createButton(
 fun createButtonWithError(
     textButton: String,
     corBotao: Color,
-    funcao:  () -> Unit
+    funcao: () -> Unit
 ) {
 
-        Button(
-            onClick = {
-                funcao()
+    Button(
+        onClick = {
+            funcao()
 
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(1.dp, corBotao, CircleShape)
-
-            ,
-            colors = ButtonDefaults.buttonColors(Color.Transparent)
-        ) {
-            Text(
-                text = textButton,
-                color = corBotao,
-                fontSize = 20.sp,
-                fontWeight = FontWeight(400)
-            )
-        }
-
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(1.dp, corBotao, CircleShape),
+        colors = ButtonDefaults.buttonColors(Color.Transparent)
+    ) {
+        Text(
+            text = textButton,
+            color = corBotao,
+            fontSize = 20.sp,
+            fontWeight = FontWeight(400)
+        )
+    }
 
 
 }
@@ -89,7 +87,7 @@ fun createButtonWithError2(
     textButton: String,
     corBotao: Color,
     teste: Boolean,
-    funcao:  () -> Unit
+    funcao: () -> Unit
 ) {
 
     Button(
@@ -99,18 +97,17 @@ fun createButtonWithError2(
         },
         modifier = Modifier
             .fillMaxWidth()
-            .border(1.dp, corBotao, CircleShape)
-
-        ,
+            .border(1.dp, corBotao, CircleShape),
         colors = ButtonDefaults.buttonColors(Color.Transparent)
     ) {
-        if(teste == false){
-        Text(
-            text = textButton,
-            color = corBotao,
-            fontSize = 20.sp,
-            fontWeight = FontWeight(400)
-        )}else{
+        if (teste == false) {
+            Text(
+                text = textButton,
+                color = corBotao,
+                fontSize = 20.sp,
+                fontWeight = FontWeight(400)
+            )
+        } else {
             CircularProgressIndicator(
                 modifier = Modifier.width(32.dp),
                 color = MaterialTheme.colorScheme.surfaceVariant
@@ -119,8 +116,8 @@ fun createButtonWithError2(
     }
 
 
-
 }
+
 @Composable
 fun createButtonWithFunction(
     textButton: String,
@@ -150,14 +147,13 @@ fun createButtonWithFunction(
 @Composable
 fun createButtonWithWidth(
     textButton: String,
-    naveController: NavController,
-    navName: String,
     corBotao: Color,
-    width: Dp
+    width: Dp,
+    funcao: () -> Unit
 ) {
     //cores
     Button(
-        onClick = { naveController.navigate(navName) },
+        onClick = { funcao() },
         modifier = Modifier
             .width(width)
             .border(1.dp, corBotao, CircleShape),
@@ -173,7 +169,13 @@ fun createButtonWithWidth(
 }
 
 @Composable
-fun createButtonWithWidth2(textButton: String, naveController: NavController, aoMudar: () -> Unit, corBotao: Color, width: Dp) {
+fun createButtonWithWidth2(
+    textButton: String,
+    naveController: NavController,
+    aoMudar: () -> Unit,
+    corBotao: Color,
+    width: Dp
+) {
     //cores
     Button(
         onClick = { aoMudar() },

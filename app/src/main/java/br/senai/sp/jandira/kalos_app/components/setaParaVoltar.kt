@@ -15,7 +15,7 @@ import br.senai.sp.jandira.kalos_app.R
 @Composable
 fun SetaParaVoltar(navController: NavController, navName: String) {
     IconButton(
-
+modifier = Modifier.offset(x = -170.dp, y = -60.dp),
         onClick = { navController.navigate(navName) },
 
     ) {

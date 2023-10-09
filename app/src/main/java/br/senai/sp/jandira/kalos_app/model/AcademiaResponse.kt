@@ -1,5 +1,10 @@
 package br.senai.sp.jandira.kalos_app.model
 
+data class Tag(
+    var id_tags: Int? = 0,
+    var nome_tags: String? = ""
+)
+
 data class AcademiaResponse(
     var id: Int? = 0,
     var nome: String? = "",
@@ -27,6 +32,6 @@ data class AcademiaResponse(
     var complemento: String? = "",
     var cep: String? = "",
     var cidade: String? = "",
-    var estado: String? = ""
+    var estado: String? = "",
+    var tags: List<Tag>? = emptyList()
 )
-

@@ -253,7 +253,7 @@ fun LoginScreen(navController: NavController,
 
         
 
-        ContinueCom(navController = navController, viewModel = viewModel)
+        ContinueCom(navController = navController, viewModel = viewModel,localStorage)
 
         Espacamento(tamanho = 30.dp)
 
@@ -265,9 +265,11 @@ fun LoginScreen(navController: NavController,
 
 
 fun validarEmail(email: String): String? {
-    if (email.isEmpty()) {
-        return "O campo de email não pode estar vazio"
-    } else if (email.length < 5) {
+    if (email.isEmpty()  ) {
+        return "O campo de email não pode estar vazio ou conter espaços"
+    } else if(email.contains(" ")){
+        return "O campo não pode conter espaços"
+    }else if (email.length < 5) {
         return "O email deve conter pelo menos 5 caracteres"
     } else if (email.length > 255) {
         return "O email excedeu o limite de 255 caracteres"
@@ -283,9 +285,11 @@ fun validarEmail(email: String): String? {
 }
 
 fun validarSenha(senha: String): String? {
-    if (senha.isEmpty()) {
+    if (senha.isEmpty() ) {
         return "O campo de senha não pode estar vazios"
-    } else if (senha.length < 8) {
+    } else if( senha.contains(" ")){
+        return "O campo não pode conter espaços"
+    }else if (senha.length < 8) {
         return "A senha deve conter pelo menos 8 caracteres"
     } else if (senha.length > 12) {
         return "A senha excedeu o limite de 30 caracteres"

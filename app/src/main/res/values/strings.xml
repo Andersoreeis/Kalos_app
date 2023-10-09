@@ -21,6 +21,10 @@
     <string name="botao_para_voltar_para_tela_anterior">Botão para voltar para tela anterior</string>
     <string name="editar_foto">Editar foto</string>
     <string name="nome">Nome</string>
+
+
+
+
     <string name="telefone">Telefone</string>
     <string name="genero">Gênero</string>
     <string name="data_de_nascimento">Data de nascimento</string>
@@ -28,4 +32,11 @@
     <string name="peso_em_kg">Peso (em kg)</string>
     <string name="altura_em_cm">Altura (em cm)</string>
     <string name="salvar">Salvar</string>
+
+    <string name="alterar_senha">Alterar senha</string>
+    <string name="ir_para_alterar_senha">Ir para alterar senha</string>
+    <string name="title_activity_detalhes_treino_screen">DetalhesTreinoScreen</string>
+
+
+
 </resources>

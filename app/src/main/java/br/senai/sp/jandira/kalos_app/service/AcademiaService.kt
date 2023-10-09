@@ -13,15 +13,15 @@ import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface AcademiaService {
 
     @GET("kalos/academia/nome/{nomes}")
     suspend fun getAlunoByNome(@Path("nomes") id: String): Response<BaseResponseAcademia<AcademiaResponse>>
 
-    @GET("kalos/academia/")
-    suspend fun getAcademia(): Response<BaseResponseAcademia<AcademiaResponse>>
-
+    @GET("kalos/academia")
+    suspend fun getAcademia(@Query("page") page: String): Response<BaseResponseAcademia<AcademiaResponse>>
 
 
 

@@ -3,6 +3,7 @@ package br.senai.sp.jandira.kalos_app.screens.telaBuscarAcademias.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,11 +47,13 @@ fun AcademiaCard(
             .height(150.dp)
             .background(
                 GrayKalosEscuroCard
-            ).border(
-                width = 2.dp, // Espessura da borda
-                color = Color(80, 80, 80), // Cor da borda
-                shape = RoundedCornerShape(20.dp) // Forma da borda, correspondente à forma do Card
             )
+            .border(
+                width = 2.dp,
+                color = Color(80, 80, 80),
+                shape = RoundedCornerShape(20.dp)
+            )
+            .clickable { onClick() }
 
 
     ) {
@@ -72,14 +75,28 @@ fun AcademiaCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(modifier = Modifier.padding(10.dp)) {
-                    AsyncImage(
-                        model = academia.foto,
-                        contentDescription = "foto academia",
-                        modifier = Modifier
-                            .width(110.dp)
-                            .height(110.dp)
-                            .clip(CircleShape)
-                    )
+                    if (academia.foto!!.isNotEmpty()) {
+                        AsyncImage(
+                            model = academia.foto,
+                            contentDescription = "foto academia",
+                            modifier = Modifier
+                                .width(110.dp)
+                                .height(110.dp)
+                                .clip(CircleShape),
+                            error = painterResource(id = R.drawable.ginasio)
+                        )
+                    } else {
+                        Image(
+                            painter = painterResource(id = R.drawable.ginasio),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(110.dp)
+                                .clip(
+                                    CircleShape
+                                )
+                        )
+                    }
+
                 }
 
 
@@ -128,43 +145,11 @@ fun AcademiaCard(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    var teste1 = 1
-                    var teste2 = 2
-                    var teste3 = 3
 
-                    if (teste1 == 1) {
-                        Image(
-                            painter = painterResource(id = R.drawable.brainle_icone),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .size(30.dp)
-                                .padding(3.dp)
-                        )
-
-                    }
-                    if (teste2 == 2) {
-                        Image(
-                            painter = painterResource(id = R.drawable.cadeirante_icone),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .size(30.dp)
-                                .padding(3.dp)
-                        )
-
-
-                    }
-                    if (teste3 == 3) {
-                        Image(
-                            painter = painterResource(id = R.drawable.libras_icone),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .size(30.dp)
-                                .padding(3.dp)
-                        )
                     }
                 }
             }
         }
     }
-}
+
 
