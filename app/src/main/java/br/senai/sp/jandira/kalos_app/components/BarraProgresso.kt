@@ -21,6 +21,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -69,6 +70,9 @@ fun BarraProgresso(
         mutableStateOf("")
     }
     var lesoesState by remember {
+        mutableStateOf("")
+    }
+    var emailFirebaseOuNormal by remember {
         mutableStateOf("")
     }
 
@@ -426,8 +430,9 @@ fun BarraProgresso(
                         val userFirebase = localStorage.lerValor(context, "userFirebase")
                         val userEmailFirebase = localStorage.lerValor(context, "userEmailFirebase")
 
-                        var email = localStorage.lerValor(context, "email").toString()
+                        val email = localStorage.lerValor(context, "email").toString()
                         var senha = localStorage.lerValor(context, "senha").toString()
+
                         val nome = localStorage.lerValor(context, "nome").toString()
                             localStorage.lerValor(context, "dataNascimento").toString()
                         val cpf = localStorage.lerValor(context, "cpf").toString()
@@ -438,12 +443,25 @@ fun BarraProgresso(
                         var generoText = localStorage.lerValor(context, "genero").toString()
                         var genero: Int
 
-                        if (email.isEmpty() && senha.isEmpty()){
+
+                        Log.e("userFirebase", "${userFirebase}")
+                        Log.e("userEmailFirebase", "${userEmailFirebase}")
+                        Log.e("Email", "${email}")
+                        Log.e("senha", "${senha}")
+                        Log.e("valorEstado", "${emailFirebaseOuNormal}")8
+
+
+                        if (email == "" && senha == ""){
                             if (userEmailFirebase.toString().isNotEmpty()){
-                                email = userEmailFirebase.toString()
+
+                                emailFirebaseOuNormal = userEmailFirebase.toString()
+                                Log.e("testeFirebaseEmail", "${email}")
                                 senha = "loginViaFirebase"
+                                Log.e("testeFirebaseEmail", "${senha}")
 
                             }
+                        }else{
+                            emailFirebaseOuNormal = email
                         }
 
                         fun formatarData(input: String): String {
@@ -480,7 +498,7 @@ fun BarraProgresso(
                         if (objetivoStateError == "") {
                             lifecycleScope.launch {
                                 val body = JsonObject().apply {
-                                    addProperty("email", email)
+                                    addProperty("email", emailFirebaseOuNormal)
                                     addProperty("senha", senha)
                                     addProperty("nome", nome)
                                     addProperty("data_nascimento", dataFormatada)
