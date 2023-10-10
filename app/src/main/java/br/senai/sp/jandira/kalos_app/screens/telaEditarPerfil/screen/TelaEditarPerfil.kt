@@ -49,11 +49,14 @@ import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.components.Formula
 
 import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.components.FormularioPerfil
 
+import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.components.FormularioPerfil
+
 
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.CampoNome
 import br.senai.sp.jandira.kalos_app.service.AlunoService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
+import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
@@ -90,7 +93,7 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
         mutableStateOf(false)
     }
 
-    lifecycleScope.launch {
+    lifecycleScope.launch{
         val result = alunoService.getAlunoByID(idALuno.toString())
 
         if (result.isSuccessful) {
@@ -102,6 +105,8 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
     }
 
     if(status){
+
+
 
 
         var estadoNome = remember {
@@ -139,6 +144,11 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
                 )
             }
             Spacer(modifier = Modifier.height(36.dp))
+            Spacer(modifier = Modifier.height(36.dp))
+
+
+
+
 
 
             FormularioPerfil(aluno, lifecycleScope, navController, localStorage)

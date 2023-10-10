@@ -21,6 +21,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -31,6 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -38,6 +41,8 @@ import br.senai.sp.jandira.kalos_app.LocalStorage
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.LoginScreeViewModel
+import br.senai.sp.jandira.kalos_app.service.AlunoService
+import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -47,13 +52,19 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
 
 
 private val auth: FirebaseAuth = Firebase.auth
 private val loading = MutableLiveData(false)
 
 @Composable
-fun ContinueCom(navController: NavController, viewModel: LoginScreeViewModel, localstorage: Storage) {
+fun ContinueCom(
+    navController: NavController,
+    viewModel: LoginScreeViewModel,
+    localstorage: Storage,
+    lifecycleCoroutineScope: LifecycleCoroutineScope
+) {
     val degradeLeft = Brush.horizontalGradient(
         colors = listOf(Color(0xFF000000), Color(0xFF00FE90))
     )
@@ -61,10 +72,18 @@ fun ContinueCom(navController: NavController, viewModel: LoginScreeViewModel, lo
     val degradeRight = Brush.horizontalGradient(
         colors = listOf(Color(0xFF00FE90), Color(0xFF000000))
     )
+    val auth = FirebaseAuth.getInstance()
+    val currentUser = auth.currentUser
+    val providerId = currentUser!!.providerData[0].providerId
+
+    var statusFirebase = remember { mutableStateOf(false) }
     val token = "470985893904-bh5urla6jiaglnbs4p38j5p7k8ehsi6k.apps.googleusercontent.com"
     val context = LocalContext.current
+    val user = Firebase.auth.currentUser
+    val userEmail = user?.email
     //Login Via Google
-
+    val emailUserFirebase = localstorage.lerValor(context, "email")
+    val alunoService: AlunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
 
     val launcher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
@@ -73,8 +92,26 @@ fun ContinueCom(navController: NavController, viewModel: LoginScreeViewModel, lo
                 val account = task.getResult(ApiException::class.java)
                 val credential = GoogleAuthProvider.getCredential(account.idToken, null)
                 viewModel.signInWithGoogleCredential(credential) {
-                    navController.navigate("telaInformacoesDoCliente")
+
+                    lifecycleCoroutineScope.launch {
+                        val result = alunoService.getAlunoByEmail(userEmail.toString())
+                       var idALuno = result.body()?.data?.id
+
+                        if (result.isSuccessful) {
+                            localstorage.salvarValor(context, "${userEmail}", "email")
+                            localstorage.salvarValor(context, "${idALuno}", "idAluno")
+
+                            navController.navigate("home")
+
+                        }
+                        else {
+                            navController.navigate("telaInformacoesDoCliente")
+
+                        }
+                    }
+
                 }
+
             } catch (ex: Exception) {
                 Log.d("Falhado Login", "Login Falhou")
             }
@@ -125,12 +162,14 @@ fun ContinueCom(navController: NavController, viewModel: LoginScreeViewModel, lo
         ) {
             IconButton(
                 onClick = {
+                    statusFirebase.value = true
+
                     val opcoes = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestIdToken(token).requestEmail().build()
-                    val user = Firebase.auth.currentUser
-                    val userEmail = user?.email
+
                     localstorage.salvarValor(context, user.toString(), "userFirebase")
                     localstorage.salvarValor(context, userEmail.toString(), "userEmailFirebase")
+                    localstorage.salvarValor(context, statusFirebase.toString(), "statusFirebase")
 
                     val googleSingInCliente = GoogleSignIn.getClient(context, opcoes)
                     launcher.launch(googleSingInCliente.signInIntent)
@@ -142,7 +181,6 @@ fun ContinueCom(navController: NavController, viewModel: LoginScreeViewModel, lo
                     modifier = Modifier.size(30.dp)
                 )
             }
-
 
 
         }

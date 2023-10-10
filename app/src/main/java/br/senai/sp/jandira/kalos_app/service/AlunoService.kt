@@ -5,6 +5,7 @@ import br.senai.sp.jandira.kalos_app.model.AlunoResponse
 import br.senai.sp.jandira.kalos_app.model.BaseResponse
 import br.senai.sp.jandira.kalos_app.model.BaseResponse2
 import br.senai.sp.jandira.kalos_app.model.BaseResponseAcademia
+import br.senai.sp.jandira.kalos_app.model.BaseResponseStatus
 import com.google.gson.JsonObject
 import retrofit2.Response
 import retrofit2.http.Body
@@ -20,7 +21,7 @@ interface AlunoService {
     suspend fun getAlunoByID(@Path("id") id: String): Response<BaseResponse<AlunoResponse>>
 
     @GET("kalos/aluno/email/{email}")
-    suspend fun getAlunoByEmail(@Path("email") email: String): Response<JsonObject>
+    suspend fun getAlunoByEmail(@Path("email") email: String): Response<BaseResponseStatus<AlunoResponse>>
 
     @GET("kalos/aluno")
     suspend fun getAlunos(): Response<BaseResponse<AlunoResponse>>
@@ -34,7 +35,7 @@ interface AlunoService {
 
     @Headers("Content-Type: application/json")
     @POST("kalos/aluno")
-    suspend fun cadastrarAluno(@Body body: JsonObject): Response<JsonObject>
+    suspend fun cadastrarAluno(@Body body: JsonObject): Response<BaseResponseStatus<AlunoResponse>>
 
     @Headers("Content-Type: application/json")
     @PUT("kalos/aluno/id/{id}")

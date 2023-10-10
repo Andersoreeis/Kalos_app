@@ -41,6 +41,7 @@ import br.senai.sp.jandira.app_kalos.components.createTextKalos
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.components.Espacamento
 import br.senai.sp.jandira.kalos_app.components.SetaParaVoltar
+import br.senai.sp.jandira.kalos_app.components.SetaParaVoltar2
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 import coil.annotation.ExperimentalCoilApi
@@ -150,7 +151,7 @@ fun TelaPerfilAcademia(
                 color = corPrimaria,
             ) {
 
-                SetaParaVoltar(navController = navController, navName = "home")
+                SetaParaVoltar2(navController = navController, navName = "home", corSegundaria)
 
 
             }

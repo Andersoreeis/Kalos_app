@@ -253,7 +253,7 @@ fun LoginScreen(navController: NavController,
 
         
 
-        ContinueCom(navController = navController, viewModel = viewModel,localStorage)
+        ContinueCom(navController = navController, viewModel = viewModel,localStorage, lifecycleScope)
 
         Espacamento(tamanho = 30.dp)
 

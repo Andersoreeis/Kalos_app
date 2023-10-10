@@ -174,6 +174,7 @@ fun HomeAluno(aluno: AlunoResponse, navController: NavController,
 
                                 localStorage.salvarValor(context, pegarNomeTags(academia).toString(), "tagsAcademia")
                                 Log.e("LocalStorage", "tagsAcademia: ${pegarNomeTags(academia)}")
+                                localStorage.salvarValor(context, academia.id.toString(), "idAcademia")
 
 
                             }

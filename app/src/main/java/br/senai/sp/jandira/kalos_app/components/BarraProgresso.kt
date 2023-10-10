@@ -46,6 +46,7 @@ import br.senai.sp.jandira.kalos_app.service.AlunoService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
 
@@ -138,7 +139,7 @@ fun BarraProgresso(
         mutableStateOf("")
     }
 
-    estadoDataNascimento.value = "${estadoDia.value +estadoMes.value + estadoAno.value}"
+    estadoDataNascimento.value = "${estadoDia.value + estadoMes.value + estadoAno.value}"
 
     fun validarNome(nome: String): String {
         if (nome.isEmpty()) {
@@ -155,9 +156,9 @@ fun BarraProgresso(
     fun validarDataNascimento(dataNascimento: String): String {
         if (dataNascimento.isEmpty() || dataNascimento == "") {
             return "Data de nascimento é obrigatória."
-        }else if(dataNascimento.length > 8 || dataNascimento.length < 8){
+        } else if (dataNascimento.length > 8 || dataNascimento.length < 8) {
             return "Data de nascimento está incorreto"
-        }else{
+        } else {
             return ""
         }
     }
@@ -165,7 +166,7 @@ fun BarraProgresso(
     fun validarTelefone(telefone: String): String {
         if (telefone.isEmpty()) {
             return "Telefone é obrigatório."
-        }  else {
+        } else {
             return ""
 
         }
@@ -325,7 +326,7 @@ fun BarraProgresso(
                     objetivoStateError = ""
                 })
 
-        
+
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -430,11 +431,12 @@ fun BarraProgresso(
                         val userFirebase = localStorage.lerValor(context, "userFirebase")
                         val userEmailFirebase = localStorage.lerValor(context, "userEmailFirebase")
 
-                        val email = localStorage.lerValor(context, "email").toString()
+                        //val email = localStorage.lerValor(context, "email").toString()
                         var senha = localStorage.lerValor(context, "senha").toString()
-
+                        val statusFirebase = localStorage.lerValor(context, "statusFirebase")
                         val nome = localStorage.lerValor(context, "nome").toString()
-                            localStorage.lerValor(context, "dataNascimento").toString()
+
+                        val data = localStorage.lerValor(context, "dataNascimento").toString()
                         val cpf = localStorage.lerValor(context, "cpf").toString()
                         val telefone = localStorage.lerValor(context, "telefone").toString()
                         val peso = localStorage.lerValor(context, "peso").toString()
@@ -446,23 +448,27 @@ fun BarraProgresso(
 
                         Log.e("userFirebase", "${userFirebase}")
                         Log.e("userEmailFirebase", "${userEmailFirebase}")
-                        Log.e("Email", "${email}")
+                       // Log.e("Email", "${email}")
                         Log.e("senha", "${senha}")
-                        Log.e("valorEstado", "${emailFirebaseOuNormal}")8
+                        Log.e("statusFirebase", "${statusFirebase}")
+                        Log.e("valorEstado", "${emailFirebaseOuNormal}")
 
 
-                        if (email == "" && senha == ""){
-                            if (userEmailFirebase.toString().isNotEmpty()){
 
-                                emailFirebaseOuNormal = userEmailFirebase.toString()
-                                Log.e("testeFirebaseEmail", "${email}")
-                                senha = "loginViaFirebase"
-                                Log.e("testeFirebaseEmail", "${senha}")
 
-                            }
-                        }else{
-                            emailFirebaseOuNormal = email
+
+                        if (statusFirebase == "true") {
+
+                            localStorage.salvarValor(context, "${userEmailFirebase.toString()}", "email")
+
+
+                            Log.e("testeFirebaseEmail", "${emailFirebaseOuNormal}")
+                            senha = "loginViaFirebase"
+                            Log.e("testeFirebaseEmail", "${senha}")
+
                         }
+
+                        val email = localStorage.lerValor(context, "email").toString()
 
                         fun formatarData(input: String): String {
                             val digitsOnly = input.replace(Regex("[^\\d]"), "")
@@ -498,7 +504,7 @@ fun BarraProgresso(
                         if (objetivoStateError == "") {
                             lifecycleScope.launch {
                                 val body = JsonObject().apply {
-                                    addProperty("email", emailFirebaseOuNormal)
+                                    addProperty("email", email)
                                     addProperty("senha", senha)
                                     addProperty("nome", nome)
                                     addProperty("data_nascimento", dataFormatada)
@@ -517,12 +523,27 @@ fun BarraProgresso(
 
                                 if (result.isSuccessful) {
                                     Log.e("CREAT-DATA", "${result.body()}")
-                                    val checagem = result.body()?.get("status")
-                                    if (checagem.toString() == "201") {
-                                        Toast.makeText(context, "Conta criada com sucesso", Toast.LENGTH_SHORT)
-                                            .show()
+                                    val checagem = result.body()?.status
+                                    val alunoNovo = result.body()?.data!!.id
 
-                                        navController.navigate("fazerLogin")
+                                 localStorage.salvarValor(context, "${alunoNovo}", "idAluno")
+
+
+                                    if (checagem.toString() == "201") {
+                                        Toast.makeText(
+                                            context,
+                                            "Conta criada com sucesso",
+                                            Toast.LENGTH_SHORT
+                                        )
+                                            .show()
+                                        Log.e("id", alunoNovo.toString())
+                                        localStorage.salvarValor(
+                                            context,
+                                            alunoNovo.toString(),
+                                            "idAlunoContaCriadaComSucesso"
+                                        )
+
+                                        navController.navigate("home")
 
 
                                     } else {

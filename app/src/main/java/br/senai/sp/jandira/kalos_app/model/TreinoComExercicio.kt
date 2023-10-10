@@ -1,6 +1,6 @@
 package br.senai.sp.jandira.kalos_app.model
 
-data class TreinosResponse(
+data class TreinoComExercicio(
     val id:Int? = 0,
     val id_treino:Int? = 0,
     val nome: String? = "",
@@ -9,6 +9,5 @@ data class TreinosResponse(
     val data_criacao: String? = "",
     val nome_categoria_treino: String? = "",
     val id_academia:Int? = 0,
-    val id_aluno:Int? = 0
-
+    val exercicio:List<ExercicioResponse>? = emptyList()
 )

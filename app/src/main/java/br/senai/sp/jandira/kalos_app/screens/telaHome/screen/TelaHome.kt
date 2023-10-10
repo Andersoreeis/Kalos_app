@@ -83,7 +83,7 @@ fun TelaHome(navController: NavController, lifecycleScope: LifecycleCoroutineSco
         BottomNavigationItem(
             title = "procurar",
             selectedIcon = Icons.Filled.Search,
-            unselectedIcon = Icons.Outlined.Search,
+            unselectedIcon = Icons.Filled.Search,
 
             ),
         BottomNavigationItem(
@@ -169,7 +169,7 @@ fun TelaHome(navController: NavController, lifecycleScope: LifecycleCoroutineSco
         lifecycleScope.launch {
             val result = alunoService.getAlunoByID(idALuno.toString())
 
-            if (result.isSuccessful) {
+            if (result.isSuccessful ) {
 
 
                 aluno = result.body()?.data!!
