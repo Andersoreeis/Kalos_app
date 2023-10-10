@@ -451,6 +451,8 @@ fun BarraProgresso(
                        // Log.e("Email", "${email}")
                         Log.e("senha", "${senha}")
                         Log.e("statusFirebase", "${statusFirebase}")
+                        Log.e("valorEstado", "${emailFirebaseOuNormal}")
+
 
 
 

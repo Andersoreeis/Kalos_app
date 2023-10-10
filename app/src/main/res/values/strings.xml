@@ -36,6 +36,7 @@
     <string name="alterar_senha">Alterar senha</string>
     <string name="ir_para_alterar_senha">Ir para alterar senha</string>
     <string name="title_activity_detalhes_treino_screen">DetalhesTreinoScreen</string>
+    <string name="title_activity_header_treino">HeaderTreino</string>
 
 
 

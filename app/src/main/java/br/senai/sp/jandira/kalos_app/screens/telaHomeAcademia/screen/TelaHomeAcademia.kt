@@ -2,6 +2,9 @@ package br.senai.sp.jandira.kalos_app.screens.telaHomeAcademia.screen
 
 
 import android.annotation.SuppressLint
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -66,16 +69,21 @@ import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.components.Espacamento
 import br.senai.sp.jandira.kalos_app.components.SetaParaVoltar
+import br.senai.sp.jandira.kalos_app.components.SetaParaVoltar2
 import br.senai.sp.jandira.kalos_app.model.BottomNavigationItem
 import br.senai.sp.jandira.kalos_app.screens.telaBuscarAcademias.screens.BuscarAcademias
 import br.senai.sp.jandira.kalos_app.screens.telaHome.components.HomeAluno
 import br.senai.sp.jandira.kalos_app.screens.telaHomeAcademia.components.TelaTreinos
 import br.senai.sp.jandira.kalos_app.screens.telaPerfil.screen.TelaPerfil
+import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
+import br.senai.sp.jandira.kalos_app.service.TreinoService
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalosEscuro
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 import coil.compose.AsyncImage
+import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun TelaHomeAcademia(
@@ -184,7 +192,7 @@ fun TelaHomeAcademia(
                 color = corPrimaria,
             ) {
 
-                SetaParaVoltar(navController = navController, navName = "home")
+                SetaParaVoltar2(navController = navController, navName = "home", corSegundaria)
 
 
             }
@@ -448,8 +456,17 @@ fun TelaHomeAcademia(
             ) {
                 if (selectedItemIndex == 1) {
                    Text(text = "produtos", color = Color.White)
+                    lateinit var treinoService: TreinoService
+                    treinoService = RetrofitHelper.getInstance().create(TreinoService::class.java)
+                    lifecycleCoroutineScope.launch {
+                        val result = treinoService.getTreinoPorId("20")
+                        if (result.isSuccessful){
+                            Log.e("testes", "TelaHomeAcademia: ${result.body()?.data?.exercicio}", )
+                        }
+
+                    }
                 } else if (selectedItemIndex == 2) {
-                    TelaTreinos()
+                    TelaTreinos(lifecycleCoroutineScope, localStorage)
                 } else if(selectedItemIndex == 3) {
                     Text(text = "informaçoes", color = Color.White)
                 }else{
