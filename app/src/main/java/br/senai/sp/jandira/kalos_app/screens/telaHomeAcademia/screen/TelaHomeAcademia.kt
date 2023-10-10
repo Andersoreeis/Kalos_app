@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -71,6 +72,8 @@ import br.senai.sp.jandira.kalos_app.components.Espacamento
 import br.senai.sp.jandira.kalos_app.components.SetaParaVoltar
 import br.senai.sp.jandira.kalos_app.components.SetaParaVoltar2
 import br.senai.sp.jandira.kalos_app.model.BottomNavigationItem
+import br.senai.sp.jandira.kalos_app.model.ExercicioResponse
+import br.senai.sp.jandira.kalos_app.model.TreinoComExercicio
 import br.senai.sp.jandira.kalos_app.screens.telaBuscarAcademias.screens.BuscarAcademias
 import br.senai.sp.jandira.kalos_app.screens.telaHome.components.HomeAluno
 import br.senai.sp.jandira.kalos_app.screens.telaHomeAcademia.components.TelaTreinos
@@ -455,16 +458,35 @@ fun TelaHomeAcademia(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if (selectedItemIndex == 1) {
+
                    Text(text = "produtos", color = Color.White)
+                    var estatoExercicios by remember {
+                        mutableStateOf(TreinoComExercicio())
+                    }
                     lateinit var treinoService: TreinoService
                     treinoService = RetrofitHelper.getInstance().create(TreinoService::class.java)
+                    
                     lifecycleCoroutineScope.launch {
                         val result = treinoService.getTreinoPorId("20")
                         if (result.isSuccessful){
-                            Log.e("testes", "TelaHomeAcademia: ${result.body()?.data?.exercicio}", )
+                            Log.e("ssss", "TelaHomeAcademia: ${result.body()}", )
+                            estatoExercicios = result.body()?.data!!
+                            
                         }
 
                     }
+                    Column(
+                        modifier = Modifier.height(400.dp)
+                    ) {
+                        LazyColumn(){
+                            items(estatoExercicios.exercicios!!){
+                                    exercicio ->
+                                Log.e("nomeExercicio", "TelaHomeAcademia:${exercicio.nome} ", )
+                                Text(text = exercicio.nome.toString(), color = Color.White)
+                            }
+                            }
+                        }
+
                 } else if (selectedItemIndex == 2) {
                     TelaTreinos(lifecycleCoroutineScope, localStorage)
                 } else if(selectedItemIndex == 3) {
