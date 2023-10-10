@@ -41,6 +41,8 @@ import br.senai.sp.jandira.kalos_app.LocalStorage
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.LoginScreeViewModel
+import br.senai.sp.jandira.kalos_app.service.AlunoService
+import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -81,7 +83,7 @@ fun ContinueCom(
     val userEmail = user?.email
     //Login Via Google
     val emailUserFirebase = localstorage.lerValor(context, "email")
-
+    val alunoService: AlunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
 
     val launcher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
@@ -92,18 +94,24 @@ fun ContinueCom(
                 viewModel.signInWithGoogleCredential(credential) {
 
                     lifecycleCoroutineScope.launch {
+                        val result = alunoService.getAlunoByEmail(userEmail.toString())
+                       var idALuno = result.body()?.data?.id
 
-                    }
-                        if (emailUserFirebase == userEmail){
+                        if (result.isSuccessful) {
+                            localstorage.salvarValor(context, "${userEmail}", "email")
+                            localstorage.salvarValor(context, "${idALuno}", "idAluno")
 
-                        navController.navigate("home")
+                            navController.navigate("home")
 
-                    } else {
-                        navController.navigate("telaInformacoesDoCliente")
+                        }
+                        else {
+                            navController.navigate("telaInformacoesDoCliente")
 
+                        }
                     }
 
                 }
+
             } catch (ex: Exception) {
                 Log.d("Falhado Login", "Login Falhou")
             }

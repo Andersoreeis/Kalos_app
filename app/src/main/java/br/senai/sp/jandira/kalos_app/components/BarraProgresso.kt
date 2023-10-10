@@ -524,7 +524,7 @@ fun BarraProgresso(
                                 if (result.isSuccessful) {
                                     Log.e("CREAT-DATA", "${result.body()}")
                                     val checagem = result.body()?.status
-                                    val alunoNovo = result.body()?.data?.id
+                                    val alunoNovo = result.body()?.data!!.id
 
                                  localStorage.salvarValor(context, "${alunoNovo}", "idAluno")
 

@@ -146,19 +146,7 @@ fun TelaEditarPerfil(navController: NavController, lifecycleScope: LifecycleCoro
             Spacer(modifier = Modifier.height(36.dp))
             Spacer(modifier = Modifier.height(36.dp))
 
-            Column(
-                modifier = Modifier.fillMaxWidth()
-            ) {
 
-                Text(
-                    text = stringResource(R.string.nome),
-                    color = GrayKalos,
-                    fontSize = 14.sp
-                )
-
-                CampoNome(value = estadoNome.value, aoMudar ={ estadoNome.value = it} , placeholder ="" , isError =estadoNomeError.value.isNotEmpty() )
-
-            }
 
 
 

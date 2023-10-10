@@ -32,8 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.screens.telaDetalhesTreino.components.ui.theme.Kalos_appTheme
-import br.senai.sp.jandira.kalos_app.screens.telaHomeAcademia.components.dateToLocalDate
-import br.senai.sp.jandira.kalos_app.screens.telaHomeAcademia.components.formatarData2
+
 import br.senai.sp.jandira.kalos_app.screens.telaPerfil.components.convertIso8601ToDate
 
 @Composable
