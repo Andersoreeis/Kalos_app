@@ -74,7 +74,7 @@ fun ContinueCom(
     )
     val auth = FirebaseAuth.getInstance()
     val currentUser = auth.currentUser
-    val providerId = currentUser!!.providerData[0].providerId
+
 
     var statusFirebase = remember { mutableStateOf(false) }
     val token = "470985893904-bh5urla6jiaglnbs4p38j5p7k8ehsi6k.apps.googleusercontent.com"
