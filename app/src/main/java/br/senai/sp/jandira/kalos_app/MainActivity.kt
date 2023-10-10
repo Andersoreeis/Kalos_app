@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(route = "telaInicial") {
 
-                            TelaInicial(navController)
+                            TelaInicial(navController, lifecycleScope, localStorage)
                         }
                         composable(route = "fazerLogin") {
                             LoginScreen(navController, lifecycleScope, viewModel = LoginScreeViewModel(), localStorage)

@@ -31,19 +31,33 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createButton
 import br.senai.sp.jandira.app_kalos.components.createTextKalos
 import br.senai.sp.jandira.app_kalos.components.getLogoKalosCompleted
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.Storage
+import br.senai.sp.jandira.kalos_app.service.AlunoService
+import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalosEscuro
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
-fun TelaInicial(navController: NavController) {
+fun TelaInicial(
+    navController: NavController,
+    lifecycleCoroutineScope: LifecycleCoroutineScope,
+    localstorage: Storage
+) {
+
+
+    val alunoService: AlunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -59,8 +73,20 @@ fun TelaInicial(navController: NavController) {
         val context = LocalContext.current
 
         LaunchedEffect(Unit) {
-            delay(1000) // Espera 1 segundo
-            navController.navigate("fazerLogin")
+            lifecycleCoroutineScope.launch {
+                val idUser = localstorage.lerValor(context, "idAluno")
+
+                val result = alunoService.getAlunoByID(idUser.toString())
+                if (result.isSuccessful) {
+                    delay(1000) // Espera 1 segundo
+                    navController.navigate("home")
+                }else{
+                    delay(1000) // Espera 1 segundo
+                    navController.navigate("fazerLogin")
+                }
+
+            }
+
         }
 
 

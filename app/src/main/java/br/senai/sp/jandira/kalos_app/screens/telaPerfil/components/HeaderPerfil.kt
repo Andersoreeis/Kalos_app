@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -35,8 +36,7 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 import coil.compose.AsyncImage
 
 @Composable
-fun HeaderPerfil(aluno: AlunoResponse, navController: NavController) {
-    var exibirDialog = remember { mutableStateOf(false) }
+fun HeaderPerfil(aluno: AlunoResponse, navController: NavController, exibirDialog: MutableState<Boolean>) {
 
 
 
@@ -77,15 +77,7 @@ fun HeaderPerfil(aluno: AlunoResponse, navController: NavController) {
             }
         }
 
-        ConfirmacaoDeslogarDialog(
-            exibirDialog = exibirDialog.value,
-            onClose = {
-                exibirDialog.value = false
-            },
-            onConfirm = {
-                exibirDialog.value = false
-            }
-        )
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()

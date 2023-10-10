@@ -20,6 +20,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,8 +30,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.model.AlunoResponse
 import br.senai.sp.jandira.kalos_app.screens.telaHome.components.BarraRetaHome
+import br.senai.sp.jandira.kalos_app.screens.telaPerfil.components.ConfirmacaoDeslogarDialog
 import br.senai.sp.jandira.kalos_app.screens.telaPerfil.components.HeaderPerfil
 import br.senai.sp.jandira.kalos_app.screens.telaPerfil.components.MedidasPerfil
 import br.senai.sp.jandira.kalos_app.screens.telaPerfil.components.NomeCodigoPerfil
@@ -42,13 +46,33 @@ import coil.compose.rememberImagePainter
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun TelaPerfil(aluno: AlunoResponse, navController: NavController) {
+fun TelaPerfil(aluno: AlunoResponse, navController: NavController, localStorage: Storage) {
+
+    var exibirDialog = remember { mutableStateOf(false) }
+
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HeaderPerfil(aluno = aluno, navController)
+        ConfirmacaoDeslogarDialog(
+            exibirDialog = exibirDialog.value,
+            onClose = {
+                exibirDialog.value = false
+            },
+            onConfirm = {
+                exibirDialog.value = false
+
+
+            },
+            localStorage,
+            navController
+        )
+        HeaderPerfil(aluno = aluno, navController, exibirDialog)
+
         Spacer(modifier = Modifier.height(10.dp))
+
+
         NomeCodigoPerfil(aluno = aluno)
         Spacer(modifier = Modifier.height(16.dp))
         MedidasPerfil(aluno = aluno)
