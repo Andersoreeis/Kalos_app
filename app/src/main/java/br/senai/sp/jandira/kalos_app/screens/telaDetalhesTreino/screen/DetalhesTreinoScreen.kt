@@ -6,15 +6,19 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -56,11 +60,16 @@ fun DetalhesTreinoScreen(navController: NavController, lifecycleCoroutineScope: 
     ){
 
         val context = LocalContext.current
-        val corPrimariaAcademia = localStorage.lerValor(context, "corPrimariaAcademia")
+        val corPrimariaAcademia = localStorage.lerValor(context, "corPrimariaAcademia")?.substring(1)
+
         val idTreino = localStorage.lerValor(context, "idTreino")
         var estatoExercicios by remember {
             mutableStateOf(TreinoComExercicio())
         }
+        var status by remember {
+            mutableStateOf(false)
+        }
+
         lateinit var treinoService: TreinoService
         treinoService = RetrofitHelper.getInstance().create(TreinoService::class.java)
 
@@ -69,57 +78,79 @@ fun DetalhesTreinoScreen(navController: NavController, lifecycleCoroutineScope: 
             if (result.isSuccessful){
                 Log.e("ssss", "TelaHomeAcademia: ${result.body()}", )
                 estatoExercicios = result.body()?.data!!
+                status = true
 
             }
 
         }
 
-        estatoExercicios.foto?.let { CardCapaTreino(it) }
+        if(status){
+            Log.e(" aadas", "DetalhesTreinoScreen: ${estatoExercicios}", )
+            estatoExercicios.foto?.let { CardCapaTreino(it, navController) }
 
-        Column (modifier = Modifier.padding(15.dp)){
-            estatoExercicios?.let {
-                HeaderTreino(
-                    nomeTreino = it.nome!!,
-                    nivelTreino = it.nome_nivel!!,
-                    categoriaTreino = it.nome_categoria_treino!!,
-                    descricao = it.descricao!!,
-                    dataTreino = it.data_criacao!!
-                )
-            }
-
-            Spacer(modifier = Modifier.height(15.dp))
-
-            BotaoIniciarTreino(cor = corPrimariaAcademia.toString())
-
-            Spacer(modifier = Modifier.height(15.dp))
-
-            Text(
-                text = "Resumo",
-                color = Color.White,
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            )
-
-            var i:Int = 0
-
-            LazyColumn(){
-                items(estatoExercicios.exercicios!!){
-
-                    i++
-
-                    CardExercicio(
-                        numero = i.toString(),
-                        imagem = it.anexo!!,
-                        nome = it.nome!!,
-                        series = it.series!!,
-                        repeticoes = it.repeticoes!!,
-                        duracao = it.duracao!!
+            Column (modifier = Modifier.padding(15.dp)){
+                estatoExercicios?.let {
+                    HeaderTreino(
+                        nomeTreino = it.nome!!,
+                        nivelTreino = it.nome_nivel!!,
+                        categoriaTreino = it.nome_categoria_treino!!,
+                        descricao = it.descricao!!,
+                        dataTreino = it.data_criacao!!
                     )
                 }
+
+                Spacer(modifier = Modifier.height(15.dp))
+
+                BotaoIniciarTreino(cor = corPrimariaAcademia.toString())
+
+                Spacer(modifier = Modifier.height(15.dp))
+
+                Text(
+                    text = "Resumo",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
+
+                var i:Int = 0
+                Log.e("exercicios", "DetalhesTreinoScreen: ${estatoExercicios.exercicios} ", )
+
+                LazyColumn(
+                    modifier =  Modifier.fillMaxWidth()
+                ){
+                    estatoExercicios.exercicios?.let {
+                        items(it){
+
+                            i++
+
+
+                        CardExercicio(
+                            numero = i.toString(),
+                            imagem = it.anexo!!,
+                            nome = it.nome!!,
+                            series = it.series!!,
+                            repeticoes = it.repeticoes,
+                            duracao = it.duracao
+                        )
+                        }
+                    }
+
+                }
+
+
+            }
+        }else{
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                CircularProgressIndicator(color = Color.White, modifier = Modifier.size(64.dp))
             }
 
+        }
 
-    }
+
     }
 }
 

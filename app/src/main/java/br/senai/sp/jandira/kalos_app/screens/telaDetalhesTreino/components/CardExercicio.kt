@@ -63,7 +63,8 @@ fun CardExercicio(numero: String, imagem: String, nome: String, series: String, 
                 modifier = Modifier
                     .size(50.dp)
                     .shadow(2.dp, RoundedCornerShape(5.dp)),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
+                error = painterResource(id = R.drawable.treinoerro)
             )
 
         }

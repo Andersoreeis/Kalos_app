@@ -14,7 +14,13 @@ fun BotaoIniciarTreino (cor: String){
         onClick = { /*TODO*/ },
         colors = ButtonDefaults.buttonColors(Color(0xFF000000.toInt() or Integer.parseInt(cor, 16)))
     ) {
-        Text(text = "Iniciar treino")
+        Text(text = "Iniciar treino",
+            color =  if(cor.equals("FFFFFF")){
+            Color.Black
+        }else{
+            Color.White
+            }
+        )
     }
 }
 
