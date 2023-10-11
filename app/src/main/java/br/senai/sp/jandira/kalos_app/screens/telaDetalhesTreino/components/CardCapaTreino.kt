@@ -1,6 +1,7 @@
 package br.senai.sp.jandira.kalos_app.screens.telaDetalhesTreino.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,12 +21,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.R
 import coil.compose.AsyncImage
 
 
 @Composable
-fun CardCapaTreino(imagem: String) {
+fun CardCapaTreino(imagem: String, navController: NavController) {
 
 //    val colorStops = arrayOf(
 //        0.0f to Color.Yellow,
@@ -47,7 +49,8 @@ fun CardCapaTreino(imagem: String) {
             modifier = Modifier
                 .fillMaxSize()
                 .graphicsLayer(alpha = 0.5f),
-            colorFilter = ColorFilter.tint(Color.Black, BlendMode.Lighten)
+            colorFilter = ColorFilter.tint(Color.Black, BlendMode.Lighten),
+            error = painterResource(id = R.drawable.treinoerro)
         )
 
         Box(
@@ -67,7 +70,11 @@ fun CardCapaTreino(imagem: String) {
         Icon(
             painter = painterResource(id = R.drawable.baseline_chevron_left_24),
             tint = Color.White,
-            modifier = Modifier.size(40.dp),
+            modifier = Modifier
+                .size(40.dp)
+                .clickable {
+                           navController.navigate("homeAcademia")
+                },
             contentDescription = null
         )
     }
@@ -75,8 +82,8 @@ fun CardCapaTreino(imagem: String) {
 
 }
 
-@Preview
-@Composable
-fun CardCapaTreinoPreview() {
-    CardCapaTreino(imagem = "")
-}
+//@Preview
+//@Composable
+//fun CardCapaTreinoPreview() {
+//    CardCapaTreino(imagem = "")
+//}

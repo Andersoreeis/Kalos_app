@@ -458,35 +458,7 @@ fun TelaHomeAcademia(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if (selectedItemIndex == 1) {
-
                    Text(text = "produtos", color = Color.White)
-                    var estatoExercicios by remember {
-                        mutableStateOf(TreinoComExercicio())
-                    }
-                    lateinit var treinoService: TreinoService
-                    treinoService = RetrofitHelper.getInstance().create(TreinoService::class.java)
-                    
-                    lifecycleCoroutineScope.launch {
-                        val result = treinoService.getTreinoPorId("20")
-                        if (result.isSuccessful){
-                            Log.e("ssss", "TelaHomeAcademia: ${result.body()}", )
-                            estatoExercicios = result.body()?.data!!
-                            
-                        }
-
-                    }
-                    Column(
-                        modifier = Modifier.height(400.dp)
-                    ) {
-                        LazyColumn(){
-                            items(estatoExercicios.exercicios!!){
-                                    exercicio ->
-                                Log.e("nomeExercicio", "TelaHomeAcademia:${exercicio.nome} ", )
-                                Text(text = exercicio.nome.toString(), color = Color.White)
-                            }
-                            }
-                        }
-
                 } else if (selectedItemIndex == 2) {
                     TelaTreinos(lifecycleCoroutineScope, localStorage, navController)
                 } else if(selectedItemIndex == 3) {
