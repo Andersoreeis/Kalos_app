@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.model.TreinosResponse
@@ -53,7 +55,7 @@ import java.util.Date
 @SuppressLint("CoroutineCreationDuringComposition")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun TelaTreinos(lifecycleCoroutineScope: LifecycleCoroutineScope, localStorage: Storage) {
+fun TelaTreinos(lifecycleCoroutineScope: LifecycleCoroutineScope, localStorage: Storage, navController: NavController) {
     var treinos by remember {
         mutableStateOf(listOf(TreinosResponse()))
     }
@@ -62,35 +64,7 @@ fun TelaTreinos(lifecycleCoroutineScope: LifecycleCoroutineScope, localStorage: 
     }
     val context = LocalContext.current
 
-//    val testes = listOf(
-//        TreinosResponse(
-//            nome = "Treino de perna",
-//            foto = "https://firebasestorage.googleapis.com/v0/b/kalos-app-b403c.appspot.com/o/" +
-//                    "images%2Ffotoacademia.png?alt=media&token=699de6e9-2d5f-4843-8c4f-c600cfa1ae" +
-//                    "df&_gl=1*k4mb0j*_ga*NDQ2MTg1MTA2LjE2OTE2OTMzMDY.*_ga_CW55HF8NVT*MTY5NjUyNTUxMy4" +
-//                    "xOS4xLjE2OTY1MjU3MjMuMzguMC4w",
-//            nome_categoria_treino = "Musculação",
-//            data_criacao = "2004-04-10T00:00:00.000Z"
-//        ),
-//        TreinosResponse(
-//            nome = "Treino de Costas",
-//            foto = "https://firebasestorage.googleapis.com/v0/b/kalos-app-b403c.appspot.com/o/" +
-//                    "images%2Ffotoacademia.png?alt=media&token=699de6e9-2d5f-4843-8c4f-c600cfa1ae" +
-//                    "df&_gl=1*k4mb0j*_ga*NDQ2MTg1MTA2LjE2OTE2OTMzMDY.*_ga_CW55HF8NVT*MTY5NjUyNTUxMy4" +
-//                    "xOS4xLjE2OTY1MjU3MjMuMzguMC4w",
-//            nome_categoria_treino = "Musculação",
-//            data_criacao = "2004-04-10T00:00:00.000Z"
-//        ),
-//        TreinosResponse(
-//            nome = "Treino de Peito",
-//            foto = "https://firebasestorage.googleapis.com/v0/b/kalos-app-b403c.appspot.com/o/" +
-//                    "images%2Ffotoacademia.png?alt=media&token=699de6e9-2d5f-4843-8c4f-c600cfa1ae" +
-//                    "df&_gl=1*k4mb0j*_ga*NDQ2MTg1MTA2LjE2OTE2OTMzMDY.*_ga_CW55HF8NVT*MTY5NjUyNTUxMy4" +
-//                    "xOS4xLjE2OTY1MjU3MjMuMzguMC4w",
-//            nome_categoria_treino = "Musculação",
-//            data_criacao = "2004-04-10T00:00:00.000Z"
-//        )
-//    )
+
     lateinit var treinoService: TreinoService
     treinoService = RetrofitHelper.getInstance().create(TreinoService::class.java)
 
@@ -136,7 +110,11 @@ fun TelaTreinos(lifecycleCoroutineScope: LifecycleCoroutineScope, localStorage: 
                     AsyncImage(
                         model = it.foto,
                         contentDescription = "foto do treino",
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize()
+                            .clickable {
+                                localStorage.salvarValor(context, it.id_treino.toString(), "idTreino")
+                                navController.navigate("detalhesTreino")
+                            },
                         error = painterResource(id = R.drawable.treinoerro)
                     )
                     Column(
