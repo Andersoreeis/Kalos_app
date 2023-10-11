@@ -488,7 +488,7 @@ fun TelaHomeAcademia(
                         }
 
                 } else if (selectedItemIndex == 2) {
-                    TelaTreinos(lifecycleCoroutineScope, localStorage)
+                    TelaTreinos(lifecycleCoroutineScope, localStorage, navController)
                 } else if(selectedItemIndex == 3) {
                     Text(text = "informaçoes", color = Color.White)
                 }else{
