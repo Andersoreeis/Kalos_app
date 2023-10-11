@@ -9,5 +9,6 @@ data class TreinoComExercicio(
     val data_criacao: String? = "",
     val nome_categoria_treino: String? = "",
     val id_academia:Int? = 0,
+    val nome_nivel:String? = "",
     val exercicios:List<ExercicioResponse>? = emptyList()
 )

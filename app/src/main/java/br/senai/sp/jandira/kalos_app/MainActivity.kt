@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import br.senai.sp.jandira.kalos_app.screens.InformacoesCliente.screen.TelasInformacoesdoCliente
 import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.screen.CriarContaScreen
 import br.senai.sp.jandira.kalos_app.screens.telaAlterarSenha.screen.TelaAlterarSenha
+import br.senai.sp.jandira.kalos_app.screens.telaDetalhesTreino.screen.DetalhesTreinoScreen
 import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.screen.TelaEditarPerfil
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.LoginScreeViewModel
 
@@ -87,6 +88,10 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "homeAcademia"){
                             TelaHomeAcademia(navController, lifecycleScope, localStorage)
+                        }
+
+                        composable(route = "detalhesTreino"){
+                            DetalhesTreinoScreen(navController, lifecycleScope, localStorage)
                         }
 
 
