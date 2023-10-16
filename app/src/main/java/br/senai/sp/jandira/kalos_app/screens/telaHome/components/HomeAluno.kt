@@ -104,7 +104,7 @@ fun HomeAluno(aluno: AlunoResponse, navController: NavController,
         if(status) {
 
                 LazyColumn(
-                    modifier = Modifier.fillMaxSize().padding(10.dp)
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     items(academias){
                             academia ->

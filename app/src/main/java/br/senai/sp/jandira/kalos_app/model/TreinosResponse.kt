@@ -11,4 +11,5 @@ data class TreinosResponse(
     val id_academia:Int? = 0,
     val id_aluno:Int? = 0
 
+
 )
