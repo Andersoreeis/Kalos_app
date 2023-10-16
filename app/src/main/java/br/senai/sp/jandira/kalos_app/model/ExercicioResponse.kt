@@ -9,6 +9,7 @@ data class ExercicioResponse(
     val series: String? = "",
     val repeticoes: String? = "",
     val duracao: String? = null,
-    val id_treino_nivel_categoria:Int? = 0
+    val id_treino_nivel_categoria:Int? = 0,
+    val numero:Int? = 0
 
 )
