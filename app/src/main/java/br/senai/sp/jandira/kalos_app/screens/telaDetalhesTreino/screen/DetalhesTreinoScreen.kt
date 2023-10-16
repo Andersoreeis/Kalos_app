@@ -125,7 +125,7 @@ fun DetalhesTreinoScreen(navController: NavController, lifecycleCoroutineScope: 
 
 
                         CardExercicio(
-                            numero = i.toString(),
+                            numero = it.numero.toString(),
                             imagem = it.anexo!!,
                             nome = it.nome!!,
                             series = it.series!!,
