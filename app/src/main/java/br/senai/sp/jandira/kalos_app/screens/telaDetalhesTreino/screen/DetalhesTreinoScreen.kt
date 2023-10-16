@@ -145,7 +145,7 @@ fun DetalhesTreinoScreen(navController: NavController, lifecycleCoroutineScope: 
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                CircularProgressIndicator(color = Color.White, modifier = Modifier.size(64.dp))
+                CircularProgressIndicator(color = Color(0, 255, 144), modifier = Modifier.size(64.dp))
             }
 
         }
