@@ -119,5 +119,9 @@ dependencies {
 
     implementation ("androidx.compose.material3:material3:1.0.0-beta01")
 
+    //exoplayer
+    implementation ("com.google.android.exoplayer:exoplayer:2.19.1")
+
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.28")
 
 }

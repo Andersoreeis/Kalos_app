@@ -176,7 +176,6 @@ fun BuscarAcademias(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(20.dp)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),

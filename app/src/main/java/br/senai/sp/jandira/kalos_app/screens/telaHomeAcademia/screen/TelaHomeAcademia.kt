@@ -179,7 +179,6 @@ fun TelaHomeAcademia(
             .fillMaxSize()
             .background(Color.Black)
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 20.dp)
     ) {
 
         Box(
@@ -237,7 +236,7 @@ fun TelaHomeAcademia(
         Espacamento(tamanho = 20.dp)
 
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
