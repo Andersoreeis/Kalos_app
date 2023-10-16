@@ -18,6 +18,9 @@ import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.screen.CriarCon
 import br.senai.sp.jandira.kalos_app.screens.telaAlterarSenha.screen.TelaAlterarSenha
 import br.senai.sp.jandira.kalos_app.screens.telaDetalhesTreino.screen.DetalhesTreinoScreen
 import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.screen.TelaEditarPerfil
+import br.senai.sp.jandira.kalos_app.screens.telaEsqueciSenha.screen.TelaEsqueciSenhaCodigo
+import br.senai.sp.jandira.kalos_app.screens.telaEsqueciSenha.screen.TelaEsqueciSenhaEmail
+import br.senai.sp.jandira.kalos_app.screens.telaEsqueciSenha.screen.TelaEsqueciSenhaNovaSenha
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.LoginScreeViewModel
 
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.screen.LoginScreen
@@ -92,6 +95,15 @@ class MainActivity : ComponentActivity() {
 
                         composable(route = "detalhesTreino"){
                             DetalhesTreinoScreen(navController, lifecycleScope, localStorage)
+                        }
+                        composable(route = "esqueciSenhaEmail"){
+                            TelaEsqueciSenhaEmail()
+                        }
+                        composable(route = "esqueciSenhaCodigo"){
+                            TelaEsqueciSenhaCodigo()
+                        }
+                        composable(route = "esqueciSenhaNovaSenha"){
+                            TelaEsqueciSenhaNovaSenha()
                         }
 
 

@@ -124,9 +124,6 @@ fun HomeAluno(aluno: AlunoResponse, navController: NavController,
                         }
 
 
-
-
-
                         AcademiaCard(
                             academia = academia,
 
