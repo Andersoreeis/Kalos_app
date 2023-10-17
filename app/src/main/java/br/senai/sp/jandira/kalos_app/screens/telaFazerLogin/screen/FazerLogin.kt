@@ -172,7 +172,7 @@ fun LoginScreen(navController: NavController,
                     bold = 400,
                     alinhamento = TextAlign.End,
                     naveController = navController,
-                    navName = "criarConta"
+                    navName = "esqueciSenhaNovaSenha"
                 )
             }
         }

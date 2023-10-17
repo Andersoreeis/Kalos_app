@@ -37,7 +37,14 @@
     <string name="ir_para_alterar_senha">Ir para alterar senha</string>
     <string name="title_activity_detalhes_treino_screen">DetalhesTreinoScreen</string>
     <string name="title_activity_header_treino">HeaderTreino</string>
-
+    <string name="esqueci_a_senha">Esqueci a senha</string>
+    <string name="Iremos_enviar_email">Iremos enviar um código de recuperação para o seu e-mail.</string>
+    <string name="digite_o_email_cadastrado">Digite o email cadastrado:</string>
+    <string name="digite_o_email">Digite o email</string>
+    <string name="enviar_codigo">Enviar código</string>
+    <string name="verificar">Verificar</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="escolha_uma_nova_senha">Escolha uma nova senha</string>
 
 
 </resources>
