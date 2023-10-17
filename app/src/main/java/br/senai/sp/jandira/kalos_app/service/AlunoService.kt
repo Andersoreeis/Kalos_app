@@ -34,6 +34,14 @@ interface AlunoService {
     suspend fun autenticarAluno(@Body body: JsonObject): Response<JsonObject>
 
     @Headers("Content-Type: application/json")
+    @POST("kalos/aluno/esqueci_senha")
+    suspend fun esqueciSenha(@Body body: JsonObject): Response<JsonObject>
+
+    @Headers("Content-Type: application/json")
+    @POST("kalos/aluno/validar_token")
+    suspend fun enviarCodigo(@Body body: JsonObject): Response<JsonObject>
+
+    @Headers("Content-Type: application/json")
     @POST("kalos/aluno")
     suspend fun cadastrarAluno(@Body body: JsonObject): Response<BaseResponseStatus<AlunoResponse>>
 

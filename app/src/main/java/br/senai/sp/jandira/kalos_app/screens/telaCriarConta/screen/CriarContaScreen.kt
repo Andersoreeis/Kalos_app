@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.components.ContinueCom
+import br.senai.sp.jandira.kalos_app.components.Espacamento
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CamposCriarConta
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.HeaderCriarConta
 import br.senai.sp.jandira.kalos_app.screens.telaFazerLogin.LoginScreeViewModel
@@ -55,6 +56,8 @@ fun CriarContaScreen(navController: NavController, lifecycleScope: LifecycleCoro
         ){
             ContinueCom(navController = navController, viewModel = viewModel, localstorage = classe, lifecycleScope)
         }
+
+        Espacamento(tamanho = 30.dp)
 
         Row (
             verticalAlignment = Alignment.CenterVertically

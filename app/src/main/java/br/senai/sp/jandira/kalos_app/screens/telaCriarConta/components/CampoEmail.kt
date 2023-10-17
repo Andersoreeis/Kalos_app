@@ -23,8 +23,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -103,7 +107,8 @@ fun CampoCodigo(value: String, aoMudar: (String) -> Unit, isError: Boolean) {
         },
         modifier = Modifier
             .background(Color.Black)
-            .size(80.dp),
+            .size(60.dp)
+            ,
         shape = RoundedCornerShape(25.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             textColor = GreenKalos,
@@ -113,8 +118,12 @@ fun CampoCodigo(value: String, aoMudar: (String) -> Unit, isError: Boolean) {
             cursorColor = GreenKalos
         ),
         isError = isError,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        maxLines = 1,
+        singleLine = true,
+        textStyle = TextStyle.Default.copy(fontSize = 20.sp, textAlign = TextAlign.Center)
 
         )
+
 }
 
