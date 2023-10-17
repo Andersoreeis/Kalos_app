@@ -10,12 +10,13 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun BotaoIniciarTreino (cor: String){
+    val color = android.graphics.Color.parseColor(cor)
     Button(
         onClick = { /*TODO*/ },
-        colors = ButtonDefaults.buttonColors(Color(0xFF000000.toInt() or Integer.parseInt(cor, 16)))
+        colors = ButtonDefaults.buttonColors(Color(color))
     ) {
         Text(text = "Iniciar treino",
-            color =  if(cor.equals("FFFFFF")){
+            color =  if(cor.equals("#FFFFFF")){
             Color.Black
         }else{
             Color.White
@@ -27,5 +28,5 @@ fun BotaoIniciarTreino (cor: String){
 @Composable
 @Preview(showBackground = true)
 fun BotaoIniciarTreinoPreview(){
-    BotaoIniciarTreino("34439E")
+    BotaoIniciarTreino("#34439E")
 }

@@ -52,15 +52,20 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun DetalhesTreinoScreen(navController: NavController, lifecycleCoroutineScope: LifecycleCoroutineScope, localStorage: Storage) {
-    Column (
+fun DetalhesTreinoScreen(
+    navController: NavController,
+    lifecycleCoroutineScope: LifecycleCoroutineScope,
+    localStorage: Storage
+) {
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-    ){
+    ) {
 
         val context = LocalContext.current
-        val corPrimariaAcademia = localStorage.lerValor(context, "corPrimariaAcademia")?.substring(1)
+        val corPrimariaAcademia =
+            localStorage.lerValor(context, "corPrimariaAcademia")
 
         val idTreino = localStorage.lerValor(context, "idTreino")
         var estatoExercicios by remember {
@@ -75,8 +80,8 @@ fun DetalhesTreinoScreen(navController: NavController, lifecycleCoroutineScope: 
 
         lifecycleCoroutineScope.launch {
             val result = treinoService.getTreinoPorId(idTreino.toString())
-            if (result.isSuccessful){
-                Log.e("ssss", "TelaHomeAcademia: ${result.body()}", )
+            if (result.isSuccessful) {
+                Log.e("ssss", "TelaHomeAcademia: ${result.body()}")
                 estatoExercicios = result.body()?.data!!
                 status = true
 
@@ -84,11 +89,11 @@ fun DetalhesTreinoScreen(navController: NavController, lifecycleCoroutineScope: 
 
         }
 
-        if(status){
-            Log.e(" aadas", "DetalhesTreinoScreen: ${estatoExercicios}", )
+        if (status) {
+            Log.e(" aadas", "DetalhesTreinoScreen: ${estatoExercicios}")
             estatoExercicios.foto?.let { CardCapaTreino(it, navController) }
 
-            Column (modifier = Modifier.padding(15.dp)){
+            Column(modifier = Modifier.padding(15.dp)) {
                 estatoExercicios?.let {
                     HeaderTreino(
                         nomeTreino = it.nome!!,
@@ -112,26 +117,22 @@ fun DetalhesTreinoScreen(navController: NavController, lifecycleCoroutineScope: 
                     fontSize = 16.sp
                 )
 
-                var i:Int = 0
-                Log.e("exercicios", "DetalhesTreinoScreen: ${estatoExercicios.exercicios} ", )
+                Log.e("exercicios", "DetalhesTreinoScreen: ${estatoExercicios.exercicios} ")
 
                 LazyColumn(
-                    modifier =  Modifier.fillMaxWidth()
-                ){
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     estatoExercicios.exercicios?.let {
-                        items(it){
+                        items(it) {
 
-                            i++
-
-
-                        CardExercicio(
-                            numero = it.numero.toString(),
-                            imagem = it.anexo!!,
-                            nome = it.nome!!,
-                            series = it.series!!,
-                            repeticoes = it.repeticoes,
-                            duracao = it.duracao
-                        )
+                            CardExercicio(
+                                numero = it.numero.toString(),
+                                imagem = it.anexo!!,
+                                nome = it.nome!!,
+                                series = it.series!!,
+                                repeticoes = it.repeticoes,
+                                duracao = it.duracao
+                            )
                         }
                     }
 
@@ -139,13 +140,16 @@ fun DetalhesTreinoScreen(navController: NavController, lifecycleCoroutineScope: 
 
 
             }
-        }else{
+        } else {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                CircularProgressIndicator(color = Color(0, 255, 144), modifier = Modifier.size(64.dp))
+                CircularProgressIndicator(
+                    color = Color(0, 255, 144),
+                    modifier = Modifier.size(64.dp)
+                )
             }
 
         }
