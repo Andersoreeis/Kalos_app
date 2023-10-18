@@ -78,6 +78,7 @@ import br.senai.sp.jandira.kalos_app.screens.telaBuscarAcademias.screens.BuscarA
 import br.senai.sp.jandira.kalos_app.screens.telaHome.components.HomeAluno
 import br.senai.sp.jandira.kalos_app.screens.telaHomeAcademia.components.TelaTreinos
 import br.senai.sp.jandira.kalos_app.screens.telaPerfil.screen.TelaPerfil
+import br.senai.sp.jandira.kalos_app.screens.telaPostagens.screen.TelaPostagens
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.service.TreinoService
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
@@ -463,7 +464,7 @@ fun TelaHomeAcademia(
                 } else if(selectedItemIndex == 3) {
                     Text(text = "informaçoes", color = Color.White)
                 }else{
-                    Text(text = "posts", color = Color.White)
+                    TelaPostagens(lifecycleCoroutineScope,localStorage)
                 }
             }
 
