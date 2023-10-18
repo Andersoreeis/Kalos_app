@@ -8,7 +8,7 @@
     <string name="ja_usuario">Ja é usuário?</string>
     <string name="faca_login">Faça login</string>
     <string name="saude_limitacoes">Saúde e limitações</string>
-    <string name="seja_bem_vindo">Seja bem vindo!</string>
+    <string name="seja_bem_vindo">Seja bem-vindo!</string>
     <string name="condicao_medica">Você possui alguma condição médica que possa afetar seu exercício físico?</string>
     <string name="lesoes">Você já teve ou tem lesões recentes? Se sim, quais?</string>
     <string name="medicamentos">Você está tomando algum medicamento atualmente?</string>
@@ -45,6 +45,8 @@
     <string name="verificar">Verificar</string>
     <string name="confirmar">Confirmar</string>
     <string name="escolha_uma_nova_senha">Escolha uma nova senha</string>
+    <string name="bem_vindo_de_volta">Bem-vindo de volta!</string>
+    <string name="foto_da_postagem">foto da postagem</string>
 
 
 </resources>
