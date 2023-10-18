@@ -273,7 +273,7 @@ fun validarSenha(senhaAtual: String, senhaNova: String, confirmarSenha: String, 
     } else if (senhaNova.length < 8) {
         return "A senha deve conter pelo menos 8 caracteres"
     } else if (senhaNova.length > 12) {
-        return "A senha excedeu o limite de 30 caracteres"
+        return "A senha excedeu o limite de 12 caracteres"
     } else if (senhaNova != confirmarSenha) {
         return "As senhas não coincidem"
     } else {

@@ -1,5 +1,7 @@
 package br.senai.sp.jandira.kalos_app.screens.telaEsqueciSenha.screen
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -27,24 +30,33 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.navigation.NavController
+import br.senai.sp.jandira.app_kalos.components.createButtonWithError2
 import br.senai.sp.jandira.app_kalos.components.createButtonWithFunction
 import br.senai.sp.jandira.app_kalos.components.createTextKalos
 import br.senai.sp.jandira.app_kalos.components.getLogoKalos
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CampoEmailCadastrar
 import br.senai.sp.jandira.kalos_app.screens.telaCriarConta.components.CampoEmailCadastrar2
+import br.senai.sp.jandira.kalos_app.service.AlunoService
+import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalosEscuro
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
+import com.google.gson.JsonObject
+import kotlinx.coroutines.launch
 
 @Composable
-fun TelaEsqueciSenhaEmail() {
+fun TelaEsqueciSenhaEmail(navController: NavController, lifecycleCoroutineScope: LifecycleCoroutineScope, localStorage: Storage) {
     var estadoEmail by remember {
         mutableStateOf("")
     }
     var estadoEmailError by remember {
         mutableStateOf("")
     }
+    val context = LocalContext.current
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -106,9 +118,39 @@ fun TelaEsqueciSenhaEmail() {
                 }
             }
         }
+        var statusCarregando by remember {
+            mutableStateOf(false)
+        }
 
-        createButtonWithFunction(textButton = stringResource(R.string.enviar_codigo), corBotao = GreenKalos ) {
+        createButtonWithError2(textButton = stringResource(R.string.enviar_codigo), corBotao = GreenKalos, statusCarregando ) {
             estadoEmailError = validarEmail(estadoEmail).toString()
+            lateinit var alunoService: AlunoService
+            alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
+
+            if(estadoEmailError == ""){
+                statusCarregando = true
+                lifecycleCoroutineScope.launch {
+
+                    val result = alunoService.getAlunoByEmail(estadoEmail)
+
+                    if(result.isSuccessful){
+                        val body = JsonObject().apply {
+                            addProperty("email", estadoEmail)
+                        }
+                        val resultado = alunoService.esqueciSenha(body)
+                        if(result.isSuccessful){
+                            localStorage.salvarValor(context, result.body()!!.data!!.id.toString(), "idEsqueciSenha")
+                            localStorage.salvarValor(context, result.body()!!.data!!.email.toString(), "emailEsqueciSenha")
+                            navController.navigate("esqueciSenhaCodigo")
+                        }
+
+
+                    }else{
+                        Toast.makeText(context, "Email não cadastrado", Toast.LENGTH_SHORT).show()
+                        statusCarregando = false
+                    }
+                }
+            }
         }
 
 
