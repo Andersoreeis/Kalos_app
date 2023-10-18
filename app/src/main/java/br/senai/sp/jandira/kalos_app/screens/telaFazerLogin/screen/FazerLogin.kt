@@ -33,6 +33,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -43,6 +44,7 @@ import br.senai.sp.jandira.app_kalos.components.createButtonWithError2
 import br.senai.sp.jandira.app_kalos.components.createTextKalos
 import br.senai.sp.jandira.app_kalos.components.createTitleKalos
 import br.senai.sp.jandira.app_kalos.components.getLogoKalos
+import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.components.ContinueCom
 import br.senai.sp.jandira.kalos_app.components.Espacamento
@@ -96,7 +98,7 @@ fun LoginScreen(navController: NavController,
             )
             Espacamento(tamanho = 10.dp)
             createTextKalos(
-                content = "Bem vindo de volta!",
+                content = stringResource(R.string.bem_vindo_de_volta),
                 sizeText = 20,
                 colorText = Color.White,
                 bold = 400,
