@@ -9,10 +9,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun BotaoIniciarTreino (cor: String){
+fun BotaoIniciarTreino (cor: String, onClick: ()-> Unit){
     val color = android.graphics.Color.parseColor(cor)
     Button(
-        onClick = { /*TODO*/ },
+        onClick = { onClick() },
         colors = ButtonDefaults.buttonColors(Color(color))
     ) {
         Text(text = "Iniciar treino",
@@ -25,8 +25,8 @@ fun BotaoIniciarTreino (cor: String){
     }
 }
 
-@Composable
-@Preview(showBackground = true)
-fun BotaoIniciarTreinoPreview(){
-    BotaoIniciarTreino("#34439E")
-}
+//@Composable
+//@Preview(showBackground = true)
+//fun BotaoIniciarTreinoPreview(){
+//    BotaoIniciarTreino("#34439E")
+//}

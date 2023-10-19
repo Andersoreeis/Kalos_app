@@ -81,7 +81,7 @@ fun DetalhesTreinoScreen(
         lifecycleCoroutineScope.launch {
             val result = treinoService.getTreinoPorId(idTreino.toString())
             if (result.isSuccessful) {
-                Log.e("ssss", "TelaHomeAcademia: ${result.body()}")
+                Log.e("maufhuahdfuashfu", "TelaHomeAcademia: ${result.body()}")
                 estatoExercicios = result.body()?.data!!
                 status = true
 
@@ -106,7 +106,23 @@ fun DetalhesTreinoScreen(
 
                 Spacer(modifier = Modifier.height(15.dp))
 
-                BotaoIniciarTreino(cor = corPrimariaAcademia.toString())
+                BotaoIniciarTreino(cor = corPrimariaAcademia.toString()){
+                    navController.navigate("detalhesExercicio")
+
+                    Log.e("LLAALLALLAALLAAL", "${estatoExercicios.exercicios?.get(0)?.id_exercicio_serie_repeticao}" )
+
+                    val arrayExercicios = intArrayOf()
+                    estatoExercicios.exercicios?.forEach{exercicio ->
+                        //continuar aqui, colocar dentro do array todos os ids dos exercicios
+                    }
+
+                    estatoExercicios.exercicios?.get(0)?.let {
+                        localStorage.salvarValor(
+                            context,
+                            it.id_exercicio_serie_repeticao.toString(),
+                            "idExercicioSerieRepeticao")
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(15.dp))
 

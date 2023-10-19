@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import br.senai.sp.jandira.kalos_app.screens.InformacoesCliente.screen.TelasInformacoesdoCliente
 import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.screen.CriarContaScreen
 import br.senai.sp.jandira.kalos_app.screens.telaAlterarSenha.screen.TelaAlterarSenha
+import br.senai.sp.jandira.kalos_app.screens.telaDetalhesExercicio.screen.TelaDetalhesExercicio
 import br.senai.sp.jandira.kalos_app.screens.telaDetalhesTreino.screen.DetalhesTreinoScreen
 import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.screen.TelaEditarPerfil
 import br.senai.sp.jandira.kalos_app.screens.telaEsqueciSenha.screen.TelaEsqueciSenhaCodigo
@@ -108,6 +110,10 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "senhaRedefinida"){
                             TelaSenhaRedefinida(navController)
+                        }
+
+                        composable(route = "detalhesExercicio"){
+                            TelaDetalhesExercicio(LocalLifecycleOwner.current, localStorage, navController)
                         }
 
 
