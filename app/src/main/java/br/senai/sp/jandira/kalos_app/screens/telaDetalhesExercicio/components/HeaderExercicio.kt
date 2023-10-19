@@ -27,7 +27,7 @@ fun HeaderExercicio(nome: String, series: String, repeticoes: String?, duracao: 
     Surface (
         modifier = Modifier
             .width(300.dp),
-            color = Color.Black
+            color = Color.Transparent
     ){
         Column {
             Text(

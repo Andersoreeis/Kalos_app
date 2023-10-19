@@ -33,7 +33,7 @@ fun CardProximoExercicio(imagem: String, nome: String) {
     Surface(
         modifier = Modifier
             .height(70.dp)
-            .width(350.dp),
+            .width(360.dp),
         color = Color(255, 255, 255, 60),
         shape = RoundedCornerShape(20.dp)
     ) {

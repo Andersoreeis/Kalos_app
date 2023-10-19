@@ -22,10 +22,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.senai.sp.jandira.kalos_app.R
 import kotlinx.coroutines.delay
 import java.util.concurrent.TimeUnit
 
@@ -70,15 +73,15 @@ fun Cronometro(tempo: String, cor: String) {
 
     Column(
         Modifier
-            .background(Color.Black)
-            .width(350.dp)
-            .fillMaxWidth(),
+            .width(356.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = formattedTime,
             color = Color.White,
-            fontSize = 85.sp
+            fontSize = 85.sp,
+            fontFamily = FontFamily( Font(R.font.montserrat)),
+            fontWeight = FontWeight.Black
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
