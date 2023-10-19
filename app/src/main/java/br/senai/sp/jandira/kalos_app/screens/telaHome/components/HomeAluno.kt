@@ -131,47 +131,52 @@ fun HomeAluno(aluno: AlunoResponse, navController: NavController,
                                 statuAtivo.value = true
 
                                 localStorage.salvarValor(context, "${statuAtivo.value}", "alunoAtivo")
-                                Log.e("LocalStorage", "alunoAtivo: ${statuAtivo.value}")
+
 
                                 localStorage.salvarValor(context, "${aluno.nome}", "aluno")
-                                Log.e("LocalStorage", "aluno: ${aluno.nome}")
+
 
                                 localStorage.salvarValor(context, "${academia.nome}", "nomeAcademia")
-                                Log.e("LocalStorage", "nomeAcademia: ${academia.nome}")
+
 
                                 localStorage.salvarValor(context, "${academia.telefone}", "telefoneAcademia")
-                                Log.e("LocalStorage", "telefoneAcademia: ${academia.telefone}")
+
 
                                 localStorage.salvarValor(context, "${academia.email}", "emailAcademia")
-                                Log.e("LocalStorage", "emailAcademia: ${academia.email}")
+
 
                                 localStorage.salvarValor(context, "${academia.instagram}", "instagramAcademia")
-                                Log.e("LocalStorage", "instagramAcademia: ${academia.instagram}")
+
 
                                 localStorage.salvarValor(context, "${academia.facebook}", "facebookAcademia")
-                                Log.e("LocalStorage", "facebookAcademia: ${academia.facebook}")
+
 
                                 localStorage.salvarValor(context, "${academia.whatsapp}", "whatsappAcademia")
-                                Log.e("LocalStorage", "whatsappAcademia: ${academia.whatsapp}")
+
 
                                 localStorage.salvarValor(context, "${academia.foto}", "fotoAcademia")
-                                Log.e("LocalStorage", "fotoAcademia: ${academia.foto}")
+
 
                                 localStorage.salvarValor(context, "${academia.descricao}", "descricaoAcademia")
-                                Log.e("LocalStorage", "descricaoAcademia: ${academia.descricao}")
+
 
                                 localStorage.salvarValor(context, "${academia.cor_primaria}", "corPrimariaAcademia")
-                                Log.e("LocalStorage", "corPrimariaAcademia: ${academia.cor_primaria}")
+
 
                                 localStorage.salvarValor(context, "${academia.cor_secundaria}", "corSegundariaAcademia")
-                                Log.e("LocalStorage", "corSegundariaAcademia: ${academia.cor_secundaria}")
+
 
                                 localStorage.salvarValor(context, "${academia.foto}", "fotoAcademia")
-                                Log.e("LocalStorage", "fotoAcademia: ${academia.foto}")
+
 
                                 localStorage.salvarValor(context, pegarNomeTags(academia).toString(), "tagsAcademia")
-                                Log.e("LocalStorage", "tagsAcademia: ${pegarNomeTags(academia)}")
+
                                 localStorage.salvarValor(context, academia.id.toString(), "idAcademia")
+
+                                localStorage.salvarValor(context,academia.logradouro.toString(), "logradouroAcademia")
+                                localStorage.salvarValor(context,academia.numero.toString(), "numeroAcademia")
+                                localStorage.salvarValor(context,academia.cidade.toString(), "cidadeAcademia")
+
 
 
                             }

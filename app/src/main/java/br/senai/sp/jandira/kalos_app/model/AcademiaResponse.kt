@@ -28,7 +28,7 @@ data class AcademiaResponse(
     var id_categoria: Int? = 0,
     var categoria: String? = "",
     var logradouro: String? = "",
-    var numero_endereco: String? = "",
+    var numero: String? = "",
     var complemento: String? = "",
     var cep: String? = "",
     var cidade: String? = "",

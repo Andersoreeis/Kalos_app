@@ -109,6 +109,7 @@ fun TelaHomeAcademia(
     var logradouroAcademia = localStorage.lerValor(context, "logradouroAcademia")
     var numeroAcademia = localStorage.lerValor(context, "numeroAcademia")
 
+
     val corPrimariaAcademia = localStorage.lerValor(context, "corPrimariaAcademia")
     val corPrimaria = Color(android.graphics.Color.parseColor(corPrimariaAcademia ?: "#353535"))
 
@@ -332,7 +333,7 @@ fun TelaHomeAcademia(
             }
 
             Espacamento(tamanho = 20.dp)
-
+            var cidade = localStorage.lerValor(context, "cidadeAcademia")
             Box(
                 modifier = Modifier
                     .padding(4.dp)
@@ -348,7 +349,7 @@ fun TelaHomeAcademia(
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = logradouroAcademia.toString(),
+                        text = " ${logradouroAcademia.toString()}, ${numeroAcademia.toString()} - ${cidade.toString()}",
                         color = corSegundaria,
                         fontWeight = FontWeight.Bold,
                         fontSize = 12.sp

@@ -338,13 +338,10 @@ fun BuscarAcademias(
 
                                             localStorage.salvarValor(
                                                 context,
-                                                "${academia.numero_endereco}",
+                                                "${academia.numero}",
                                                 "numeroAcademia"
                                             );
-                                            Log.e(
-                                                "Valor numero endereço",
-                                                "${academia.numero_endereco}"
-                                            );
+
 
                                             localStorage.salvarValor(
                                                 context,
