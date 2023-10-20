@@ -167,7 +167,7 @@ fun BuscarAcademias(
                         buscarAcademias()
                     }
                 },
-                lifecycleScope = lifecycleScope
+                placeholder = "Buscar Academias"
             )
 
             Espacamento(tamanho = 40.dp)

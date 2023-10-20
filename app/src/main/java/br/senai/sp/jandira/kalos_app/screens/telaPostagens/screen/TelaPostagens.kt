@@ -103,7 +103,7 @@ fun TelaPostagens(lifecycleCoroutineScope: LifecycleCoroutineScope, localStorage
                         data = it.data!!,
                         hora = it.hora!!
                     )
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(30.dp))
                 }
             }
 

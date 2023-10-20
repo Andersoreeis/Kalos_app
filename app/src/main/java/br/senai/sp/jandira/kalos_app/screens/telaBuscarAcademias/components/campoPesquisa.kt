@@ -33,7 +33,7 @@ fun CampoPesquisa(
     estadoValue: String,
     aoMudar: (String) -> Unit,
     funcao: () -> Unit,
-    lifecycleScope: LifecycleCoroutineScope
+    placeholder: String
 ) {
 
     val context = LocalContext.current
@@ -70,7 +70,7 @@ fun CampoPesquisa(
             }
         ),
         placeholder = {
-            Text(text = "Buscar Academias", color = Color(0xFF606060))
+            Text(text = placeholder, color = Color(0xFF606060))
         },
         modifier = Modifier
             .background(Color.Black)
