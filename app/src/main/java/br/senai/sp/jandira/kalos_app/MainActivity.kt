@@ -113,7 +113,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = "detalhesExercicio"){
-                            TelaDetalhesExercicio(LocalLifecycleOwner.current, localStorage, navController)
+                            TelaDetalhesExercicio(LocalLifecycleOwner.current, localStorage, navController, lifecycleScope)
                         }
 
 

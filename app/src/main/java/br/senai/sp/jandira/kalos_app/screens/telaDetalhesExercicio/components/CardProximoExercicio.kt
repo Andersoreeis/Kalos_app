@@ -1,6 +1,7 @@
 package br.senai.sp.jandira.kalos_app.screens.telaDetalhesExercicio.components
 
-import androidx.compose.foundation.background
+
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,7 +30,7 @@ import coil.compose.AsyncImage
 import br.senai.sp.jandira.kalos_app.R
 
 @Composable
-fun CardProximoExercicio(imagem: String, nome: String) {
+fun CardProximoExercicio(imagem: String, nome: String, onCLick: () -> Unit) {
     Surface(
         modifier = Modifier
             .height(70.dp)
@@ -44,39 +45,47 @@ fun CardProximoExercicio(imagem: String, nome: String) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ){
-            AsyncImage(
-                model = imagem,
-                contentDescription = null,
-                placeholder = painterResource(id = R.drawable.treinoerro),
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(50.dp)
-                    .shadow(2.dp, RoundedCornerShape(5.dp))
-            )
 
-            Column (
-                modifier = Modifier.height(50.dp),
-                verticalArrangement = Arrangement.SpaceEvenly
-            ){
-                Text(
-                    text = "Próximo exercício",
-                    color = Color.White,
-                    fontSize = 11.sp
+            Row (modifier = Modifier){
+                AsyncImage(
+                    model = imagem,
+                    contentDescription = null,
+                    placeholder = painterResource(id = R.drawable.treinoerro),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(50.dp)
+                        .shadow(2.dp, RoundedCornerShape(5.dp))
                 )
-                Text(
-                    text = nome,
-                    color = Color.White,
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.Bold
-                )
+
+                Spacer(modifier = Modifier.width(15.dp))
+
+                Column (
+                    modifier = Modifier.height(50.dp),
+                    verticalArrangement = Arrangement.SpaceEvenly
+                ){
+                    Text(
+                        text = "Próximo",
+                        color = Color.White,
+                        fontSize = 11.sp
+                    )
+                    Text(
+                        text = nome,
+                        color = Color.White,
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
+
 
             Spacer(modifier = Modifier.width(50.dp))
 
-            Icon(painter = painterResource(
-                id = R.drawable.baseline_skip_next_24),
+            Icon(
+                painter = painterResource(id = R.drawable.baseline_skip_next_24),
                 contentDescription = null,
-                modifier = Modifier.size(30.dp),
+                modifier = Modifier
+                    .size(30.dp)
+                    .clickable { onCLick() },
                 tint = Color.White
             )
         }
@@ -89,5 +98,5 @@ fun CardProximoExercicioPreview() {
     CardProximoExercicio(
         "https://img.freepik.com/fotos-gratis/halteres-no-chao-de-uma-academia-ai-generative_123827-23743.jpg?w=2000&t=st=1697050142~exp=1697050742~hmac=e9061cb6138441930546f5971bf27a77deb352dddb2a45b493370a62232a421b",
                 "Aquecimento de músculos"
-        )
+        ){}
 }

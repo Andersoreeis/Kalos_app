@@ -73,7 +73,7 @@ fun Cronometro(tempo: String, cor: String) {
 
     Column(
         Modifier
-            .width(356.dp),
+            .width(360.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
