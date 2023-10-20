@@ -24,10 +24,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,7 +40,7 @@ fun InputAnotarCarga(cor: String){
     }
 
     Column(modifier = Modifier
-        .width(350.dp)
+        .width(360.dp)
         .height(130.dp)
         .background(Color.Black),
         verticalArrangement = Arrangement.SpaceBetween) {
@@ -74,7 +76,7 @@ fun InputAnotarCarga(cor: String){
             ) {
                 Text(
                     text = "Salvar",
-                    color = Color.White,
+                    color = if (cor.uppercase() == "#FFFFFF") Color.Black else Color.White,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold
                 )

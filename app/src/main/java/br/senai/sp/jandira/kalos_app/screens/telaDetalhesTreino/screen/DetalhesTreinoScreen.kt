@@ -109,17 +109,16 @@ fun DetalhesTreinoScreen(
                 BotaoIniciarTreino(cor = corPrimariaAcademia.toString()){
                     navController.navigate("detalhesExercicio")
 
-                    Log.e("LLAALLALLAALLAAL", "${estatoExercicios.exercicios?.get(0)?.id_exercicio_serie_repeticao}" )
-
-                    val arrayExercicios = intArrayOf()
+                    val arrayExercicios = arrayListOf<Int>()
                     estatoExercicios.exercicios?.forEach{exercicio ->
-                        //continuar aqui, colocar dentro do array todos os ids dos exercicios
+                        exercicio.id_exercicio_serie_repeticao?.let { arrayExercicios.add(it) }
                     }
+
 
                     estatoExercicios.exercicios?.get(0)?.let {
                         localStorage.salvarValor(
                             context,
-                            it.id_exercicio_serie_repeticao.toString(),
+                            "${arrayExercicios}",
                             "idExercicioSerieRepeticao")
                     }
                 }
@@ -173,6 +172,7 @@ fun DetalhesTreinoScreen(
 
     }
 }
+
 
 //@Preview(showBackground = true, showSystemUi = true)
 //@Composable
