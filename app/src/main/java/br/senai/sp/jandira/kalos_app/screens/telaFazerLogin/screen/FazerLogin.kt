@@ -230,9 +230,10 @@ fun LoginScreen(navController: NavController,
                             Log.e("TAG", "Deu erro")
                             Toast.makeText(
                                 context,
-                                "Erro senha ou email encorretos",
+                                "Erro senha ou email incorreto",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            statusCarregando = false
 
                         } else {
                             Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show()

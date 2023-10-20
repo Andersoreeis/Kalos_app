@@ -79,6 +79,7 @@ import br.senai.sp.jandira.kalos_app.screens.telaHome.components.HomeAluno
 import br.senai.sp.jandira.kalos_app.screens.telaHomeAcademia.components.TelaTreinos
 import br.senai.sp.jandira.kalos_app.screens.telaPerfil.screen.TelaPerfil
 import br.senai.sp.jandira.kalos_app.screens.telaPostagens.screen.TelaPostagens
+import br.senai.sp.jandira.kalos_app.screens.telaProdutos.screen.TelaProdutos
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.service.TreinoService
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
@@ -238,7 +239,9 @@ fun TelaHomeAcademia(
         Espacamento(tamanho = 20.dp)
 
         Column(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -459,7 +462,7 @@ fun TelaHomeAcademia(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if (selectedItemIndex == 1) {
-                   Text(text = "produtos", color = Color.White)
+                   TelaProdutos(lifecycleCoroutineScope, corPrimariaAcademia!!)
                 } else if (selectedItemIndex == 2) {
                     TelaTreinos(lifecycleCoroutineScope, localStorage, navController)
                 } else if(selectedItemIndex == 3) {
