@@ -31,6 +31,7 @@ import br.senai.sp.jandira.kalos_app.screens.telaHome.screen.TelaHome
 import br.senai.sp.jandira.kalos_app.screens.telaHomeAcademia.screen.TelaHomeAcademia
 import br.senai.sp.jandira.kalos_app.screens.telaInicial.screen.TelaInicial
 import br.senai.sp.jandira.kalos_app.screens.telaObjetivo.screen.TelaObjetivo
+import br.senai.sp.jandira.kalos_app.screens.telaReservas.screen.TelaReservas
 import br.senai.sp.jandira.kalos_app.screens.telaSaudeLimitacoes.screen.TelaSaudeLimitacoes
 import br.senai.sp.jandira.kalos_app.telaP.telaPerfilAcademia.screen.TelaPerfilAcademia
 import br.senai.sp.jandira.kalos_app.ui.theme.Kalos_appTheme
@@ -114,6 +115,9 @@ class MainActivity : ComponentActivity() {
 
                         composable(route = "detalhesExercicio"){
                             TelaDetalhesExercicio(LocalLifecycleOwner.current, localStorage, navController, lifecycleScope)
+                        }
+                        composable(route = "reservas"){
+                           TelaReservas(navController)
                         }
 
 

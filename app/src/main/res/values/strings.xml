@@ -47,6 +47,11 @@
     <string name="escolha_uma_nova_senha">Escolha uma nova senha</string>
     <string name="bem_vindo_de_volta">Bem-vindo de volta!</string>
     <string name="foto_da_postagem">foto da postagem</string>
+    <string name="foto_do_produto">Foto do produto</string>
+    <string name="ver_detalhes">Ver detalhes</string>
+    <string name="reservas">Reservas</string>
+    <string name="voltar_para_pagina_anterior">voltar para página anterior</string>
+    <string name="suas_reservas">Suas reservas</string>
 
 
 </resources>

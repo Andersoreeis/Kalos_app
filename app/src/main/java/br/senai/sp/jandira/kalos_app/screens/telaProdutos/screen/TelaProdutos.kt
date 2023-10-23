@@ -25,21 +25,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.screens.telaBuscarAcademias.components.CampoPesquisa
 import br.senai.sp.jandira.kalos_app.screens.telaProdutos.components.BotaoReservas
 import br.senai.sp.jandira.kalos_app.screens.telaProdutos.components.CardProduto
 
 @Composable
-fun TelaProdutos(lifecycleCoroutineScope: LifecycleCoroutineScope, corPrimaria: String) {
-    val list = listOf<Color>(
-        Color.White,
-        Color.Red,
-        Color.Green,
-        Color.Yellow, Color.White,
-        Color.Red,
-        Color.Green,
-        Color.Yellow
-    )
+fun TelaProdutos(lifecycleCoroutineScope: LifecycleCoroutineScope, corPrimaria: String, navController: NavController) {
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -57,7 +50,7 @@ fun TelaProdutos(lifecycleCoroutineScope: LifecycleCoroutineScope, corPrimaria: 
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ) {
-            BotaoReservas(corPrimariaAcademia = corPrimaria)
+            BotaoReservas(corPrimariaAcademia = corPrimaria, navController )
         }
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -70,7 +63,7 @@ fun TelaProdutos(lifecycleCoroutineScope: LifecycleCoroutineScope, corPrimaria: 
         ) {
             items(6) {
 
-                CardProduto()
+                CardProduto(corPrimaria)
 
 
             }
