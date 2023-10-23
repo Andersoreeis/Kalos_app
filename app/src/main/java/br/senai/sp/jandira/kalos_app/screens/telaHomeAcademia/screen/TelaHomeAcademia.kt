@@ -462,7 +462,7 @@ fun TelaHomeAcademia(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if (selectedItemIndex == 1) {
-                   TelaProdutos(lifecycleCoroutineScope, corPrimariaAcademia!!)
+                   TelaProdutos(lifecycleCoroutineScope, corPrimariaAcademia!!, navController)
                 } else if (selectedItemIndex == 2) {
                     TelaTreinos(lifecycleCoroutineScope, localStorage, navController)
                 } else if(selectedItemIndex == 3) {
