@@ -128,7 +128,17 @@ fun TelaDetalhesExercicio(
                     modifier = Modifier
                         .size(40.dp)
                         .clickable {
-                            navController.navigate("telaDetalhesExercicio")
+                            arrayIdsExercicios.forEach {
+                                if (it == estadoExercicio.id_exercicio_serie_repeticao){
+                                    if (contador == 0){
+                                        navController.navigate("detalhesTreino")
+                                    } else {
+                                        contador -= 1
+                                        status = false
+                                    }
+
+                                }
+                            }
                         },
                     contentDescription = null
                 )
@@ -154,12 +164,12 @@ fun TelaDetalhesExercicio(
                     cor = corPrimariaAcademia.toString()
                 )
             } else {
-                InputAnotarCarga(cor = corPrimariaAcademia.toString())
+                InputAnotarCarga(cor = corPrimariaAcademia.toString(), lifecycleCoroutineScope, localStorage, estadoExercicio.id_exercicio_serie_repeticao.toString())
             }
 
             val thumbnailUrl = "https://img.youtube.com/vi/${estadoProximoExercicio.anexo}/0.jpg"
 
-            if (contador < arrayIdsExercicios.size - 1){
+            if (contador < arrayIdsExercicios.size - 1) {
                 CardProximoExercicio(
                     imagem = thumbnailUrl,
                     nome = estadoProximoExercicio.nome!!
@@ -168,8 +178,12 @@ fun TelaDetalhesExercicio(
                     status = false
                 }
             } else {
-                createButtonWithWidth(textButton = "Finalizar treino", corBotao = Color(android.graphics.Color.parseColor(corPrimariaAcademia)), width = 350.dp) {
-                    navController.navigate("homeAcademia")
+                createButtonWithWidth(
+                    textButton = "Finalizar treino",
+                    corBotao = Color(android.graphics.Color.parseColor(corPrimariaAcademia)),
+                    width = 350.dp
+                ) {
+                    navController.navigate("treinoConcluido")
                 }
             }
 

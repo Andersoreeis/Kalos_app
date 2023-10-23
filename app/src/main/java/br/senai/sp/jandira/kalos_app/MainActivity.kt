@@ -18,6 +18,7 @@ import br.senai.sp.jandira.kalos_app.screens.InformacoesCliente.screen.TelasInfo
 import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.screen.CriarContaScreen
 import br.senai.sp.jandira.kalos_app.screens.telaAlterarSenha.screen.TelaAlterarSenha
 import br.senai.sp.jandira.kalos_app.screens.telaDetalhesExercicio.screen.TelaDetalhesExercicio
+import br.senai.sp.jandira.kalos_app.screens.telaDetalhesExercicio.screen.TelaTreinoConcluido
 import br.senai.sp.jandira.kalos_app.screens.telaDetalhesTreino.screen.DetalhesTreinoScreen
 import br.senai.sp.jandira.kalos_app.screens.telaEditarPerfil.screen.TelaEditarPerfil
 import br.senai.sp.jandira.kalos_app.screens.telaEsqueciSenha.screen.TelaEsqueciSenhaCodigo
@@ -118,6 +119,10 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "reservas"){
                            TelaReservas(navController)
+                        }
+
+                        composable(route = "treinoConcluido"){
+                            TelaTreinoConcluido(navController)
                         }
 
 
