@@ -4,11 +4,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import br.senai.sp.jandira.kalos_app.screens.telaReservas.components.CardReservas
 import br.senai.sp.jandira.kalos_app.screens.telaReservas.components.HeaderReservas
 
 @Composable
@@ -20,5 +22,11 @@ fun TelaReservas(navController: NavController) {
             .padding(20.dp)
     ) {
         HeaderReservas(navController = navController)
+        LazyColumn(){
+            items(5){
+                CardReservas()
+            }
+        }
+
     }
 }

@@ -82,7 +82,7 @@ fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCor
     var estadoTelefoneError = remember {
         mutableStateOf("")
     }
-    var categoryGenero = remember {
+    var categoryGenero by remember {
         mutableStateOf(aluno.genero)
     }
     var categoryGeneroError = remember {
@@ -263,7 +263,13 @@ fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCor
 
         CampoGenero2(
             isError = categoryGeneroError.value.isNotEmpty(),
-            categoria = categoryGenero.value.toString()
+            category = categoryGenero.toString(),
+            {
+            categoryGenero = it
+            },
+            {
+                categoryGenero = it
+            }
         )
         Espacamento(tamanho = 20.dp)
 
@@ -376,7 +382,7 @@ fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCor
                     localStorage.salvarValor(context, aluno.senha.toString(), "senhaAlunoAlt")
                     localStorage.salvarValor(context, aluno.email.toString(), "emailAluno")
 
-                           navController.navigate("alterarSenha")
+                    navController.navigate("alterarSenha")
                 },
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically
@@ -401,7 +407,7 @@ fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCor
             val dataNascimentoError = validarDataNascimento(estadoDataNascimento.value)
             val telefoneError = validarTelefone(estadoTelefone.value)
             val cpfError = validarCPF(estadoCpf.value)
-            val generoError = categoryGenero.value?.let { validarGenero(it) }
+            val generoError = categoryGenero?.let { validarGenero(it) }
 
             fun formatarData(input: String): String {
                 val digitsOnly = input.replace(Regex("[^\\d]"), "")
@@ -420,10 +426,11 @@ fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCor
             }
 
             val dataFormatada = formatarData(estadoDataNascimento.value)
+            Log.e("teste", "FormularioPerfil: ${categoryGenero}", )
             var genero: Int
-            if (categoryGenero.value == "Masculino")
+            if (categoryGenero == "Masculino")
                 genero = 1
-            else if (categoryGenero.value== "Feminino") {
+            else if (categoryGenero== "Feminino") {
                 genero = 2
             } else {
                 genero = 4
@@ -438,7 +445,7 @@ fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCor
                 lateinit var alunoService: AlunoService
                 alunoService = RetrofitHelper.getInstance().create(AlunoService::class.java)
 
-
+                Log.e("teste", "FormularioPerfil: ${genero}", )
 
                 if(fotoUri.value == null){
                     lifecycleCoroutineScope.launch {

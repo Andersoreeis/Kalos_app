@@ -142,7 +142,7 @@ fun CampoGenero(localStorage: Storage, isError: Boolean, categoria: MutableState
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 @Composable
-fun CampoGenero2(isError: Boolean, categoria: String) {
+fun CampoGenero2(isError: Boolean, category: String, aoMudar: (String) -> Unit, titulo: (String) -> Unit) {
     val context = LocalContext.current
     val categories = listOf(
         "Masculino",
@@ -150,9 +150,9 @@ fun CampoGenero2(isError: Boolean, categoria: String) {
         "Outros",
     )
 
-    var category by remember {
-        mutableStateOf(categoria)
-    }
+//    var category by remember {
+//        mutableStateOf(categoria)
+//    }
 
     var textFieldSize by remember {
         mutableStateOf(Size.Zero)
@@ -183,7 +183,8 @@ fun CampoGenero2(isError: Boolean, categoria: String) {
             OutlinedTextField(
                 value = category,
                 onValueChange = {
-                    category= it
+                                aoMudar(it)
+//                    category= it
                     expanded = true
 
                 },
@@ -239,7 +240,7 @@ fun CampoGenero2(isError: Boolean, categoria: String) {
                                 .sorted()
                         ) { title ->
                             CategoryItem(title = title) {
-                                category = title
+                                titulo(title)
                                 expanded = false
                             }
                         }
