@@ -79,7 +79,7 @@ fun Cronometro(tempo: String, cor: String) {
         Text(
             text = formattedTime,
             color = Color.White,
-            fontSize = 85.sp,
+            fontSize = 75.sp,
             fontFamily = FontFamily( Font(R.font.montserrat)),
             fontWeight = FontWeight.Black
         )
