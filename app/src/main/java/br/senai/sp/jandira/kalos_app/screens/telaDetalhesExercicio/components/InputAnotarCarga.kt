@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.kalos_app.screens.telaDetalhesExercicio.components
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleCoroutineScope
 import br.senai.sp.jandira.kalos_app.Storage
+import br.senai.sp.jandira.kalos_app.model.CargaResponse
 import br.senai.sp.jandira.kalos_app.service.ExercicioService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
@@ -40,6 +42,7 @@ import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
 import java.util.Locale
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InputAnotarCarga(
@@ -56,14 +59,29 @@ fun InputAnotarCarga(
     var context = LocalContext.current
 
     var habilitadoTextField by remember {
-        mutableStateOf(true)
-    }
-    var statusLoading by remember {
         mutableStateOf(false)
+    }
+    var carga by remember {
+        mutableStateOf(CargaResponse())
     }
 
     lateinit var exercicioService: ExercicioService
     exercicioService = RetrofitHelper.getInstance().create(ExercicioService::class.java)
+
+    lifecycleCoroutineScope.launch {
+
+        var resultCargaExistente = exercicioService.getCargaPorIdAlunoEExercicio(localStorage.lerValor(context, "idAluno")!!.toInt(), idExercicioSerieRepeticao.toInt())
+
+        Log.e("result carga existente antes do if", "${resultCargaExistente.body()?.data}")
+
+        //se existir um registro
+        if (resultCargaExistente.body()?.data != null){
+            carga = resultCargaExistente.body()?.data?.get(0)!!
+        } else {
+            habilitadoTextField = true
+        }
+
+    }
 
     Column(
         modifier = Modifier
@@ -82,8 +100,8 @@ fun InputAnotarCarga(
         }
 
         OutlinedTextField(
-            value = cargaState,
-            onValueChange = {cargaState = it},
+            value = if (carga.peso == "") cargaState else carga.peso!!,
+            onValueChange = { cargaState = it },
             modifier = Modifier
                 .height(51.dp)
                 .fillMaxWidth(),
@@ -100,46 +118,80 @@ fun InputAnotarCarga(
         )
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-            Button(
-                onClick = {
-                    Log.e("status habilitado", "${habilitadoTextField}", )
 
-                    if (habilitadoTextField){
-                        lifecycleCoroutineScope.launch {
-                            val body = JsonObject().apply {
-                                addProperty("peso", cargaState)
-                                addProperty("id_aluno", localStorage.lerValor(context, "idAluno"))
-                                addProperty("id_exercicio_serie_repeticao", idExercicioSerieRepeticao)
+            if (habilitadoTextField) {
+                Button(
+
+                    onClick = {
+                        if (carga.peso == ""){
+                            Log.e("status habilitado", "${habilitadoTextField}")
+
+
+                            lifecycleCoroutineScope.launch {
+                                val body = JsonObject().apply {
+                                    addProperty("peso", cargaState)
+                                    addProperty("id_aluno", localStorage.lerValor(context, "idAluno"))
+                                    addProperty("id_exercicio_serie_repeticao", idExercicioSerieRepeticao)
+                                }
+
+                                val result = exercicioService.anotarCarga(body)
+
+                                Log.e("result id carga", "${result.body()?.data?.id}")
+
+                                if (result.isSuccessful) {
+                                    Toast.makeText(context, "Carga salva.", Toast.LENGTH_SHORT).show()
+                                    habilitadoTextField = false
+                                    carga = result.body()?.data!!
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "Erro ao tentar salvar. Tente novamente",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             }
-
-                            val result = exercicioService.anotarCarga(body)
-
-                            Log.e("result carga", "${result}")
-
-                            if (result.isSuccessful) {
-                                Toast.makeText(context, "Carga salva.", Toast.LENGTH_SHORT).show()
-                                habilitadoTextField = false
-                            } else {
-                                Toast.makeText(
-                                    context,
-                                    "Erro ao tentar salvar. Tente novamente",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "Agora ele edita",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                    } else {
-                        habilitadoTextField = false
-                    }
 
-                },
-                colors = ButtonDefaults.buttonColors(Color(color))
-            ) {
-                Text(
-                    text = if (habilitadoTextField) "Salvar" else "Editar",
-                    color = if (cor.uppercase() == "#FFFFFF") Color.Black else Color.White,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold
-                )
+
+
+                    },
+                    colors = ButtonDefaults.buttonColors(Color(color))
+                ) {
+                    Text(
+                        text = "Salvar",
+                        color = if (cor.uppercase() == "#FFFFFF") Color.Black else Color.White,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+
+            } else {
+                Button(
+
+                    onClick = {
+                        Log.e("status habilitado", "${habilitadoTextField}")
+
+                        habilitadoTextField = true
+
+                        Log.e("status habilitado v2", "${habilitadoTextField}")
+
+                    },
+                    colors = ButtonDefaults.buttonColors(Color(color))
+                ) {
+                    Text(
+                        text = "Editar",
+                        color = if (cor.uppercase() == "#FFFFFF") Color.Black else Color.White,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
     }
