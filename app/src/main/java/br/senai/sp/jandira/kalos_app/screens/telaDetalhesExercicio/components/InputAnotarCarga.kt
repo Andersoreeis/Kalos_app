@@ -53,9 +53,7 @@ fun InputAnotarCarga(
 ) {
     val color = android.graphics.Color.parseColor(cor)
 
-    var cargaState by remember {
-        mutableStateOf("")
-    }
+
     var context = LocalContext.current
 
     var habilitadoTextField by remember {
@@ -64,22 +62,106 @@ fun InputAnotarCarga(
     var carga by remember {
         mutableStateOf(CargaResponse())
     }
+    var cargaState by remember {
+        mutableStateOf("")
+    }
+
+    Log.e("idexercicioserierep", "${idExercicioSerieRepeticao}")
 
     lateinit var exercicioService: ExercicioService
     exercicioService = RetrofitHelper.getInstance().create(ExercicioService::class.java)
 
+    //Busca um registro de carga com o id do aluno e id do exercicio
     lifecycleCoroutineScope.launch {
-
-        var resultCargaExistente = exercicioService.getCargaPorIdAlunoEExercicio(localStorage.lerValor(context, "idAluno")!!.toInt(), idExercicioSerieRepeticao.toInt())
+        var resultCargaExistente = exercicioService.getCargaPorIdAlunoEExercicio(
+            localStorage.lerValor(
+                context,
+                "idAluno"
+            )!!.toInt(), idExercicioSerieRepeticao.toInt()
+        )
 
         Log.e("result carga existente antes do if", "${resultCargaExistente.body()?.data}")
 
-        //se existir um registro
-        if (resultCargaExistente.body()?.data != null){
+        //Se existir um registro, atribui a variavel "carga" o registro.
+        if (resultCargaExistente.body()?.data != null) {
             carga = resultCargaExistente.body()?.data?.get(0)!!
+            cargaState = carga.peso!!
+
+            //Se não existir, deixa o textfield habilitado para o usuário salvar a carga
         } else {
             habilitadoTextField = true
         }
+    }
+
+    fun salvarEditarCarga(){
+        //Se o carga.peso for vazio, significa que não foi atribuido nenhum valor a ele, portanto não existe registro de carga anotada no exercício e o botão irá salvar.
+        if (carga.peso == "") {
+            Log.e("status habilitado", "${habilitadoTextField}")
+
+            lifecycleCoroutineScope.launch {
+                val body = JsonObject().apply {
+                    addProperty("peso", cargaState)
+                    addProperty(
+                        "id_aluno",
+                        localStorage.lerValor(context, "idAluno")
+                    )
+                    addProperty(
+                        "id_exercicio_serie_repeticao",
+                        idExercicioSerieRepeticao
+                    )
+                }
+
+                val result = exercicioService.anotarCarga(body)
+
+                Log.e("result id carga", "${result.body()?.data?.id}")
+
+                if (result.isSuccessful) {
+                    Toast.makeText(context, "Carga salva.", Toast.LENGTH_SHORT)
+                        .show()
+                    habilitadoTextField = false
+                    carga = result.body()?.data!!
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Erro ao tentar salvar. Tente novamente",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            //Se houver algum registro em carga.peso, significa que foi atribuido algum valor, então ao invés de salvar ele vai editar
+        } else {
+            lifecycleCoroutineScope.launch {
+                val body = JsonObject().apply {
+                    addProperty("peso", cargaState)
+                    addProperty(
+                        "id_aluno",
+                        localStorage.lerValor(context, "idAluno")
+                    )
+                    addProperty(
+                        "id_exercicio_serie_repeticao",
+                        idExercicioSerieRepeticao
+                    )
+                }
+
+                val result = exercicioService.updateCarga(body, carga.id!!)
+
+                Log.e("result id carga", "${result}")
+
+                if (result.isSuccessful) {
+                    Toast.makeText(context, "Carga editada com sucesso.", Toast.LENGTH_SHORT)
+                        .show()
+                    habilitadoTextField = false
+                    carga = result.body()?.data!!
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Erro ao tentar editar. Tente novamente",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+
 
     }
 
@@ -100,7 +182,7 @@ fun InputAnotarCarga(
         }
 
         OutlinedTextField(
-            value = if (carga.peso == "") cargaState else carga.peso!!,
+            value = cargaState,
             onValueChange = { cargaState = it },
             modifier = Modifier
                 .height(51.dp)
@@ -119,47 +201,12 @@ fun InputAnotarCarga(
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
 
+            //Verifica se o textfield está habilitado
             if (habilitadoTextField) {
+
                 Button(
-
                     onClick = {
-                        if (carga.peso == ""){
-                            Log.e("status habilitado", "${habilitadoTextField}")
-
-
-                            lifecycleCoroutineScope.launch {
-                                val body = JsonObject().apply {
-                                    addProperty("peso", cargaState)
-                                    addProperty("id_aluno", localStorage.lerValor(context, "idAluno"))
-                                    addProperty("id_exercicio_serie_repeticao", idExercicioSerieRepeticao)
-                                }
-
-                                val result = exercicioService.anotarCarga(body)
-
-                                Log.e("result id carga", "${result.body()?.data?.id}")
-
-                                if (result.isSuccessful) {
-                                    Toast.makeText(context, "Carga salva.", Toast.LENGTH_SHORT).show()
-                                    habilitadoTextField = false
-                                    carga = result.body()?.data!!
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        "Erro ao tentar salvar. Tente novamente",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-                        } else {
-                            Toast.makeText(
-                                context,
-                                "Agora ele edita",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
-
-
+                        salvarEditarCarga()
                     },
                     colors = ButtonDefaults.buttonColors(Color(color))
                 ) {
@@ -174,13 +221,10 @@ fun InputAnotarCarga(
 
             } else {
                 Button(
-
                     onClick = {
-                        Log.e("status habilitado", "${habilitadoTextField}")
-
                         habilitadoTextField = true
+                        Log.e("status habilitado é true", "${habilitadoTextField}")
 
-                        Log.e("status habilitado v2", "${habilitadoTextField}")
 
                     },
                     colors = ButtonDefaults.buttonColors(Color(color))

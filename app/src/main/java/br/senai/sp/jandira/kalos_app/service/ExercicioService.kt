@@ -23,10 +23,10 @@ interface ExercicioService {
     suspend fun getCargaPorIdAlunoEExercicio(@Path("idAluno") idAluno: Int, @Path("idExercicioSerieRepeticao") idExercicioSerieRepeticao: Int): Response<BaseResponseCargas<CargaResponse>>
 
     @Headers("Content-Type: application/json")
-    @POST("kalos/carga")
+    @POST("/kalos/carga")
     suspend fun anotarCarga(@Body body: JsonObject): Response<BaseResponseCarga<CargaResponse>>
 
     @Headers("Content-Type: application/json")
-    @PUT("kalos/carga/{id}")
+    @PUT("/kalos/carga/{id}")
     suspend fun updateCarga(@Body body: JsonObject, @Path("id") id: Int): Response<BaseResponseCarga<CargaResponse>>
 }
