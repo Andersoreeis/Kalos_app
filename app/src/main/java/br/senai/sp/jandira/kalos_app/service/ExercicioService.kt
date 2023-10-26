@@ -27,6 +27,6 @@ interface ExercicioService {
     suspend fun anotarCarga(@Body body: JsonObject): Response<BaseResponseCarga<CargaResponse>>
 
     @Headers("Content-Type: application/json")
-    @PUT("/kalos/carga/{id}")
+    @PUT("/kalos/carga/id/{id}")
     suspend fun updateCarga(@Body body: JsonObject, @Path("id") id: Int): Response<BaseResponseCarga<CargaResponse>>
 }

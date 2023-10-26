@@ -80,16 +80,17 @@ fun InputAnotarCarga(
             )!!.toInt(), idExercicioSerieRepeticao.toInt()
         )
 
-        Log.e("result carga existente antes do if", "${resultCargaExistente.body()?.data}")
+        Log.e("result carga existente antes do if", "${resultCargaExistente.body()}")
 
         //Se existir um registro, atribui a variavel "carga" o registro.
         if (resultCargaExistente.body()?.data != null) {
             carga = resultCargaExistente.body()?.data?.get(0)!!
-            cargaState = carga.peso!!
 
+            Log.e("scr", "caiu no if se existe carga, response: ${carga}", )
             //Se não existir, deixa o textfield habilitado para o usuário salvar a carga
         } else {
             habilitadoTextField = true
+            Log.e("scr", "caiu no if se existe carga", )
         }
     }
 
@@ -120,6 +121,7 @@ fun InputAnotarCarga(
                         .show()
                     habilitadoTextField = false
                     carga = result.body()?.data!!
+                    Log.e("caragaagagag", "${carga}", )
                 } else {
                     Toast.makeText(
                         context,
@@ -130,6 +132,7 @@ fun InputAnotarCarga(
             }
             //Se houver algum registro em carga.peso, significa que foi atribuido algum valor, então ao invés de salvar ele vai editar
         } else {
+            Log.e("clicou no salvar dps de editar", "${carga}" )
             lifecycleCoroutineScope.launch {
                 val body = JsonObject().apply {
                     addProperty("peso", cargaState)
@@ -143,9 +146,14 @@ fun InputAnotarCarga(
                     )
                 }
 
+                Log.e("body", "${body}", )
+
+                Log.e("depois do launch", "${carga}", )
+
                 val result = exercicioService.updateCarga(body, carga.id!!)
 
                 Log.e("result id carga", "${result}")
+                Log.e("result carga", "${carga.id}")
 
                 if (result.isSuccessful) {
                     Toast.makeText(context, "Carga editada com sucesso.", Toast.LENGTH_SHORT)
@@ -182,7 +190,7 @@ fun InputAnotarCarga(
         }
 
         OutlinedTextField(
-            value = cargaState,
+            value = if (habilitadoTextField) cargaState else carga.peso!!,
             onValueChange = { cargaState = it },
             modifier = Modifier
                 .height(51.dp)
@@ -225,7 +233,7 @@ fun InputAnotarCarga(
                         habilitadoTextField = true
                         Log.e("status habilitado é true", "${habilitadoTextField}")
 
-
+                        Log.e("clicou no editar", "${carga}", )
                     },
                     colors = ButtonDefaults.buttonColors(Color(color))
                 ) {
