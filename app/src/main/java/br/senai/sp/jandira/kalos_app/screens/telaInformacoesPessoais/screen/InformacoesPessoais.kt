@@ -60,47 +60,6 @@ fun InformacoesPessoais(
     val context = LocalContext.current
 
 
-//    val estadoNome = remember {
-//        mutableStateOf(estadoNome)
-//    }
-//
-//    val estadoNomeError = remember {
-//        mutableStateOf(estadoNomeError)
-//    }
-
-
-//    val estadoDataNascimento = remember {
-//        mutableStateOf(estadoDataNascimento)
-//
-//    }
-//    val estadoDataNascimentoError = remember {
-//        mutableStateOf(estadoDataNascimentoError)
-//    }
-//
-//    val estadoTelefone = remember {
-//        mutableStateOf(estadoTelefone)
-//    }
-//
-//    val estadoTelefoneError = remember {
-//        mutableStateOf(estadoTelefoneError)
-//    }
-//
-//
-//    val estadoCpf = remember {
-//        mutableStateOf(estadoCpf)
-//    }
-//
-//    val estadoCpfError = remember {
-//        mutableStateOf(estadoCpfError)
-//    }
-//
-//    var categoryGenero = remember {
-//        mutableStateOf(categoryGenero)
-//    }
-//    var categoryGeneroError = remember {
-//        mutableStateOf(categoryGeneroError)
-//    }
-
 
     HeaderTelaInformacoes(titulo = "Informações Pessoais") {
         navController.navigate("criarConta")

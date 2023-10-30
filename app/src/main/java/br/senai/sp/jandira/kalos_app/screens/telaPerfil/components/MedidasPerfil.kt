@@ -42,9 +42,9 @@ fun MedidasPerfil(aluno: AlunoResponse) {
             verticalAlignment = Alignment.CenterVertically,
              horizontalArrangement = Arrangement.SpaceAround
         ) {
-            MedidaValorPerfil(titulo = "PESO", valor = if(aluno.peso.toString() == "null"){"0"}else{ aluno.peso.toString()} , desc = "kg")
+            MedidaValorPerfil(titulo = "PESO", valor = if(aluno.peso.toString() == "null"){"0"}else{ aluno.peso.toString()} , desc = " kg")
             BarraVerticalPerfil()
-            MedidaValorPerfil(titulo = "ALTURA", valor = if(aluno.altura == "null"){"0"}else{ aluno.altura.toString()}, desc = "cm")
+            MedidaValorPerfil(titulo = "ALTURA", valor = if(aluno.altura == "null"){"0"}else{ aluno.altura.toString()}, desc = " cm")
             BarraVerticalPerfil()
             val date = convertIso8601ToDate(aluno.data_nascimento.toString())
             val dateLocal = dateToLocalDate(date)

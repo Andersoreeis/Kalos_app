@@ -32,9 +32,12 @@ fun CampoTextoMetricas(
     OutlinedTextField(
         value = value,
         onValueChange = { newValue ->
-            val numericValue = newValue.filter { it.isDigit() }
-            aoMudar(numericValue)
-            errorText.value = ""
+            if(newValue.length <= 3){
+                val numericValue = newValue.filter { it.isDigit() }
+                aoMudar(numericValue)
+                errorText.value = ""
+            }
+
         },
         placeholder = {
             Text(text = placeholder, color = Color(0xFF606060))
