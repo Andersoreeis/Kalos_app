@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,6 +39,7 @@ import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.model.CargaResponse
 import br.senai.sp.jandira.kalos_app.service.ExercicioService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
+import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
@@ -201,10 +204,12 @@ fun InputAnotarCarga(
                 containerColor = Color(0xFF393939),
                 unfocusedBorderColor = Color(0xFF393939),
                 focusedBorderColor = GreenKalos,
-                cursorColor = GreenKalos
+                cursorColor = GreenKalos,
+                disabledTextColor = GrayKalos
             ),
             singleLine = true,
-            enabled = habilitadoTextField
+            enabled = habilitadoTextField,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
