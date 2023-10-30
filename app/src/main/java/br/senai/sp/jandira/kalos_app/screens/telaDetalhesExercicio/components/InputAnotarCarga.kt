@@ -185,7 +185,7 @@ fun InputAnotarCarga(
     ) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
             Text(
-                text = "Carga:",
+                text = "Carga (em kg):",
                 color = Color.White,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold
