@@ -16,14 +16,22 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import br.senai.sp.jandira.kalos_app.MaskVisualTransformation
+import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.NumberDefaults.MASKCPF
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
-
+object NumberDefaults {
+    const val MASKCPF = "###.###.###-##"
+    const val MASKNUMBER = "(##) #####-####"
+    const val INPUT_LENGTH = 11 // Equals to "#####-###".count { it == '#' }
+}
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CampoCpf(value: String, aoMudar: (String) -> Unit, placeholder: String, isError: Boolean) {
     var cpf by remember(value) {
         mutableStateOf(value)
     }
+
+
 
     OutlinedTextField(
         value = cpf,
@@ -54,6 +62,6 @@ fun CampoCpf(value: String, aoMudar: (String) -> Unit, placeholder: String, isEr
             focusedBorderColor = GreenKalos,
             cursorColor = GreenKalos
         ),
-        visualTransformation = VisualTransformation.None
+        visualTransformation = MaskVisualTransformation(MASKCPF)
     )
 }

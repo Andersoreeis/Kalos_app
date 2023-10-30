@@ -12,7 +12,9 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @Composable
 fun MedidaValorPerfil(titulo: String, valor: String, desc: String) {
-    Column {
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Text(
             text = titulo,
             color = GreenKalos,

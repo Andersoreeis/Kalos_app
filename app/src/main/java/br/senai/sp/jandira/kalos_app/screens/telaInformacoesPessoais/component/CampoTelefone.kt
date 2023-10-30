@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import br.senai.sp.jandira.kalos_app.MaskVisualTransformation
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,6 +52,7 @@ fun CampoTelefone(value: String, aoMudar: (String) -> Unit, placeholder: String,
             unfocusedBorderColor = Color(0xFF393939),
             focusedBorderColor = GreenKalos,
             cursorColor = GreenKalos
-        )
+        ),
+        visualTransformation = MaskVisualTransformation(NumberDefaults.MASKNUMBER)
     )
 }
