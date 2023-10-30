@@ -33,5 +33,6 @@ data class AcademiaResponse(
     var cep: String? = "",
     var cidade: String? = "",
     var estado: String? = "",
+    var bairro: String? = "",
     var tags: List<Tag>? = emptyList()
 )

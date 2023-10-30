@@ -57,11 +57,8 @@ fun TelaDetalhesProduto(navController: NavController) {
                     )
                 }
             }
-
         }
-
     }
-
 }
 
 @Preview

@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.kalos_app.screens.telaBuscarAcademias.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -40,6 +42,7 @@ fun AcademiaCard(
     academia: AcademiaResponse,
     onClick: () -> Unit
 ) {
+    Log.i("academia", "$academia")
     Card(
         modifier = Modifier
             .clip(shape = RoundedCornerShape(20.dp))
@@ -83,7 +86,8 @@ fun AcademiaCard(
                                 .width(110.dp)
                                 .height(110.dp)
                                 .clip(CircleShape),
-                            error = painterResource(id = R.drawable.ginasio)
+                            error = painterResource(id = R.drawable.ginasio),
+                            contentScale = ContentScale.Crop
                         )
                     } else {
                         Image(
@@ -101,7 +105,7 @@ fun AcademiaCard(
 
 
 
-                Column(modifier = Modifier.width(100.dp)) {
+                Column(modifier = Modifier.fillMaxWidth()) {
                     createTextKalos(
                         content = academia.nome.toString(),
                         sizeText = 21,
@@ -112,7 +116,7 @@ fun AcademiaCard(
                     Espacamento(tamanho = 5.dp)
 
                     createTextKalos(
-                        content = "Academia",
+                        content = academia.categoria.toString(),
                         sizeText = 14,
                         colorText = Color.White,
                         bold = 400,
@@ -121,18 +125,18 @@ fun AcademiaCard(
                     Espacamento(tamanho = 15.dp)
 
                     createTextKalos(
-                        content = academia.numero.toString(),
+                        content = "${academia.logradouro} - ${academia.numero}, ${academia.bairro}, ${academia.cidade} - ${academia.estado}",
                         sizeText = 10,
                         colorText = Color.White,
                         bold = 400,
                         alinhamento = TextAlign.Start
                     )
 
-                    Espacamento(tamanho = 2.dp)
+                    Espacamento(tamanho = 5.dp)
 
                     createTextKalos(
                         content = academia.telefone.toString(),
-                        sizeText = 5,
+                        sizeText = 10,
                         colorText = Color.White,
                         bold = 400,
                         alinhamento = TextAlign.Start

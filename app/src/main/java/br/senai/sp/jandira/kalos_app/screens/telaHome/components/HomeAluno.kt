@@ -55,6 +55,7 @@ fun HomeAluno(aluno: AlunoResponse, navController: NavController,
     var academias by remember {
         mutableStateOf(emptyList<AcademiaResponse>())
     }
+    Log.i("academias", "$academias")
     val context = LocalContext.current
     var statuAtivo = remember {
         mutableStateOf(false)
