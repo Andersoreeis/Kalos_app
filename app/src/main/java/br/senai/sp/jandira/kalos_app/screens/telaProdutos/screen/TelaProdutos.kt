@@ -63,7 +63,9 @@ fun TelaProdutos(lifecycleCoroutineScope: LifecycleCoroutineScope, corPrimaria: 
         ) {
             items(6) {
 
-                CardProduto(corPrimaria)
+                CardProduto(corPrimaria){
+                    navController.navigate("detalhesProduto")
+                }
 
 
             }

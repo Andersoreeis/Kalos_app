@@ -30,16 +30,16 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalosEscuro
 import coil.compose.AsyncImage
 
 @Composable
-fun CardProduto(corPrimariaAcademia: String) {
+fun CardProduto(corPrimariaAcademia: String, onClick: () -> Unit) {
     val corPrimaria = Color(android.graphics.Color.parseColor(corPrimariaAcademia ?: "#353535"))
-    Surface (
+    Surface(
         modifier = Modifier
 //            .height(260.dp)
             .width(180.dp),
         color = GrayKalosEscuro,
         shape = RoundedCornerShape(20.dp),
 
-    ){
+        ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -50,7 +50,7 @@ fun CardProduto(corPrimariaAcademia: String) {
                 shape = RoundedCornerShape(15.dp)
             ) {
                 AsyncImage(
-                    model =  "",
+                    model = "",
                     contentDescription = stringResource(R.string.foto_do_produto),
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
@@ -70,12 +70,12 @@ fun CardProduto(corPrimariaAcademia: String) {
                 color = Color.White,
                 fontSize = 13.sp,
 
-            )
+                )
 
             Spacer(modifier = Modifier.height(10.dp))
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { onClick() },
                 modifier = Modifier
                     .height(35.dp)
                     .width(150.dp),
@@ -88,7 +88,7 @@ fun CardProduto(corPrimariaAcademia: String) {
                     fontWeight = FontWeight.Bold
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(20.dp))
 
         }

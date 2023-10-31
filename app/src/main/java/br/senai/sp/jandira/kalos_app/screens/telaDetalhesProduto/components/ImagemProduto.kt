@@ -35,8 +35,8 @@ fun ImagemProduto(imagem: String) {
 
 }
 
-//@Preview
-//@Composable
-//fun ImagemProdutoPreview() {
-//    ImagemProduto("")
-//}
+@Preview
+@Composable
+fun ImagemProdutoPreview() {
+    ImagemProduto("")
+}
