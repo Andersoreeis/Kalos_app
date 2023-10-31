@@ -31,8 +31,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -55,7 +60,11 @@ import java.util.Date
 @SuppressLint("CoroutineCreationDuringComposition")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun TelaTreinos(lifecycleCoroutineScope: LifecycleCoroutineScope, localStorage: Storage, navController: NavController) {
+fun TelaTreinos(
+    lifecycleCoroutineScope: LifecycleCoroutineScope,
+    localStorage: Storage,
+    navController: NavController
+) {
     var treinos by remember {
         mutableStateOf(listOf(TreinosResponse()))
     }
@@ -78,90 +87,121 @@ fun TelaTreinos(lifecycleCoroutineScope: LifecycleCoroutineScope, localStorage: 
 
         val idAcademia = localStorage.lerValor(context, "idAcademia")
         val idAluno = localStorage.lerValor(context, "idAluno")
-        Log.e("ids", "TelaTreinos: ${idAcademia} ", )
-        Log.e("ids", "TelaTreinos: ${idAluno} ", )
+        Log.e("ids", "TelaTreinos: ${idAcademia} ")
+        Log.e("ids", "TelaTreinos: ${idAluno} ")
 
         lifecycleCoroutineScope.launch {
-            val result = treinoService.getTreinosAcademiaAluno(idAcademia.toString(), idAluno.toString())
-            Log.e("respostas", "TelaTreinos: ${result.body()}", )
+            val result =
+                treinoService.getTreinosAcademiaAluno(idAcademia.toString(), idAluno.toString())
+            Log.e("respostas", "TelaTreinos: ${result.body()}")
             if (result.isSuccessful) {
                 val response = result.body()
                 if (response != null) {
-                    Log.e("respostas", "TelaTreinos: ${response.data}", )
+                    Log.e("respostas", "TelaTreinos: ${response.data}")
                     treinos = response.data!!
                     status = true
                 } else {
                     status = false
                 }
             }
-            
+
         }
-        if(status){
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            items(treinos) {
-                Box(
-                    modifier = Modifier
-                        .height(227.dp)
-                        .width(344.dp)
-                ) {
-                    AsyncImage(
-                        model = it.foto,
-                        contentDescription = "foto do treino",
-                        modifier = Modifier.fillMaxSize()
-                            .clickable {
-                                localStorage.salvarValor(context, it.id_treino.toString(), "idTreino")
-                                navController.navigate("detalhesTreino")
-                            },
-                        error = painterResource(id = R.drawable.treinoerro)
-                    )
-                    Column(
-                        modifier = Modifier.padding(top = 100.dp, start = 20.dp)
+        if (status) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                items(treinos) {
+                    Box(
+                        modifier = Modifier
+                            .height(227.dp)
+                            .width(344.dp)
+                            .shadow(2.dp, RoundedCornerShape(16.dp))
                     ) {
-                        Text(text = it.nome.toString(), color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                        Text(
-                            text = it.nome_categoria_treino.toString(),
-                            color = Color.White,
-                            fontSize = 15.sp
-                        )
-                        Surface(
+                        AsyncImage(
+                            model = it.foto,
+                            contentDescription = "foto do treino",
                             modifier = Modifier
-                                .height(25.dp)
-                                .width(90.dp)
-                                ,
-                             color = Color(255, 255, 255, 60),
-                            shape = RoundedCornerShape(10.dp)
+                                .fillMaxSize()
+                                .clickable {
+                                    localStorage.salvarValor(
+                                        context,
+                                        it.id_treino.toString(),
+                                        "idTreino"
+                                    )
+                                    navController.navigate("detalhesTreino")
+                                }
+                                .shadow(2.dp, RoundedCornerShape(16.dp)),
+                            error = painterResource(id = R.drawable.treinoerro),
+                            alpha = 0.7f
+                        )
 
+
+
+                        Column(
+                            modifier = Modifier
+                                .padding(top = 130.dp, start = 20.dp)
+                                .shadow(
+                                    elevation = 20.dp,
+                                    spotColor = Color.Black,
+                                    ambientColor = Color.Black
+                                )
                         ) {
+                            Text(
+                                text = it.nome.toString(),
+                                color = Color.White,
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold
+                            )
 
-                            Row(
-                                modifier = Modifier.fillMaxSize(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
+                            Text(
+                                text = it.nome_categoria_treino.toString(),
+                                color = Color.White,
+                                fontSize = 15.sp
+                            )
+                            
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Surface(
+                                modifier = Modifier
+                                    .height(25.dp)
+                                    .width(90.dp),
+                                color = Color(255, 255, 255, 60),
+                                shape = RoundedCornerShape(10.dp)
+
                             ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.baseline_calendar_month_24),
-                                    contentDescription = "calendario",
-                                    tint = Color.White
-                                )
-                                Text(
-                                    text = it.data_criacao.toString(),
-                                    color = Color.White,
-                                    fontSize = 12.sp
-                                )
+
+                                Row(
+                                    modifier = Modifier.fillMaxSize(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.baseline_calendar_month_24),
+                                        contentDescription = "calendario",
+                                        tint = Color.White
+                                    )
+                                    Text(
+                                        text = it.data_criacao.toString(),
+                                        color = Color.White,
+                                        fontSize = 12.sp
+                                    )
+                                }
+
                             }
 
                         }
 
                     }
-
+                    Spacer(modifier = Modifier.height(15.dp))
                 }
-                Spacer(modifier = Modifier.height(15.dp))
             }
-        }}else{
-            Text(text = "Você não possui treinos nessa academia", color = Color.White,fontSize = 20.sp )
+        } else {
+            Text(
+                text = "Você não possui treinos nessa academia",
+                color = Color.White,
+                fontSize = 20.sp
+            )
         }
 
     }
