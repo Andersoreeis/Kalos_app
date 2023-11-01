@@ -2,6 +2,7 @@ package br.senai.sp.jandira.app_kalos.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -153,7 +154,8 @@ fun createButtonWithFunction4(
             .fillMaxWidth()
             .height(27.dp)
             .border(1.dp, corBotao, CircleShape)
-            .background(Color.Black),
+            .background(Color.Black)
+            .clickable { funcao() },
         color = Color.Black
     ) {
         Column(
