@@ -54,7 +54,7 @@ fun PrecoReserva(corAcademia: String, preco: String, onClick: () -> Unit) {
 
             Button(
                 onClick = {
-                    onClick
+                    onClick()
                 },
                 colors = ButtonDefaults.buttonColors(Color(color))
             ) {
