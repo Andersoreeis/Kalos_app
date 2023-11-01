@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,13 +32,21 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 import coil.compose.AsyncImage
 
 @Composable
-fun CardReservas() {
+fun CardReservas(
+    nomeProduto: String,
+    imagem: String,
+    dataReserva: String,
+    quantidade: String,
+    valor: String,
+    status: String, mutableState: MutableState<Boolean>
+) {
 
-    val nomeProduto = "Whey Protein 907g"
-    val imagem = ""
-    val dataReserva = "01/07/2023"
-    val quantidade = "2"
-    val valor = "285,50"
+//    val nomeProduto = "Whey Protein 907g"
+//    val imagem = ""
+//    val dataReserva = "01/07/2023"
+//    val quantidade = "2"
+//    val valor = "285,50"
+//    val status = "Recebido"
     Column (
         modifier = Modifier
             .fillMaxWidth()
@@ -99,8 +108,14 @@ fun CardReservas() {
                     )
                 }
                 Spacer(modifier = Modifier.height(18.dp))
-                createButtonWithFunction4(textButton = "Recebido", corBotao = GreenKalos) {
+                if(status.lowercase() == "recebido"){
+                createButtonWithFunction4(textButton = status, corBotao = GreenKalos) {
 
+                }
+                }else{
+                    createButtonWithFunction4(textButton = status, corBotao = Color.Red) {
+                        mutableState.value = true
+                    }
                 }
                 Spacer(modifier = Modifier.height(15.dp))
 
