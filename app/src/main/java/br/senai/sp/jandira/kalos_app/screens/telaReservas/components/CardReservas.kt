@@ -47,12 +47,12 @@ fun CardReservas(
 //    val quantidade = "2"
 //    val valor = "285,50"
 //    val status = "Recebido"
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 15.dp),
         verticalArrangement = Arrangement.Center
-    ){
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -62,17 +62,17 @@ fun CardReservas(
                 shape = RoundedCornerShape(15.dp)
             ) {
                 AsyncImage(
-                    model =  imagem,
+                    model = imagem,
                     contentDescription = stringResource(R.string.foto_do_produto),
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
                     error = painterResource(id = R.drawable.produto)
                 )
             }
-            
+
             Spacer(modifier = Modifier.width(20.dp))
 
-            Column (
+            Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
@@ -81,7 +81,7 @@ fun CardReservas(
                     fontSize = 16.sp,
                     fontWeight = FontWeight(1000)
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "Reservado em $dataReserva",
@@ -89,11 +89,11 @@ fun CardReservas(
                     fontSize = 13.sp,
                 )
                 Spacer(modifier = Modifier.height(5.dp))
-                Row (
+                Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
-                ){
+                ) {
                     Text(
                         text = "Quantidade: ${quantidade}",
                         color = Color.White,
@@ -108,11 +108,11 @@ fun CardReservas(
                     )
                 }
                 Spacer(modifier = Modifier.height(18.dp))
-                if(status.lowercase() == "recebido"){
-                createButtonWithFunction4(textButton = status, corBotao = GreenKalos) {
+                if (status.lowercase() == "recebido") {
+                    createButtonWithFunction4(textButton = status, corBotao = GreenKalos) {
 
-                }
-                }else{
+                    }
+                } else {
                     createButtonWithFunction4(textButton = status, corBotao = Color.Red) {
                         mutableState.value = true
                     }

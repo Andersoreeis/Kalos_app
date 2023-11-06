@@ -13,6 +13,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -33,7 +34,8 @@ fun HeaderReservas(navController: NavController) {
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.baseline_chevron_left_24) ,
@@ -43,7 +45,7 @@ fun HeaderReservas(navController: NavController) {
                     .size(40.dp)
                     .clickable { navController.navigate("homeAcademia") }
             )
-            Spacer(modifier = Modifier.width(25.dp))
+            Spacer(modifier = Modifier.width(20.dp))
 
             Text(
                 text = stringResource(R.string.suas_reservas),

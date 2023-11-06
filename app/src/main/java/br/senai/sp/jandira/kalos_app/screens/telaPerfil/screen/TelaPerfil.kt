@@ -1,10 +1,12 @@
 package br.senai.sp.jandira.kalos_app.screens.telaPerfil.screen
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -50,33 +53,82 @@ fun TelaPerfil(aluno: AlunoResponse, navController: NavController, localStorage:
 
     var exibirDialog = remember { mutableStateOf(false) }
 
+    Log.i("valor dialog", "${exibirDialog}")
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        ConfirmacaoDeslogarDialog(
-            exibirDialog = exibirDialog.value,
-            onClose = {
-                exibirDialog.value = false
-            },
-            onConfirm = {
-                exibirDialog.value = false
+    if(exibirDialog.value){
+        Box(modifier = Modifier.fillMaxSize().clickable { exibirDialog.value = false }){
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
+                HeaderPerfil(aluno = aluno, navController, exibirDialog)
 
-            },
-            localStorage,
-            navController
-        )
-        HeaderPerfil(aluno = aluno, navController, exibirDialog)
-
-        Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
 
-        NomeCodigoPerfil(aluno = aluno)
-        Spacer(modifier = Modifier.height(16.dp))
-        MedidasPerfil(aluno = aluno)
+                NomeCodigoPerfil(aluno = aluno)
+                Spacer(modifier = Modifier.height(16.dp))
+                MedidasPerfil(aluno = aluno)
 
+            }
+
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(16, 16, 16, 210)),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                ConfirmacaoDeslogarDialog(
+                    exibirDialog = exibirDialog.value,
+                    onClose = {
+                        exibirDialog.value = false
+                    },
+                    onConfirm = {
+                        exibirDialog.value = false
+
+
+                    },
+                    localStorage,
+                    navController
+                )
+            }
+
+        }
+
+
+
+    } else {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            ConfirmacaoDeslogarDialog(
+                exibirDialog = exibirDialog.value,
+                onClose = {
+                    exibirDialog.value = false
+                },
+                onConfirm = {
+                    exibirDialog.value = false
+
+
+                },
+                localStorage,
+                navController
+            )
+            HeaderPerfil(aluno = aluno, navController, exibirDialog)
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+
+            NomeCodigoPerfil(aluno = aluno)
+            Spacer(modifier = Modifier.height(16.dp))
+            MedidasPerfil(aluno = aluno)
+
+        }
     }
+
 }
 
