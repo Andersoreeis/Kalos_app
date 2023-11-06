@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
@@ -119,7 +120,7 @@ class MainActivity : ComponentActivity() {
                             TelaDetalhesExercicio(LocalLifecycleOwner.current, localStorage, navController, lifecycleScope)
                         }
                         composable(route = "reservas"){
-                           TelaReservas(navController)
+                           TelaReservas(navController, LocalContext.current)
                         }
 
                         composable(route = "treinoConcluido"){

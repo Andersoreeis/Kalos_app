@@ -258,7 +258,7 @@ fun TelaHomeAcademia(
             createTextKalos(
                 content = descricaoAcademia.toString(),
                 sizeText = 12,
-                colorText = corSegundaria,
+                colorText = Color.White,
                 bold = 400,
                 alinhamento = TextAlign.Center
             )
