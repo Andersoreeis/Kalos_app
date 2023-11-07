@@ -1,6 +1,7 @@
 package br.senai.sp.jandira.kalos_app.screens.telaDetalhesExercicio.components
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,9 +17,10 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
-@SuppressLint("RememberReturnType")
+
 @Composable
 fun CardVideoPlayer (url: String, lifecycleOwner: LifecycleOwner){
+    Log.i("url id video", url)
     AndroidView(
         modifier = Modifier
             .fillMaxWidth()

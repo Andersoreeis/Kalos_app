@@ -64,7 +64,6 @@ fun TelaDetalhesExercicio(
         mutableStateOf(0)
     }
 
-
     var status by remember {
         mutableStateOf(false)
     }
@@ -76,6 +75,8 @@ fun TelaDetalhesExercicio(
     var estadoProximoExercicio by remember {
         mutableStateOf(ExercicioResponse())
     }
+
+    Log.e("STATUSUSSUSUSUSUS", "$status", )
 
 
     lateinit var exercicioService: ExercicioService
@@ -106,7 +107,6 @@ fun TelaDetalhesExercicio(
 
 
     } else {
-        estadoProximoExercicio = estadoExercicio
         status = true
     }
 
@@ -129,8 +129,8 @@ fun TelaDetalhesExercicio(
                         .size(40.dp)
                         .clickable {
                             arrayIdsExercicios.forEach {
-                                if (it == estadoExercicio.id_exercicio_serie_repeticao){
-                                    if (contador == 0){
+                                if (it == estadoExercicio.id_exercicio_serie_repeticao) {
+                                    if (contador == 0) {
                                         navController.navigate("detalhesTreino")
                                     } else {
                                         contador -= 1
@@ -164,7 +164,12 @@ fun TelaDetalhesExercicio(
                     cor = corPrimariaAcademia.toString()
                 )
             } else {
-                InputAnotarCarga(cor = corPrimariaAcademia.toString(), lifecycleCoroutineScope, localStorage, estadoExercicio.id_exercicio_serie_repeticao.toString())
+                InputAnotarCarga(
+                    cor = corPrimariaAcademia.toString(),
+                    lifecycleCoroutineScope,
+                    localStorage,
+                    estadoExercicio.id_exercicio_serie_repeticao.toString()
+                )
             }
 
             val thumbnailUrl = "https://img.youtube.com/vi/${estadoProximoExercicio.anexo}/0.jpg"
@@ -184,6 +189,7 @@ fun TelaDetalhesExercicio(
                     width = 350.dp
                 ) {
                     navController.navigate("treinoConcluido")
+                    status = false
                 }
             }
 
@@ -202,8 +208,6 @@ fun TelaDetalhesExercicio(
             )
         }
     }
-
-
 }
 
 //@Preview(showSystemUi = true)
