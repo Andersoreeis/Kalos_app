@@ -89,10 +89,12 @@ fun TelaDetalhesExercicio(
         if (result.isSuccessful) {
             estadoExercicio = result.body()?.data!!
             Log.e("exercico atual", estadoExercicio.toString())
+            status = true
         }
 
     }
 
+    //definir o proximo exercicio se não estiver no ultimo do array
     if (contador < arrayIdsExercicios.size - 1) {
         lifecycleCoroutineScope.launch {
 
@@ -104,14 +106,11 @@ fun TelaDetalhesExercicio(
                 status = true
             }
         }
-
-
-    } else {
-        status = true
     }
 
 
     if (status) {
+        Log.e("caiu no if", "caiu no if", )
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -195,6 +194,7 @@ fun TelaDetalhesExercicio(
 
         }
     } else {
+        Log.i("carregando", "carregando")
         Column(
             modifier = Modifier
                 .fillMaxSize()
