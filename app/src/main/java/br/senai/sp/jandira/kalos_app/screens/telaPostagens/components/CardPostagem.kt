@@ -45,45 +45,45 @@ import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun CardPostagem(titulo: String, foto: String, descricao: String, data: String, hora: String) {
+fun CardPostagem(titulo: String, foto: String?, descricao: String, data: String, hora: String) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             ,
 
     ) {
-
-
         Text(
             text = titulo,
             color = Color.White,
-            fontSize = 25.sp,
+            fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(20.dp))
 
-        Surface(
-            modifier = Modifier
-                .size(350.dp)
-                .clip(RoundedCornerShape(20.dp))
-        ) {
-            AsyncImage(
-                model = foto,
-                contentDescription = stringResource(R.string.foto_da_postagem),
-                error = painterResource(id = R.drawable.aviso),
+        if(foto != null){
+            Surface(
                 modifier = Modifier
-                    .fillMaxSize() ,
-                contentScale = ContentScale.Crop
-            )
+                    .size(350.dp)
+                    .clip(RoundedCornerShape(20.dp))
+            ) {
+                AsyncImage(
+                    model = foto,
+                    contentDescription = stringResource(R.string.foto_da_postagem),
+                    modifier = Modifier
+                        .fillMaxSize() ,
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
 
         Text(
             text = descricao ,
             color = Color.White,
             lineHeight = TextUnit(18f, TextUnitType.Sp),
-            fontSize = 15.sp
+            fontSize = 12.sp
 
         )
         Spacer(modifier = Modifier.height(20.dp))
@@ -94,15 +94,15 @@ fun CardPostagem(titulo: String, foto: String, descricao: String, data: String, 
                 Text(
                     text = it,
                     color = Color.White,
-                    fontSize = 15.sp,
+                    fontSize = 12.sp,
                     fontWeight = FontWeight(900),
                 )
             }
 
             Text(
-                text = "  -  ",
+                text = " - ",
                 color = Color.White ,
-                fontSize = 15.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight(900)
             )
 
@@ -110,7 +110,7 @@ fun CardPostagem(titulo: String, foto: String, descricao: String, data: String, 
                 Text(
                     text = it,
                     color = Color.White ,
-                    fontSize = 15.sp,
+                    fontSize = 12.sp,
                     fontWeight = FontWeight(900)
                 )
             }
@@ -164,3 +164,8 @@ fun arrumarHorario(date: String): String? {
     return horarioFormatado
 }
 
+//@Preview
+//@Composable
+//fun PreviewCardPostagem() {
+//    CardPostagem(titulo = "teste", foto = null, descricao = "lalala", data = , hora = )
+//}

@@ -96,13 +96,15 @@ fun TelaPostagens(lifecycleCoroutineScope: LifecycleCoroutineScope, localStorage
 
             LazyColumn() {
                 items(listaPostagens) {
-                    CardPostagem(
-                        titulo = it.titulo!!,
-                        foto = it.anexo!!,
-                        descricao = it.corpo!!,
-                        data = it.data!!,
-                        hora = it.hora!!
-                    )
+                    it.anexo?.let { it1 ->
+                        CardPostagem(
+                            titulo = it.titulo!!,
+                            foto = it1,
+                            descricao = it.corpo!!,
+                            data = it.data!!,
+                            hora = it.hora!!
+                        )
+                    }
                     Spacer(modifier = Modifier.height(30.dp))
                 }
             }
