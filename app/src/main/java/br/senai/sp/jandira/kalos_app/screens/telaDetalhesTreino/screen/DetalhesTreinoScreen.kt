@@ -139,10 +139,10 @@ fun DetalhesTreinoScreen(
                 ) {
                     estatoExercicios.exercicios?.let {
                         items(it) {
-
+                            val thumbnailUrl = "https://img.youtube.com/vi/${it.anexo}/0.jpg"
                             CardExercicio(
                                 numero = it.numero.toString(),
-                                imagem = it.anexo!!,
+                                imagem = thumbnailUrl,
                                 nome = it.nome!!,
                                 series = it.series!!,
                                 repeticoes = it.repeticoes,
