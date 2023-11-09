@@ -94,7 +94,7 @@ class MainActivity : ComponentActivity() {
                             TelaAlterarSenha(navController = navController, lifecycleCoroutineScope = lifecycleScope, localStorage)
                         }
                         composable(route = "perfilAcademia"){
-                            TelaPerfilAcademia(navController = navController,  localStorage)
+                            TelaPerfilAcademia(navController = navController,  localStorage, lifecycleScope)
                         }
                         composable(route = "homeAcademia"){
                             TelaHomeAcademia(navController, lifecycleScope, localStorage)

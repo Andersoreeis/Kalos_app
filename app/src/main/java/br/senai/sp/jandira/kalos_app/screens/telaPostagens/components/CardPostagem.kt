@@ -126,7 +126,7 @@ fun CardPostagem(titulo: String, foto: String?, descricao: String, data: String,
             modifier = Modifier
                 .fillMaxWidth()
                 .background(GrayKalos)
-                .height(2.dp)
+                .height(1.dp)
         ){}
 
 

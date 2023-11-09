@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -29,6 +30,7 @@ import br.senai.sp.jandira.kalos_app.screens.telaPostagens.components.CardPostag
 import br.senai.sp.jandira.kalos_app.service.AlunoService
 import br.senai.sp.jandira.kalos_app.service.PostagemService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
+import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -96,15 +98,15 @@ fun TelaPostagens(lifecycleCoroutineScope: LifecycleCoroutineScope, localStorage
 
             LazyColumn() {
                 items(listaPostagens) {
-                    it.anexo?.let { it1 ->
+
                         CardPostagem(
                             titulo = it.titulo!!,
-                            foto = it1,
+                            foto = it.anexo,
                             descricao = it.corpo!!,
                             data = it.data!!,
                             hora = it.hora!!
                         )
-                    }
+
                     Spacer(modifier = Modifier.height(30.dp))
                 }
             }
@@ -117,9 +119,10 @@ fun TelaPostagens(lifecycleCoroutineScope: LifecycleCoroutineScope, localStorage
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .padding(horizontal = 10.dp)
+                .padding(horizontal = 10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Essa academia não possui postagens", color = Color.White, fontSize = 25.sp)
+            Text(text = "Essa academia não possui posts.", color = GrayKalos, fontSize = 18.sp)
         }
     }
 }

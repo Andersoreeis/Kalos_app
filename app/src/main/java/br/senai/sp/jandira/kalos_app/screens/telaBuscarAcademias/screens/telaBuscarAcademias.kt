@@ -239,6 +239,12 @@ fun BuscarAcademias(
 
                                             localStorage.salvarValor(
                                                 context,
+                                                "${academia.logradouro}, ${academia.numero} - ${academia.cidade}",
+                                                "enderecoAcademia"
+                                            )
+
+                                            localStorage.salvarValor(
+                                                context,
                                                 "${academia.nome}",
                                                 "nomeAcademia"
                                             );
