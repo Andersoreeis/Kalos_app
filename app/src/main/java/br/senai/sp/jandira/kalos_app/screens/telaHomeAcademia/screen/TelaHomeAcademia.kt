@@ -221,11 +221,11 @@ fun TelaHomeAcademia(
                                 .size(200.dp)
                                 .clip(CircleShape),
                             contentScale = ContentScale.Crop,
-                            error = painterResource(id = R.drawable.ginasio)
+                            error = painterResource(id = R.drawable.defaultimg)
                         )
                     } else {
                         Image(
-                            painter = painterResource(id = R.drawable.ginasio),
+                            painter = painterResource(id = R.drawable.defaultimg),
                             contentDescription = null,
                             modifier = Modifier
                                 .size(110.dp)

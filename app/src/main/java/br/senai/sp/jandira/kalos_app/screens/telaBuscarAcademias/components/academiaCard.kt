@@ -86,12 +86,12 @@ fun AcademiaCard(
                                 .width(110.dp)
                                 .height(110.dp)
                                 .clip(CircleShape),
-                            error = painterResource(id = R.drawable.ginasio),
+                            error = painterResource(id = R.drawable.defaultimg),
                             contentScale = ContentScale.Crop
                         )
                     } else {
                         Image(
-                            painter = painterResource(id = R.drawable.ginasio),
+                            painter = painterResource(id = R.drawable.defaultimg),
                             contentDescription = null,
                             modifier = Modifier
                                 .size(110.dp)

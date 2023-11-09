@@ -1,5 +1,8 @@
 package br.senai.sp.jandira.kalos_app.telaP.telaPerfilAcademia.screen
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,15 +18,22 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,23 +46,25 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createTextKalos
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.components.Espacamento
-import br.senai.sp.jandira.kalos_app.components.SetaParaVoltar
 import br.senai.sp.jandira.kalos_app.components.SetaParaVoltar2
-import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
-import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
-import coil.annotation.ExperimentalCoilApi
+import br.senai.sp.jandira.kalos_app.model.PostagensResponse
+import br.senai.sp.jandira.kalos_app.screens.telaPostagens.components.CardPostagem
+import br.senai.sp.jandira.kalos_app.service.PostagemService
+import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import coil.compose.AsyncImage
-import coil.transform.CircleCropTransformation
-import com.google.android.gms.auth.api.signin.internal.Storage
+import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TelaPerfilAcademia(
     navController: NavController,
-    localStorage: br.senai.sp.jandira.kalos_app.Storage
+    localStorage: br.senai.sp.jandira.kalos_app.Storage,
+    lifecycleCoroutineScope: LifecycleCoroutineScope
 ) {
 
     val context = LocalContext.current
@@ -67,6 +79,7 @@ fun TelaPerfilAcademia(
     var descricaoAcademia = localStorage.lerValor(context, "descricaoAcademia")
     var logradouroAcademia = localStorage.lerValor(context, "logradouroAcademia")
     var numeroAcademia = localStorage.lerValor(context, "numeroAcademia")
+    var enderecoAcademia = localStorage.lerValor(context, "enderecoAcademia")
 
     val corPrimariaAcademia = localStorage.lerValor(context, "corPrimariaAcademia")
     val corPrimaria = Color(android.graphics.Color.parseColor(corPrimariaAcademia ?: "#353535"))
@@ -136,6 +149,7 @@ fun TelaPerfilAcademia(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
+            .verticalScroll(rememberScrollState())
     ) {
 
         Box(
@@ -165,7 +179,7 @@ fun TelaPerfilAcademia(
                     modifier = Modifier
                         .clip(shape = CircleShape)
                         .size(200.dp),
-                    color = GrayKalos
+                    color = Color(0xFF393939)
                 ) {
                     if (fotoAcademia!!.isNotEmpty() || fotoAcademia.isNotBlank()) {
                         AsyncImage(
@@ -175,11 +189,11 @@ fun TelaPerfilAcademia(
                                 .size(200.dp)
                                 .clip(CircleShape),
                             contentScale = ContentScale.Crop,
-                            error = painterResource(id = R.drawable.ginasio)
+                            error = painterResource(id = R.drawable.defaultimg)
                         )
                     } else {
                         Image(
-                            painter = painterResource(id = R.drawable.ginasio),
+                            painter = painterResource(id = R.drawable.defaultimg),
                             contentDescription = null,
                             modifier = Modifier
                                 .size(110.dp)
@@ -210,21 +224,22 @@ fun TelaPerfilAcademia(
             createTextKalos(
                 content = descricaoAcademia.toString(),
                 sizeText = 12,
-                colorText = corSegundaria,
+                colorText = Color.White,
                 bold = 400,
-                alinhamento = TextAlign.Center
+                alinhamento = TextAlign.Center,
+                modifier = Modifier.padding(20.dp)
             )
 
             Espacamento(tamanho = 5.dp)
             val tagsList = tagsAcademia?.split(", ") ?: emptyList()
-
+            Spacer(
+                modifier = Modifier
+                    .width(370.dp)
+                    .height(1.dp)
+                    .background(Color(0xFF393939))
+            )
             if (tagsList.isNotEmpty() && tagsList.any { it.isNotBlank() }) {
-                Spacer(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(1.dp)
-                        .background(Color.Gray)
-                )
+
 
                 Espacamento(tamanho = 5.dp)
 
@@ -243,13 +258,13 @@ fun TelaPerfilAcademia(
 
                 Spacer(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .width(370.dp)
                         .height(1.dp)
-                        .background(Color.Gray)
+                        .background(Color(0xFF393939))
                 )
             }
 
-            Espacamento(tamanho = 5.dp)
+            Espacamento(tamanho = 20.dp)
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -304,7 +319,7 @@ fun TelaPerfilAcademia(
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = logradouroAcademia.toString(),
+                        text = enderecoAcademia.toString(),
                         color = corSegundaria,
                         fontWeight = FontWeight.Bold,
                         fontSize = 12.sp
@@ -337,6 +352,16 @@ fun TelaPerfilAcademia(
                 }
             }
 
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Spacer(
+                modifier = Modifier
+                    .width(370.dp)
+                    .height(1.dp)
+                    .background(Color(0xFF393939))
+            )
+
+
             Column(
                 modifier = Modifier
                     .height(300.dp)
@@ -345,13 +370,74 @@ fun TelaPerfilAcademia(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Bottom
             ) {
-                createTextKalos(
-                    content = "Entre em contato com a academia para se matricular nessa academia e ter acesso completo!",
-                    sizeText = 12,
-                    colorText = Color.White,
-                    bold = 400,
-                    alinhamento = TextAlign.Center
-                )
+//                createTextKalos(
+//                    content = "Entre em contato com a academia para se matricular nessa academia e ter acesso completo!",
+//                    sizeText = 12,
+//                    colorText = Color.White,
+//                    bold = 400,
+//                    alinhamento = TextAlign.Center
+//                )
+
+                lateinit var postagemService: PostagemService
+                postagemService = RetrofitHelper.getInstance().create(PostagemService::class.java)
+
+                var listaPostagens by remember {
+                    mutableStateOf(listOf<PostagensResponse>())
+                }
+
+
+                val context = LocalContext.current
+                var status by remember {
+                    mutableStateOf(false)
+                }
+
+                lifecycleCoroutineScope.launch {
+                    val result = postagemService.getTodasPostagens(
+                        localStorage.lerValor(context, "idAcademia").toString()
+                    )
+                    Log.e("result", "TelaPostagens: ${result.body()}")
+                    if (result.isSuccessful) {
+                        listaPostagens = result.body()!!.postagens!!
+                        status = true
+                    }
+                }
+                if (status) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(1000.dp)
+                            .padding(horizontal = 10.dp)
+
+                    ) {
+
+                        LazyColumn() {
+                            items(listaPostagens) {
+
+                                CardPostagem(
+                                    titulo = it.titulo!!,
+                                    foto = it.anexo,
+                                    descricao = it.corpo!!,
+                                    data = it.data!!,
+                                    hora = it.hora!!
+                                )
+
+                                Spacer(modifier = Modifier.height(30.dp))
+                            }
+                        }
+
+
+                    }
+                }else {
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(1000.dp)
+                            .padding(horizontal = 10.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                    }
+                }
             }
 
 

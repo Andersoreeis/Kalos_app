@@ -52,6 +52,7 @@ import br.senai.sp.jandira.kalos_app.screens.telaPerfil.components.convertIso860
 import br.senai.sp.jandira.kalos_app.service.AlunoService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.service.TreinoService
+import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -197,11 +198,15 @@ fun TelaTreinos(
                 }
             }
         } else {
-            Text(
-                text = "Você não possui treinos nessa academia",
-                color = Color.White,
-                fontSize = 20.sp
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .padding(horizontal = 10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "Você não possui treinos nessa academia.", color = GrayKalos, fontSize = 18.sp)
+            }
         }
 
     }

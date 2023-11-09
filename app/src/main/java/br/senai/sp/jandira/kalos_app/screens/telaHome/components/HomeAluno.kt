@@ -188,7 +188,19 @@ fun HomeAluno(aluno: AlunoResponse, navController: NavController,
 
 
         }else{
-            Text(text = "Busque por mais academias", color = Color.White, fontSize = 20.sp)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .padding(horizontal = 10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Você não possui matrículas.",
+                    color = GrayKalos,
+                    fontSize = 18.sp
+                )
+            }
         }
     }
 
