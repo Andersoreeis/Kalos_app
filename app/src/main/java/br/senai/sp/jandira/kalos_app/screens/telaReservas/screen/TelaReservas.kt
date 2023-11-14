@@ -35,67 +35,59 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.Storage
+import br.senai.sp.jandira.kalos_app.model.PostagensResponse
 import br.senai.sp.jandira.kalos_app.model.ProdutosTeste
+import br.senai.sp.jandira.kalos_app.model.ReservaResponse
+import br.senai.sp.jandira.kalos_app.screens.telaPostagens.components.arrumarData
 import br.senai.sp.jandira.kalos_app.screens.telaReservas.components.CardReservas
 import br.senai.sp.jandira.kalos_app.screens.telaReservas.components.HeaderReservas
+import br.senai.sp.jandira.kalos_app.service.PostagemService
+import br.senai.sp.jandira.kalos_app.service.ReservaService
+import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
+import kotlinx.coroutines.launch
 
 @Composable
-fun TelaReservas(navController: NavController, context: Context) {
+fun TelaReservas(
+    navController: NavController,
+    context: Context,
+    lifecycleCoroutineScope: LifecycleCoroutineScope,
+    localStorage: Storage
+) {
 
-    val list = listOf<ProdutosTeste>(
-        ProdutosTeste(
-            nomeProduto = "Whey Protein 907g",
-                    imagem = "",
-                    dataReserva = "01/07/2023",
-                    quantidade = "2",
-                    valor = "285,50",
-                    status = "Recebido"
-        ),
-        ProdutosTeste(
-            nomeProduto = "Whey Protein 907g",
-            imagem = "",
-            dataReserva = "01/07/2023",
-            quantidade = "2",
-            valor = "285,50",
-            status = "Recebido"
-        ),
-        ProdutosTeste(
-            nomeProduto = "Whey Protein 907g",
-            imagem = "",
-            dataReserva = "01/07/2023",
-            quantidade = "2",
-            valor = "285,50",
-            status = "Cancelar"
-        ),
-        ProdutosTeste(
-            nomeProduto = "Whey Protein 907g",
-            imagem = "",
-            dataReserva = "01/07/2023",
-            quantidade = "2",
-            valor = "285,50",
-            status = "Recebido"
-        ),
-        ProdutosTeste(
-            nomeProduto = "Whey Protein 907g",
-            imagem = "",
-            dataReserva = "01/07/2023",
-            quantidade = "2",
-            valor = "285,50",
-            status = "Cancelar"
-        ),
+    lateinit var reservaService: ReservaService
+    reservaService = RetrofitHelper.getInstance().create(ReservaService::class.java)
 
-    )
+    var listaReservas by remember {
+        mutableStateOf(listOf<ReservaResponse>())
+    }
 
-    var statusCarregamento = remember{
+    var status by remember {
+        mutableStateOf(false)
+    }
+    lifecycleCoroutineScope.launch {
+        val result = reservaService.getReservasAluno(
+            localStorage.lerValor(context, "idAcademia").toString(),
+            localStorage.lerValor(context, "idAluno").toString()
+        )
+
+        Log.e("result", "${result.body()}")
+        if (result.isSuccessful) {
+            listaReservas = result.body()!!.data!!
+            status = true
+        }
+    }
+
+    var statusCarregamento = remember {
         mutableStateOf(false)
     }
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-
 
 
         Column(
@@ -106,16 +98,27 @@ fun TelaReservas(navController: NavController, context: Context) {
         ) {
             HeaderReservas(navController = navController)
             LazyColumn() {
-                items(list) {
-                    CardReservas(it.nomeProduto,it.imagem,it.dataReserva,it.quantidade,it.valor,it.status, statusCarregamento)
+                items(listaReservas) {
+                    CardReservas(
+                        it.nome_produto!!,
+                        it.foto!!,
+                        arrumarData(it.data!!)!!,
+                        it.quantidade!!,
+                        it.total!!,
+                        it.status_reserva!!,
+                        statusCarregamento
+                    )
                 }
             }
 
         }
 
 
-        if(statusCarregamento.value){
-            Log.e("status", "TelaReservas: ${statusCarregamento}", )
+
+
+        if (statusCarregamento.value) {
+            Log.e("status", "TelaReservas: ${statusCarregamento}")
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -145,7 +148,10 @@ fun TelaReservas(navController: NavController, context: Context) {
                             fontWeight = FontWeight.Bold
                         )
 
-                        Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly){
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
                             Image(
                                 painter = painterResource(id = R.drawable.x),
                                 contentDescription = null,
