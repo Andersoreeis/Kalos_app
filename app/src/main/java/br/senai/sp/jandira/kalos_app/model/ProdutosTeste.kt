@@ -8,3 +8,21 @@ data class ProdutosTeste(
     var valor: String = "",
     var status: String = ""
 )
+
+
+data class ProdutosResponse(
+    var id: Int?  = 0,
+    var nome : String? = "",
+    var descricao : String? = "",
+    var codigo: String ? = "",
+    var categoria: String? = "",
+    var preco: String = "",
+    var status: String = "",
+    var id_academia: Int?  = 0,
+    var fotos: List<FotoResponse>? = emptyList()
+)
+
+
+data class FotoResponse(
+    var url: String? = null
+)
