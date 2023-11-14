@@ -120,7 +120,7 @@ class MainActivity : ComponentActivity() {
                             TelaDetalhesExercicio(LocalLifecycleOwner.current, localStorage, navController, lifecycleScope)
                         }
                         composable(route = "reservas"){
-                           TelaReservas(navController, LocalContext.current)
+                           TelaReservas(navController, LocalContext.current, lifecycleScope, localStorage)
                         }
 
                         composable(route = "treinoConcluido"){

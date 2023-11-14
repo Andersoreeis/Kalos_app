@@ -54,7 +54,7 @@ fun HeaderReservas(navController: NavController) {
                 fontWeight = FontWeight.Bold
             )
         }
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(5.dp))
 
         Surface(
             modifier = Modifier

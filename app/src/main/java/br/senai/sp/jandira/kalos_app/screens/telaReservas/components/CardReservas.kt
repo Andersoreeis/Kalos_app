@@ -58,7 +58,7 @@ fun CardReservas(
                 .fillMaxWidth(),
         ) {
             Surface(
-                modifier = Modifier.size(100.dp),
+                modifier = Modifier.size(120.dp),
                 shape = RoundedCornerShape(15.dp)
             ) {
                 AsyncImage(
@@ -112,8 +112,31 @@ fun CardReservas(
                     createButtonWithFunction4(textButton = status, corBotao = GreenKalos) {
 
                     }
-                } else {
+                } else if (status.lowercase() == "cancelado") {
                     createButtonWithFunction4(textButton = status, corBotao = Color.Red) {
+
+                    }
+                } else if (status.lowercase() == "em análise") {
+                    Column {
+                        createButtonWithFunction4(textButton = status, corBotao = Color.Yellow) {
+
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+                        
+                        createButtonWithFunction4(textButton = "Cancelar", corBotao = Color.Red) {
+                            mutableState.value = true
+                        }
+                    }
+
+                } else if (status.lowercase() == "pronto para retirada"){
+                    createButtonWithFunction4(textButton = status, corBotao = GreenKalos) {
+
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    createButtonWithFunction4(textButton = "Cancelar", corBotao = Color.Red) {
                         mutableState.value = true
                     }
                 }
