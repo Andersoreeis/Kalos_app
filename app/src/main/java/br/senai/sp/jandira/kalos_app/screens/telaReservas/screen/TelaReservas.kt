@@ -115,8 +115,10 @@ fun TelaReservas(
 
 
 
+
         if (statusCarregamento.value) {
             Log.e("status", "TelaReservas: ${statusCarregamento}")
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
