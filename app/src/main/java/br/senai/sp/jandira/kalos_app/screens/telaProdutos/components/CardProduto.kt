@@ -1,6 +1,5 @@
 package br.senai.sp.jandira.kalos_app.screens.telaProdutos.components
 
-import android.hardware.camera2.params.ColorSpaceTransform
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,7 +20,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.kalos_app.R
@@ -30,7 +27,10 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalosEscuro
 import coil.compose.AsyncImage
 
 @Composable
-fun CardProduto(corPrimariaAcademia: String, onClick: () -> Unit) {
+fun CardProduto(
+    corPrimariaAcademia: String, nome: String,
+    preco: String,
+    onClick: () -> Unit) {
     val corPrimaria = Color(android.graphics.Color.parseColor(corPrimariaAcademia ?: "#353535"))
     Surface(
         modifier = Modifier
@@ -58,7 +58,7 @@ fun CardProduto(corPrimariaAcademia: String, onClick: () -> Unit) {
                 )
             }
             Text(
-                text = "R$ 140,75",
+                text = "R$ ${preco}",
                 color = Color.White,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
@@ -66,7 +66,7 @@ fun CardProduto(corPrimariaAcademia: String, onClick: () -> Unit) {
             )
 
             Text(
-                text = "Whey Protein 907g",
+                text = nome,
                 color = Color.White,
                 fontSize = 13.sp,
 

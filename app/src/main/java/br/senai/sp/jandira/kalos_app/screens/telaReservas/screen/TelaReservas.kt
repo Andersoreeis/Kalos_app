@@ -113,6 +113,7 @@ fun TelaReservas(navController: NavController, context: Context) {
 
         }
 
+
         if(statusCarregamento.value){
             Log.e("status", "TelaReservas: ${statusCarregamento}", )
             Column(
@@ -149,17 +150,27 @@ fun TelaReservas(navController: NavController, context: Context) {
                                 painter = painterResource(id = R.drawable.x),
                                 contentDescription = null,
                                 colorFilter = ColorFilter.tint(Color.Red),
-                                modifier = Modifier.size(19.dp).clickable { statusCarregamento.value = false }
+                                modifier = Modifier
+                                    .size(19.dp)
+                                    .clickable { statusCarregamento.value = false }
                             )
 
                             Image(
                                 painter = painterResource(id = R.drawable.right),
                                 contentDescription = null,
-                                modifier = Modifier.size(24.dp).clickable {
-                                    statusCarregamento.value = false
-                                    Toast.makeText(context, "Reserva cancelada com sucesso.", Toast.LENGTH_LONG).show()
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .clickable {
+                                        statusCarregamento.value = false
+                                        Toast
+                                            .makeText(
+                                                context,
+                                                "Reserva cancelada com sucesso.",
+                                                Toast.LENGTH_LONG
+                                            )
+                                            .show()
 
-                                }
+                                    }
                             )
                         }
 
