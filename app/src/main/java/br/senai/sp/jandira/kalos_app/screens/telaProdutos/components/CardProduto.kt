@@ -29,7 +29,7 @@ import coil.compose.AsyncImage
 @Composable
 fun CardProduto(
     corPrimariaAcademia: String, nome: String,
-    preco: String,
+    preco: String, foto: String,
     onClick: () -> Unit) {
     val corPrimaria = Color(android.graphics.Color.parseColor(corPrimariaAcademia ?: "#353535"))
     Surface(
@@ -50,7 +50,7 @@ fun CardProduto(
                 shape = RoundedCornerShape(15.dp)
             ) {
                 AsyncImage(
-                    model = "",
+                    model = foto,
                     contentDescription = stringResource(R.string.foto_do_produto),
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,

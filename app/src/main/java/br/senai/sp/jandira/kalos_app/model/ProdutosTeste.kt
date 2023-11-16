@@ -19,10 +19,10 @@ data class ProdutosResponse(
     var preco: String = "",
     var status: String = "",
     var id_academia: Int?  = 0,
-    var fotos: List<FotoResponse>? = emptyList()
+    var fotos: List<FotoResponse> = emptyList()
 )
 
 
 data class FotoResponse(
-    var url: String? = null
+    var url: String? = ""
 )

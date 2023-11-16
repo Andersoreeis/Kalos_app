@@ -83,8 +83,17 @@ fun TelaProdutos(lifecycleCoroutineScope: LifecycleCoroutineScope, corPrimaria: 
         ) {
             items(listaProdutos) {
 
-                CardProduto(corPrimaria, it.nome!!, it.preco!! , ){
+                CardProduto(corPrimaria, it.nome!!, it.preco , it.fotos[0].url!! ){
                     navController.navigate("detalhesProduto")
+                    localStorage.salvarValor(context, it.id!!.toString(), "idProduto")
+
+                    localStorage.salvarValor(context, it.nome!!, "nomeProduto")
+                    localStorage.salvarValor(context, it.preco, "precoProduto")
+                    localStorage.salvarValor(context, it.descricao!!, "descricaoProduto")
+                    localStorage.salvarValor(context, it.categoria!!, "categoriaProduto")
+                    localStorage.salvarValor(context, it.codigo!!, "codigoProduto")
+                    localStorage.salvarValor(context, corPrimaria, "corPrimariaAcademia")
+
                 }
 
 
