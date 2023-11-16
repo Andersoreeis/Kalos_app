@@ -128,7 +128,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = "detalhesProduto"){
-                            TelaDetalhesProduto(navController)
+                            TelaDetalhesProduto(navController, localStorage, lifecycleScope)
                         }
 
 
