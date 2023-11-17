@@ -54,7 +54,7 @@ fun CardProduto(
                     contentDescription = stringResource(R.string.foto_do_produto),
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
-                    error = painterResource(id = R.drawable.produto)
+                    error = painterResource(id = R.drawable.sem_imagem)
                 )
             }
             Text(

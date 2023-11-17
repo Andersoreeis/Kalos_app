@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -136,14 +137,12 @@ fun TelaDetalhesProduto(navController: NavController, localStorage: Storage, lif
                             horizontalArrangement = Arrangement.spacedBy(16.dp),
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            items(count = 5) {
+                            items(produto[0].fotos) {
                                 ImagemProduto(
-                                    imagem = "https://images.unsplash.com/photo-1519160926177-c64030fde1d6?auto=format&fit=crop&q=80&w=3840&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                    imagem = it.url!!
                                 )
                                 Spacer(modifier = Modifier.width(16.dp))
-                                ImagemProduto(
-                                    imagem = "https://images.unsplash.com/photo-1543966357-d5fe7c4211bd?auto=format&fit=crop&q=80&w=3945&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                )
+
                             }
                         }
 
@@ -224,14 +223,12 @@ fun TelaDetalhesProduto(navController: NavController, localStorage: Storage, lif
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                         modifier = Modifier.padding(16.dp)
                     ) {
-                        items(count = 5) {
+                        items(produto[0].fotos) {
                             ImagemProduto(
-                                imagem = "https://images.unsplash.com/photo-1519160926177-c64030fde1d6?auto=format&fit=crop&q=80&w=3840&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                imagem = it.url!!
                             )
                             Spacer(modifier = Modifier.width(16.dp))
-                            ImagemProduto(
-                                imagem = "https://images.unsplash.com/photo-1543966357-d5fe7c4211bd?auto=format&fit=crop&q=80&w=3945&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            )
+
                         }
                     }
 

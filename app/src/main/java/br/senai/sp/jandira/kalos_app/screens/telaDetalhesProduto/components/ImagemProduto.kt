@@ -29,7 +29,7 @@ fun ImagemProduto(imagem: String) {
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize(),
-            error = painterResource(id = R.drawable.treinoerro)
+            error = painterResource(id = R.drawable.sem_imagem)
         )
     }
 
