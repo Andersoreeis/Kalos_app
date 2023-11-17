@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.kalos_app.screens.telaReservas.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,14 +23,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.senai.sp.jandira.app_kalos.components.createButtonWithFunction
+import androidx.lifecycle.LifecycleCoroutineScope
 import br.senai.sp.jandira.app_kalos.components.createButtonWithFunction4
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.service.ReservaService
+import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 import coil.compose.AsyncImage
+import kotlinx.coroutines.launch
 
 @Composable
 fun CardReservas(
@@ -38,7 +43,9 @@ fun CardReservas(
     dataReserva: String,
     quantidade: String,
     valor: String,
-    status: String, mutableState: MutableState<Boolean>
+    codigoProduto: String,
+    status: String, mutableState: MutableState<Boolean>,
+    onClick: () -> Unit
 ) {
 
 //    val nomeProduto = "Whey Protein 907g"
@@ -47,6 +54,8 @@ fun CardReservas(
 //    val quantidade = "2"
 //    val valor = "285,50"
 //    val status = "Recebido"
+
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -55,10 +64,10 @@ fun CardReservas(
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
         ) {
             Surface(
-                modifier = Modifier.size(120.dp),
+                modifier = Modifier.size(160.dp),
                 shape = RoundedCornerShape(15.dp)
             ) {
                 AsyncImage(
@@ -80,6 +89,12 @@ fun CardReservas(
                     color = Color.White,
                     fontSize = 16.sp,
                     fontWeight = FontWeight(1000)
+                )
+
+                Text(
+                    text = "$codigoProduto",
+                    color = Color.White,
+                    fontSize = 10.sp,
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -107,7 +122,9 @@ fun CardReservas(
                         fontWeight = FontWeight.Bold
                     )
                 }
-                Spacer(modifier = Modifier.height(18.dp))
+
+                Spacer(modifier = Modifier.height(15.dp))
+
                 if (status.lowercase() == "recebido") {
                     createButtonWithFunction4(textButton = status, corBotao = GreenKalos) {
 
@@ -126,6 +143,8 @@ fun CardReservas(
                         
                         createButtonWithFunction4(textButton = "Cancelar", corBotao = Color.Red) {
                             mutableState.value = true
+
+                            onClick()
                         }
                     }
 
@@ -138,9 +157,19 @@ fun CardReservas(
 
                     createButtonWithFunction4(textButton = "Cancelar", corBotao = Color.Red) {
                         mutableState.value = true
+
+                        onClick()
+
                     }
                 }
-                Spacer(modifier = Modifier.height(15.dp))
+
+                var heightSpacer: Dp = if(status.lowercase() == "em análise" || status.lowercase() == "pronto para retirada"){
+                    12.dp
+                } else {
+                    45.dp
+                }
+
+                Spacer(modifier = Modifier.height(heightSpacer))
 
             }
         }

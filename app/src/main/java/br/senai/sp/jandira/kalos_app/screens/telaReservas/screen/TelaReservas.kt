@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,6 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.R
@@ -49,7 +51,9 @@ import br.senai.sp.jandira.kalos_app.service.PostagemService
 import br.senai.sp.jandira.kalos_app.service.ReservaService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
+import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 @Composable
 fun TelaReservas(
@@ -69,6 +73,19 @@ fun TelaReservas(
     var status by remember {
         mutableStateOf(false)
     }
+
+    var idParaCancelar by remember {
+        mutableStateOf(0)
+    }
+
+    val bodyUpdateReserva by remember {
+        mutableStateOf(JsonObject())
+    }
+
+    var statusCarregamento = remember {
+        mutableStateOf(false)
+    }
+
     lifecycleCoroutineScope.launch {
         val result = reservaService.getReservasAluno(
             localStorage.lerValor(context, "idAcademia").toString(),
@@ -82,13 +99,10 @@ fun TelaReservas(
         }
     }
 
-    var statusCarregamento = remember {
-        mutableStateOf(false)
-    }
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-
 
         Column(
             modifier = Modifier
@@ -97,19 +111,50 @@ fun TelaReservas(
                 .padding(20.dp)
         ) {
             HeaderReservas(navController = navController)
-            LazyColumn() {
-                items(listaReservas) {
-                    CardReservas(
-                        it.nome_produto!!,
-                        it.foto!!,
-                        arrumarData(it.data!!)!!,
-                        it.quantidade!!,
-                        it.total!!,
-                        it.status_reserva!!,
-                        statusCarregamento
+
+            if (status){
+                LazyColumn() {
+                    items(listaReservas) {
+
+                        CardReservas(
+                            it.nome_produto!!,
+                            it.foto!!,
+                            arrumarData(it.data!!)!!,
+                            it.quantidade!!,
+                            it.total!!,
+                            it.codigo!!,
+                            it.status_reserva!!,
+                            statusCarregamento,
+                        ) {
+                            idParaCancelar = it.id!!
+
+                            bodyUpdateReserva.apply {
+                                addProperty("quantidade", it.quantidade)
+                                addProperty("total", it.total)
+                                addProperty("id_produto", it.id_produto)
+                                addProperty("id_aluno", localStorage.lerValor(context, "idAluno"))
+                                addProperty("id_status_reserva", 2) //id para "cancelado"
+                            }
+
+                        }
+                    }
+                }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    CircularProgressIndicator(
+                        color = Color(0, 255, 144),
+                        modifier = Modifier.size(64.dp)
                     )
                 }
             }
+
+
 
         }
 
@@ -117,7 +162,6 @@ fun TelaReservas(
 
 
         if (statusCarregamento.value) {
-            Log.e("status", "TelaReservas: ${statusCarregamento}")
 
             Column(
                 modifier = Modifier
@@ -168,13 +212,40 @@ fun TelaReservas(
                                     .size(24.dp)
                                     .clickable {
                                         statusCarregamento.value = false
-                                        Toast
-                                            .makeText(
-                                                context,
-                                                "Reserva cancelada com sucesso.",
-                                                Toast.LENGTH_LONG
-                                            )
-                                            .show()
+
+                                        Log.i("body", "$bodyUpdateReserva")
+
+                                        lifecycleCoroutineScope.launch {
+                                            var result =
+                                                reservaService.updateReserva(
+                                                    idParaCancelar.toString(),
+                                                    bodyUpdateReserva
+                                                )
+
+
+                                            Log.i("result cancelar", "$result")
+
+                                            if (result.isSuccessful) {
+                                                Toast
+                                                    .makeText(
+                                                        context,
+                                                        "Reserva cancelada com sucesso.",
+                                                        Toast.LENGTH_LONG
+                                                    )
+                                                    .show()
+
+                                                navController.navigate("reservas")
+                                            } else {
+                                                Toast
+                                                    .makeText(
+                                                        context,
+                                                        "Algo deu errado. Tente novamente mais tarde",
+                                                        Toast.LENGTH_LONG
+                                                    )
+                                                    .show()
+                                            }
+                                        }
+
 
                                     }
                             )
