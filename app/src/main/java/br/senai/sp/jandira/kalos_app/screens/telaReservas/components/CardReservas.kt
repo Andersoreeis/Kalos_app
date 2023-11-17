@@ -48,12 +48,6 @@ fun CardReservas(
     onClick: () -> Unit
 ) {
 
-//    val nomeProduto = "Whey Protein 907g"
-//    val imagem = ""
-//    val dataReserva = "01/07/2023"
-//    val quantidade = "2"
-//    val valor = "285,50"
-//    val status = "Recebido"
 
 
     Column(
