@@ -7,6 +7,7 @@ import br.senai.sp.jandira.kalos_app.model.PostagensResponse
 import br.senai.sp.jandira.kalos_app.model.ProdutosResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ProdutoService {
@@ -16,4 +17,5 @@ interface ProdutoService {
 
     @GET("/kalos/produto/id/{id}")
     suspend fun  getProdutoByID(@Path("id") id: String): Response<BaseResponseProduto<ProdutosResponse>>
+
 }

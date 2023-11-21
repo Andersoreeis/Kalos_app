@@ -3,7 +3,6 @@ package br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
@@ -14,11 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import br.senai.sp.jandira.kalos_app.MaskVisualTransformation
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.NumberDefaults.MASKCPF
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
+
 object NumberDefaults {
     const val MASKCPF = "###.###.###-##"
     const val MASKNUMBER = "(##) #####-####"
