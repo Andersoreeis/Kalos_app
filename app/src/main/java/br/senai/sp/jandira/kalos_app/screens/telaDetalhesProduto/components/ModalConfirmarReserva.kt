@@ -1,5 +1,7 @@
 package br.senai.sp.jandira.kalos_app.screens.telaDetalhesProduto.components
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
@@ -34,6 +36,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -41,13 +44,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.LifecycleCoroutineScope
 import br.senai.sp.jandira.kalos_app.R
+import br.senai.sp.jandira.kalos_app.Storage
+import br.senai.sp.jandira.kalos_app.service.ReservaService
+import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
+import com.google.gson.JsonObject
+import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 
 @Composable
-fun ModalConfirmarReserva(nomeProduto: String, valor: Double, cor: String, onClick: () -> Unit) {
+fun ModalConfirmarReserva(nomeProduto: String, valor: Double, cor: String,  lifecycleCoroutineScope: LifecycleCoroutineScope, localStorage: Storage, onClick: () -> Unit,) {
     val color = android.graphics.Color.parseColor(cor)
+
+    lateinit var reservaService: ReservaService
+    reservaService = RetrofitHelper.getInstance().create(ReservaService::class.java)
 
     var quantidade by remember {
         mutableStateOf(1)
@@ -57,12 +69,40 @@ fun ModalConfirmarReserva(nomeProduto: String, valor: Double, cor: String, onCli
         mutableStateOf(false)
     }
 
+    var statusConfirmacao by remember {
+        mutableStateOf(false)
+    }
+    val context = LocalContext.current
+    val idAluno = localStorage.lerValor(context, "idAluno")?.toInt()
+    val idProduto = localStorage.lerValor(context, "idProduto")?.toInt()
+
+
 //    var isVisible by remember { mutableStateOf(true) }
 //
 //    val alpha by animateFloatAsState(
 //        targetValue = if (isVisible) 1f else 0f,
 //        animationSpec = tween(durationMillis = 1000), label = ""
 //    )
+
+    if(statusConfirmacao){
+        lifecycleCoroutineScope.launch {
+            val body = JsonObject().apply {
+                addProperty("quantidade" , quantidade.toString())
+                addProperty("total", DecimalFormat("0.00").format(valor * quantidade).replace('.', ',').toString())
+                addProperty("id_produto", idProduto)
+                addProperty("id_aluno", idAluno)
+                addProperty("id_status_reserva", 3 )
+            }
+
+            var result = reservaService.fazerReserva(body)
+            if(result.isSuccessful){
+
+            }else{
+                Toast.makeText(context, "Reserva deu erro " ,Toast.LENGTH_LONG ).show()
+            }
+
+        }
+    }
 
     if (confirmarModal) {
         Surface(
@@ -75,7 +115,9 @@ fun ModalConfirmarReserva(nomeProduto: String, valor: Double, cor: String, onCli
             shape = RoundedCornerShape(20.dp)
         ) {
             Column(
-                modifier = Modifier.fillMaxSize().padding(15.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(15.dp),
                 verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -242,6 +284,7 @@ fun ModalConfirmarReserva(nomeProduto: String, valor: Double, cor: String, onCli
                     Button(
                         onClick = {
                             confirmarModal = true
+                            statusConfirmacao = true
                         },
                         colors = ButtonDefaults.buttonColors(Color(color))
                     ) {
@@ -279,8 +322,8 @@ fun Modal() {
     }
 }
 
-@Preview
-@Composable
-fun ModalConfirmarReservaPreview() {
-    ModalConfirmarReserva("Garrafinha 800ml", 17.99, "#34439E") {}
-}
+//@Preview
+//@Composable
+//fun ModalConfirmarReservaPreview() {
+//    ModalConfirmarReserva("Garrafinha 800ml", 17.99, "#34439E") {}
+//}

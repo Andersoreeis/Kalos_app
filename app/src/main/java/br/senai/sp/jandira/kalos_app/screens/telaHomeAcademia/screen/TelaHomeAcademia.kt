@@ -389,8 +389,8 @@ fun TelaHomeAcademia(
             val items = listOf(
                 "Posts",
                 "Produtos",
-                "Treinos",
-                "Informações"
+                "Treinos"
+
             )
 
                 NavigationBar(
@@ -465,9 +465,7 @@ fun TelaHomeAcademia(
                    TelaProdutos(lifecycleCoroutineScope, corPrimariaAcademia!!, navController, localStorage)
                 } else if (selectedItemIndex == 2) {
                     TelaTreinos(lifecycleCoroutineScope, localStorage, navController)
-                } else if(selectedItemIndex == 3) {
-                    Text(text = "informaçoes", color = Color.White)
-                }else{
+                } else{
                     TelaPostagens(lifecycleCoroutineScope,localStorage)
                 }
             }

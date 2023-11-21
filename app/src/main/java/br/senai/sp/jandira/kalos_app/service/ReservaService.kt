@@ -1,6 +1,8 @@
 package br.senai.sp.jandira.kalos_app.service
 
+import br.senai.sp.jandira.kalos_app.model.BaseResponseCarga
 import br.senai.sp.jandira.kalos_app.model.BaseResponseReservas
+import br.senai.sp.jandira.kalos_app.model.CargaResponse
 import br.senai.sp.jandira.kalos_app.model.ReservaResponse
 import com.google.gson.JsonObject
 import okhttp3.RequestBody
@@ -8,6 +10,8 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
@@ -17,4 +21,9 @@ interface ReservaService {
 
     @PUT("kalos/reserva/id/{idReserva}")
     suspend fun updateReserva(@Path("idReserva") idReserva: String, @Body body: JsonObject): Response<JsonObject>
+
+    @Headers("Content-Type: application/json")
+    @POST("/kalos/reserva")
+    suspend fun fazerReserva(@Body body: JsonObject): Response<JsonObject>
+
 }
