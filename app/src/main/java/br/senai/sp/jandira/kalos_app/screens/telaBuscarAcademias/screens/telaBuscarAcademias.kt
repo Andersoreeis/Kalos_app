@@ -348,6 +348,11 @@ fun BuscarAcademias(
                                                 "numeroAcademia"
                                             );
 
+                                            localStorage.salvarValor(
+                                                context,
+                                                "${academia.id}",
+                                                "idAcademia"
+                                            );
 
                                             localStorage.salvarValor(
                                                 context,
