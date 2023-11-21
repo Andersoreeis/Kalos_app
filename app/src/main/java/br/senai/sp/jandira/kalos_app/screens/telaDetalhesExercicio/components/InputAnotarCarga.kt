@@ -194,7 +194,11 @@ fun InputAnotarCarga(
 
         OutlinedTextField(
             value = if (habilitadoTextField) cargaState else carga.peso!!,
-            onValueChange = { cargaState = it },
+            onValueChange = {
+                if (cargaState.length < 5){
+                    cargaState = it
+                }
+                 },
             modifier = Modifier
                 .height(51.dp)
                 .fillMaxWidth(),
