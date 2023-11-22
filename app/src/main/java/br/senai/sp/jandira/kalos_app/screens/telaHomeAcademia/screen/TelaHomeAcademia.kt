@@ -2,6 +2,8 @@ package br.senai.sp.jandira.kalos_app.screens.telaHomeAcademia.screen
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -341,7 +343,17 @@ fun TelaHomeAcademia(
                 modifier = Modifier
                     .padding(4.dp)
                     .background(corPrimaria, shape = RoundedCornerShape(40.dp))
-                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .clickable {
+                        val gmmIntentUri = Uri.parse("geo:0,0?q=${logradouroAcademia.toString()}, ${numeroAcademia.toString()} - ${cidade.toString()}")
+                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+
+                        // Verifica se o aplicativo do Google Maps está instalado
+                        //if (mapIntent.resolveActivity(context.packageManager) != null) {
+                        context.startActivity(mapIntent)
+                        //}
+
+                    },
                 contentAlignment = Alignment.Center
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -369,7 +381,11 @@ fun TelaHomeAcademia(
                     .padding(horizontal = 8.dp, vertical = 4.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(verticalAlignment = Alignment.CenterVertically, modifier =  Modifier.clickable {
+                    val intent = Intent(Intent.ACTION_DIAL)
+                    intent.data = Uri.parse("tel: ${telefoneAcademia}")
+                    context.startActivity(intent)
+                }) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_local_phone_24),
                         contentDescription = null,

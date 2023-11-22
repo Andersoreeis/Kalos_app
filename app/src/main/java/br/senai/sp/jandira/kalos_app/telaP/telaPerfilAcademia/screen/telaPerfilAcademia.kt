@@ -1,5 +1,7 @@
 package br.senai.sp.jandira.kalos_app.telaP.telaPerfilAcademia.screen
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -46,6 +48,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createTextKalos
@@ -311,7 +314,15 @@ fun TelaPerfilAcademia(
                     .padding(horizontal = 8.dp, vertical = 4.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable {
+                    val gmmIntentUri = Uri.parse("geo:0,0?q=$enderecoAcademia")
+                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+
+                    // Verifica se o aplicativo do Google Maps está instalado
+                    //if (mapIntent.resolveActivity(context.packageManager) != null) {
+                        context.startActivity(mapIntent)
+                    //}
+                }) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_location_on_24),
                         contentDescription = null,
@@ -336,7 +347,11 @@ fun TelaPerfilAcademia(
                     .padding(horizontal = 8.dp, vertical = 4.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(verticalAlignment = Alignment.CenterVertically, modifier =  Modifier.clickable {
+                    val intent = Intent(Intent.ACTION_DIAL)
+                    intent.data = Uri.parse("tel: ${telefoneAcademia}")
+                    context.startActivity(intent)
+                }) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_local_phone_24),
                         contentDescription = null,
@@ -351,6 +366,8 @@ fun TelaPerfilAcademia(
                     )
                 }
             }
+
+
 
             Spacer(modifier = Modifier.height(20.dp))
 
