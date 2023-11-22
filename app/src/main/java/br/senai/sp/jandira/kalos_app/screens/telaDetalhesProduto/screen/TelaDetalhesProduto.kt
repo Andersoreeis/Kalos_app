@@ -181,7 +181,9 @@ fun TelaDetalhesProduto(navController: NavController, localStorage: Storage, lif
                         ModalConfirmarReserva(
                             nomeProduto = nome.toString(),
                             valor = it.toDouble(),
-                            cor = cor.toString()
+                            cor = cor.toString(),
+                            lifecycleCoroutineScope =  lifecycleCoroutineScope,
+                             localStorage
                         ) {
                             modalConfirmacao = false
                         }
