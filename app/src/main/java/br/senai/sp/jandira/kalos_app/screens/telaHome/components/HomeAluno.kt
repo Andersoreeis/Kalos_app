@@ -70,6 +70,15 @@ fun HomeAluno(aluno: AlunoResponse, navController: NavController,
         HeaderHome(aluno)
         Spacer(modifier = Modifier.height(17.dp))
         BarraRetaHome()
+
+        Spacer(modifier = Modifier.height(17.dp))
+
+        VitalBot()
+
+        Spacer(modifier = Modifier.height(17.dp))
+
+        BarraRetaHome()
+
         Spacer(modifier = Modifier.height(17.dp))
         Text(
             text = stringResource(R.string.suas_matriculas),
