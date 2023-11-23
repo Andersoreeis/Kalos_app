@@ -221,7 +221,7 @@ fun ModalConfirmarReserva(nomeProduto: String, valor: Double, cor: String,  life
                                     if (quantidade == 1) {
                                         quantidade
                                     } else {
-                                        quantidade = quantidade - 1
+                                        quantidade -= 1
                                     }
                                 }
                         )
