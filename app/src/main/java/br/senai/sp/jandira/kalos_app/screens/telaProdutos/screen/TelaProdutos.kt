@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.kalos_app.screens.telaProdutos.screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -51,6 +52,7 @@ fun TelaProdutos(lifecycleCoroutineScope: LifecycleCoroutineScope, corPrimaria: 
 
         if (result.isSuccessful){
             listaProdutos = result.body()!!.produto!!
+            Log.e("lista", "TelaProdutos: ${listaProdutos}", )
         }
     }
     Column(
@@ -82,8 +84,15 @@ fun TelaProdutos(lifecycleCoroutineScope: LifecycleCoroutineScope, corPrimaria: 
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             items(listaProdutos) {
+                var foto = ""
+                var listFoto = it.fotos
+                if(listFoto.isEmpty() ){
+                    foto = "anexo"
+                }else{
+                    foto = it.fotos[0].url!!
+                }
 
-                CardProduto(corPrimaria, it.nome!!, it.preco , it.fotos[0].url!! ){
+                CardProduto(corPrimaria, it.nome!!, it.preco , foto ){
                     navController.navigate("detalhesProduto")
                     localStorage.salvarValor(context, it.id!!.toString(), "idProduto")
 

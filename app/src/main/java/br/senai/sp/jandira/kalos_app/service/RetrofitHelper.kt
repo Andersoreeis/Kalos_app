@@ -10,7 +10,7 @@ object RetrofitHelper {
 
     fun getInstance(): Retrofit{
         return Retrofit.Builder()
-            .baseUrl(BASE_URL3)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
