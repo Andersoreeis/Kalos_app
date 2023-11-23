@@ -58,7 +58,7 @@ fun TelaProdutos(lifecycleCoroutineScope: LifecycleCoroutineScope, corPrimaria: 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(500.dp)
+            .height(700.dp)
     ) {
         CampoPesquisa(
             estadoValue = "",
