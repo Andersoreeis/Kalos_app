@@ -39,6 +39,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.screens.telaChat.components.MensagemEnviada
 import br.senai.sp.jandira.kalos_app.screens.telaChat.components.MensagemRecebida
@@ -47,7 +49,7 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelaChat() {
+fun TelaChat(navController: NavController) {
 
     var mensagemState by remember {
         mutableStateOf("")
@@ -77,7 +79,7 @@ fun TelaChat() {
                     modifier = Modifier
                         .size(40.dp)
                         .clickable {
-
+                            navController.navigate("home")
                         },
                     contentDescription = null
                 )
@@ -174,8 +176,8 @@ fun TelaChat() {
     }
 }
 
-@Preview(showSystemUi = true)
-@Composable
-fun TelaChatPreview() {
-    TelaChat()
-}
+//@Preview(showSystemUi = true)
+//@Composable
+//fun TelaChatPreview() {
+//    TelaChat()
+//}
