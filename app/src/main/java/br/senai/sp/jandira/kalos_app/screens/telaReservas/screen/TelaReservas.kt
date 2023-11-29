@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.kalos_app.screens.telaReservas.screen
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
@@ -55,6 +56,7 @@ import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun TelaReservas(
     navController: NavController,
