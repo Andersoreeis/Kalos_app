@@ -16,6 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import br.senai.sp.jandira.kalos_app.MaskVisualTransformation
+import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.NumberDefaults
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,5 +61,50 @@ fun CampoTextoMetricas(
             keyboardType = KeyboardType.Number
         ),
         singleLine = true
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+
+fun CampoTextoMetricas2(
+    value: String,
+    aoMudar: (String) -> Unit,
+    placeholder: String,
+    isError: Boolean,
+) {
+    val errorText = remember { mutableStateOf("") }
+
+    OutlinedTextField(
+        value = value,
+        onValueChange = { newValue ->
+            if(newValue.length <= 3){
+                val unformattedText = newValue.replace(Regex("[^\\d]"), "")
+                aoMudar(unformattedText)
+                errorText.value = ""
+            }
+
+        },
+        placeholder = {
+            Text(text = placeholder, color = Color(0xFF606060))
+        },
+        modifier = Modifier
+            .background(Color.Black)
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(25.dp),
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            textColor = GreenKalos,
+            containerColor = Color(0xFF393939),
+            unfocusedBorderColor = Color(0xFF393939),
+            focusedBorderColor = GreenKalos,
+            cursorColor = GreenKalos
+        ),
+        isError = isError,
+        keyboardOptions = KeyboardOptions.Default.copy(
+            imeAction = ImeAction.Next,
+            keyboardType = KeyboardType.Number
+        ),
+        singleLine = true,
+        visualTransformation = MaskVisualTransformation(NumberDefaults.MASKALTURA)
     )
 }

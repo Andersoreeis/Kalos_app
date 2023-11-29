@@ -20,6 +20,7 @@ import br.senai.sp.jandira.kalos_app.Storage
 import br.senai.sp.jandira.kalos_app.components.Espacamento
 import br.senai.sp.jandira.kalos_app.components.SetaParaVoltar
 import br.senai.sp.jandira.kalos_app.screens.telaMetricas.component.CampoTextoMetricas
+import br.senai.sp.jandira.kalos_app.screens.telaMetricas.component.CampoTextoMetricas2
 import br.senai.sp.jandira.kalos_app.screens.telaMetricas.component.TextoCampoAltura
 import br.senai.sp.jandira.kalos_app.screens.telaMetricas.component.TextoCampoPeso
 
@@ -65,7 +66,7 @@ fun TelaMetricas(navController: NavController, localStorage: Storage) {
         texto = "Digite sua altura em cm:"
     )
 
-    CampoTextoMetricas(value = estadoAltura.value, aoMudar ={ novoValor ->
+    CampoTextoMetricas2(value = estadoAltura.value, aoMudar ={ novoValor ->
         estadoAltura.value = novoValor
         estadoAlturaError.value = ""
         localStorage.salvarValor(context,estadoAltura.value, "altura")  },

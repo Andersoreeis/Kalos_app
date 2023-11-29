@@ -21,6 +21,7 @@ import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 object NumberDefaults {
     const val MASKCPF = "###.###.###-##"
     const val MASKNUMBER = "(##) #####-####"
+    const val MASKALTURA = "#,##"
     const val INPUT_LENGTH = 11 // Equals to "#####-###".count { it == '#' }
 }
 @OptIn(ExperimentalMaterial3Api::class)

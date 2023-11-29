@@ -45,6 +45,7 @@ import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.C
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.CampoNome
 import br.senai.sp.jandira.kalos_app.screens.telaInformacoesPessoais.component.CampoTelefone
 import br.senai.sp.jandira.kalos_app.screens.telaMetricas.component.CampoTextoMetricas
+import br.senai.sp.jandira.kalos_app.screens.telaMetricas.component.CampoTextoMetricas2
 import br.senai.sp.jandira.kalos_app.screens.telaPerfil.components.convertIso8601ToDate
 import br.senai.sp.jandira.kalos_app.service.AlunoService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
@@ -90,7 +91,7 @@ fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCor
     }
     var data = dateToLocalDate(convertIso8601ToDate(aluno.data_nascimento.toString()))
 
-    var estadoDia = remember { mutableStateOf(data.dayOfMonth.toString()) }
+    var estadoDia = remember { mutableStateOf("0" + data.dayOfMonth.toString()) }
     var estadoMes = remember { mutableStateOf("0" + data.monthValue.toString()) }
     var estadoAno = remember { mutableStateOf(data.year.toString()) }
     val estadoDataNascimentoError = remember {
@@ -367,7 +368,7 @@ fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCor
             modifier = Modifier.padding(bottom = 5.dp)
         )
 
-        CampoTextoMetricas(value = estadoAltura.value, aoMudar ={ novoValor ->
+        CampoTextoMetricas2(value = estadoAltura.value, aoMudar ={ novoValor ->
             estadoAltura.value = novoValor
             estadoAlturaError.value = ""
               },
