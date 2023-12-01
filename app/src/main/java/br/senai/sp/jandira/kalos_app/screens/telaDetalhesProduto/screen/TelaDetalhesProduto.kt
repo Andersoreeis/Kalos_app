@@ -40,6 +40,7 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.R
 import br.senai.sp.jandira.kalos_app.Storage
+import br.senai.sp.jandira.kalos_app.model.FotoResponse
 import br.senai.sp.jandira.kalos_app.model.ProdutosResponse
 import br.senai.sp.jandira.kalos_app.screens.telaDetalhesProduto.components.HeaderProduto
 import br.senai.sp.jandira.kalos_app.screens.telaDetalhesProduto.components.ImagemProduto
@@ -48,6 +49,7 @@ import br.senai.sp.jandira.kalos_app.screens.telaDetalhesProduto.components.Prec
 import br.senai.sp.jandira.kalos_app.service.ProdutoService
 import br.senai.sp.jandira.kalos_app.service.RetrofitHelper
 import br.senai.sp.jandira.kalos_app.ui.theme.GrayKalos
+import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -219,13 +221,21 @@ fun TelaDetalhesProduto(navController: NavController, localStorage: Storage, lif
                         .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    var listaFotos = produto[0].fotos
+                    var galeria: List<FotoResponse>
+                    var padrao = ProdutosResponse(1, "", "", "", "", "", "", 2, listOf(FotoResponse("")))
 
+                    if(listaFotos.isEmpty()){
+                        galeria = padrao.fotos
+                    }else{
+                        galeria = listaFotos
+                    }
 
                     LazyRow(
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                         modifier = Modifier.padding(16.dp)
                     ) {
-                        items(produto[0].fotos) {
+                        items(galeria) {
                             ImagemProduto(
                                 imagem = it.url!!
                             )
@@ -260,13 +270,13 @@ fun TelaDetalhesProduto(navController: NavController, localStorage: Storage, lif
         }
     }else{
         Column (
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().background(Color.Black),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ){
             CircularProgressIndicator(
                 modifier = Modifier.size(64.dp),
-                color = Color.White
+                color = GreenKalos
             )
         }
     }
