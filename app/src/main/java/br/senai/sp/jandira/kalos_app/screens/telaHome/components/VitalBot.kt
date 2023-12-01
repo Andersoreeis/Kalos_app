@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
@@ -26,30 +27,45 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.navigation.NavController
 import br.senai.sp.jandira.kalos_app.ui.theme.GreenKalos
 
 @Composable
-fun VitalBot() {
-    Row (modifier = Modifier.fillMaxWidth()){
+fun VitalBot(navController: NavController) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .padding(10.dp)) {
         Image(
             painter = painterResource(id = R.drawable.botremovebg),
             contentDescription = null,
-            modifier = Modifier.width(200.dp)
+            modifier = Modifier.width(88.dp)
         )
 
-        Column (horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.height(133.dp)){
+        Spacer(modifier = Modifier.width(50.dp))
+
+        Column(
+            horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .height(133.dp)
+                .padding(5.dp)
+        ) {
             Text(
-                text = "Converse com nosso assistente virtual especializado em treinos, dietas e bem-estar!",
+                text = "Converse com nosso assistente virtual especializado em treinos, saúde e bem-estar!",
                 color = Color.White,
                 textAlign = TextAlign.End,
-                fontSize = 14.sp
+                fontSize = 13.sp
             )
 
             Button(
-                onClick = { /*TODO*/ },
-                colors = ButtonDefaults.buttonColors(GreenKalos)
+                onClick = {
+                    navController.navigate("chatBot")
+                },
+                colors = ButtonDefaults.buttonColors(GreenKalos),
+                modifier = Modifier.height(35.dp)
             ) {
-                Row (verticalAlignment = Alignment.CenterVertically){
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
                         painter = painterResource(id = R.drawable.sendicon),
                         contentDescription = null,
@@ -63,7 +79,7 @@ fun VitalBot() {
                         color = Color.Black,
                         textAlign = TextAlign.End,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 12.sp
+                        fontSize = 16.sp
                     )
                 }
             }
@@ -71,8 +87,8 @@ fun VitalBot() {
     }
 }
 
-@Preview
-@Composable
-fun VitalBotPrev() {
-    VitalBot()
-}
+//@Preview
+//@Composable
+//fun VitalBotPrev() {
+//    VitalBot()
+//}

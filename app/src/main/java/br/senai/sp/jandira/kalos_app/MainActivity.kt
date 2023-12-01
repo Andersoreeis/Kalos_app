@@ -18,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import br.senai.sp.jandira.kalos_app.screens.InformacoesCliente.screen.TelasInformacoesdoCliente
 import br.senai.sp.jandira.kalos_app.screens.criarContaComponent.screen.CriarContaScreen
 import br.senai.sp.jandira.kalos_app.screens.telaAlterarSenha.screen.TelaAlterarSenha
+import br.senai.sp.jandira.kalos_app.screens.telaChat.screen.TelaChat
 import br.senai.sp.jandira.kalos_app.screens.telaDetalhesExercicio.screen.TelaDetalhesExercicio
 import br.senai.sp.jandira.kalos_app.screens.telaDetalhesExercicio.screen.TelaTreinoConcluido
 import br.senai.sp.jandira.kalos_app.screens.telaDetalhesProduto.screen.TelaDetalhesProduto
@@ -131,6 +132,9 @@ class MainActivity : ComponentActivity() {
                             TelaDetalhesProduto(navController, localStorage, lifecycleScope)
                         }
 
+                        composable(route = "chatBot"){
+                            TelaChat(navController)
+                        }
 
 
                     }
