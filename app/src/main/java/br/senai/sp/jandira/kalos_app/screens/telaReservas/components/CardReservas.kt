@@ -127,7 +127,7 @@ fun CardReservas(
                     createButtonWithFunction4(textButton = status, corBotao = Color.Red) {
 
                     }
-                } else if (status.lowercase() == "em análise") {
+                } else if (status.lowercase() == "em-análise") {
                     Column {
                         createButtonWithFunction4(textButton = status, corBotao = Color.Yellow) {
 
@@ -142,7 +142,7 @@ fun CardReservas(
                         }
                     }
 
-                } else if (status.lowercase() == "pronto para retirada"){
+                } else if (status.lowercase() == "pronto-para-retirada"){
                     createButtonWithFunction4(textButton = status, corBotao = GreenKalos) {
 
                     }
