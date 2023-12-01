@@ -40,6 +40,7 @@ import androidx.navigation.NavController
 import br.senai.sp.jandira.app_kalos.components.createButtonWithFunction
 import br.senai.sp.jandira.app_kalos.components.createButtonWithWidth2
 import br.senai.sp.jandira.kalos_app.Storage
+import br.senai.sp.jandira.kalos_app.model.ExercicioResponse
 import br.senai.sp.jandira.kalos_app.model.TreinoComExercicio
 import br.senai.sp.jandira.kalos_app.screens.telaDetalhesTreino.components.BotaoIniciarTreino
 import br.senai.sp.jandira.kalos_app.screens.telaDetalhesTreino.components.CardCapaTreino
@@ -106,52 +107,60 @@ fun DetalhesTreinoScreen(
 
                 Spacer(modifier = Modifier.height(15.dp))
 
-                BotaoIniciarTreino(cor = corPrimariaAcademia.toString()){
-                    navController.navigate("detalhesExercicio")
-
-                    val arrayExercicios = arrayListOf<Int>()
-                    estatoExercicios.exercicios?.forEach{exercicio ->
-                        exercicio.id_exercicio_serie_repeticao?.let { arrayExercicios.add(it) }
-                    }
 
 
-                    estatoExercicios.exercicios?.get(0)?.let {
-                        localStorage.salvarValor(
-                            context,
-                            "${arrayExercicios}",
-                            "idExercicioSerieRepeticao")
-                    }
-                }
 
-                Spacer(modifier = Modifier.height(15.dp))
-
-                Text(
-                    text = "Resumo",
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
-                )
 
                 Log.e("exercicios", "DetalhesTreinoScreen: ${estatoExercicios.exercicios} ")
 
-                LazyColumn(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    estatoExercicios.exercicios?.let {
-                        items(it) {
-                            val thumbnailUrl = "https://img.youtube.com/vi/${it.anexo}/0.jpg"
-                            CardExercicio(
-                                numero = it.numero.toString(),
-                                imagem = thumbnailUrl,
-                                nome = it.nome!!,
-                                series = it.series!!,
-                                repeticoes = it.repeticoes,
-                                duracao = it.duracao
-                            )
+
+                if(estatoExercicios.exercicios != null){
+                    BotaoIniciarTreino(cor = corPrimariaAcademia.toString()){
+                        navController.navigate("detalhesExercicio")
+
+                        val arrayExercicios = arrayListOf<Int>()
+                        estatoExercicios.exercicios?.forEach{exercicio ->
+                            exercicio.id_exercicio_serie_repeticao?.let { arrayExercicios.add(it) }
+                        }
+
+
+                        estatoExercicios.exercicios?.get(0)?.let {
+                            localStorage.salvarValor(
+                                context,
+                                "${arrayExercicios}",
+                                "idExercicioSerieRepeticao")
                         }
                     }
 
+                    Spacer(modifier = Modifier.height(15.dp))
+
+                    Text(
+                        text = "Resumo",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp
+                    )
+
+                    LazyColumn(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        estatoExercicios.exercicios?.let {
+                            items(it) {
+                                val thumbnailUrl = "https://img.youtube.com/vi/${it.anexo}/0.jpg"
+                                CardExercicio(
+                                    numero = it.numero.toString(),
+                                    imagem = thumbnailUrl,
+                                    nome = it.nome!!,
+                                    series = it.series!!,
+                                    repeticoes = it.repeticoes,
+                                    duracao = it.duracao
+                                )
+                            }
+                        }
+
+                    }
                 }
+
 
 
             }
