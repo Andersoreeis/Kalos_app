@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -134,7 +135,8 @@ fun TelaTreinos(
                                 }
                                 .shadow(2.dp, RoundedCornerShape(16.dp)),
                             error = painterResource(id = R.drawable.treinoerro),
-                            alpha = 0.7f
+                            alpha = 0.7f,
+                            contentScale = ContentScale.Crop
                         )
 
 
