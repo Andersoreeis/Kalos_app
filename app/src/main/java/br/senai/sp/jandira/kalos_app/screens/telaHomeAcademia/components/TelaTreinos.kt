@@ -84,7 +84,7 @@ fun TelaTreinos(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(350.dp)
+            .height(700.dp)
     ) {
 
         val idAcademia = localStorage.lerValor(context, "idAcademia")
