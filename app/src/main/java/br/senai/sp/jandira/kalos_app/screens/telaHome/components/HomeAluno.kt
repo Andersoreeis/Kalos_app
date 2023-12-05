@@ -74,13 +74,6 @@ fun HomeAluno(aluno: AlunoResponse, navController: NavController,
         Spacer(modifier = Modifier.height(17.dp))
         BarraRetaHome()
 
-        Spacer(modifier = Modifier.height(17.dp))
-
-        VitalBot(navController)
-
-        Spacer(modifier = Modifier.height(17.dp))
-
-        BarraRetaHome()
 
         Spacer(modifier = Modifier.height(17.dp))
         Text(
