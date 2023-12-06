@@ -157,7 +157,7 @@ fun TelaDetalhesExercicio(
                 )
             }
 
-            if (estadoExercicio.duracao != null) {
+            if (estadoExercicio.duracao != null || estadoExercicio.duracao == "0") {
                 Cronometro(
                     tempo = estadoExercicio.duracao!!,
                     cor = corPrimariaAcademia.toString()
