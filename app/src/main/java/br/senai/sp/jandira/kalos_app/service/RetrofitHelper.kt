@@ -11,7 +11,7 @@ object RetrofitHelper {
 
     fun getInstance(): Retrofit{
         return Retrofit.Builder()
-            .baseUrl(BASE_URL4)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
