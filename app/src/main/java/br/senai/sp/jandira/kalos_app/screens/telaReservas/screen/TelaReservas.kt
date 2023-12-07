@@ -73,7 +73,7 @@ fun TelaReservas(
     }
 
     var status by remember {
-        mutableStateOf(false)
+        mutableStateOf(1)
     }
 
     var idParaCancelar by remember {
@@ -97,7 +97,9 @@ fun TelaReservas(
         Log.e("result", "${result.body()}")
         if (result.isSuccessful) {
             listaReservas = result.body()!!.data!!
-            status = true
+            status = 2
+        }else{
+            status = 3
         }
     }
 
@@ -114,7 +116,7 @@ fun TelaReservas(
         ) {
             HeaderReservas(navController = navController)
 
-            if (status){
+            if (status == 2){
                 LazyColumn() {
                     items(listaReservas) {
 
@@ -141,7 +143,7 @@ fun TelaReservas(
                         }
                     }
                 }
-            } else {
+            } else if (status == 1) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -153,6 +155,15 @@ fun TelaReservas(
                         color = Color(0, 255, 144),
                         modifier = Modifier.size(64.dp)
                     )
+                }
+            }else{
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(text = "Você não possui reservas nessa academia", color = GrayKalos)
                 }
             }
 
