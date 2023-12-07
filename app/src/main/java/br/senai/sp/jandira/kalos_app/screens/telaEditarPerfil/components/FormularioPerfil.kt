@@ -91,8 +91,8 @@ fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCor
     }
     var data = dateToLocalDate(convertIso8601ToDate(aluno.data_nascimento.toString()))
 
-    var estadoDia = remember { mutableStateOf("0" + data.dayOfMonth.toString()) }
-    var estadoMes = remember { mutableStateOf("0" + data.monthValue.toString()) }
+    var estadoDia = remember { mutableStateOf(if(data.dayOfMonth > 9){ data.dayOfMonth.toString() }else{"0" + data.dayOfMonth.toString() } )}
+    var estadoMes = remember { mutableStateOf( if(data.monthValue > 9){data.monthValue.toString() }else{ "0" + data.monthValue.toString()}  ) }
     var estadoAno = remember { mutableStateOf(data.year.toString()) }
     val estadoDataNascimentoError = remember {
         mutableStateOf("")
@@ -465,6 +465,11 @@ fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCor
                                 addProperty("altura", estadoAltura.value)
                                 addProperty("objetivo", aluno.objetivo)
                                 addProperty("foto", aluno.foto)
+                                addProperty("rotina_regular", aluno.rotina_regular)
+                                addProperty("id_qualidade_do_sono", aluno.id_qualidade_do_sono)
+                                addProperty("frequencia_treino_semanal", aluno.frequencia_treino_semanal)
+                                addProperty("id_nivel_experiencia", aluno.id_nivel_experiencia)
+                                addProperty("frequencia_cardiaca", aluno.frequencia_cardiaca)
                         }
 
                         val result = alunoService.AtualizarAluno(body, aluno.id.toString())
@@ -515,6 +520,11 @@ fun FormularioPerfil(aluno: AlunoResponse, lifecycleCoroutineScope: LifecycleCor
                                                         addProperty("altura", estadoAltura.value)
                                                         addProperty("objetivo", aluno.objetivo)
                                                         addProperty("foto", uri.toString())
+                                                        addProperty("rotina_regular", aluno.rotina_regular)
+                                                        addProperty("id_qualidade_do_sono", aluno.id_qualidade_do_sono)
+                                                        addProperty("frequencia_treino_semanal", aluno.frequencia_treino_semanal)
+                                                        addProperty("id_nivel_experiencia", aluno.id_nivel_experiencia)
+                                                        addProperty("frequencia_cardiaca", aluno.frequencia_cardiaca)
                                                     }
 
                                                     val result = alunoService.AtualizarAluno(body, aluno.id.toString())
